@@ -1,0 +1,39 @@
+<h1>Listing Nodes</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, VispanaWeb.NodeLive.FormComponent,
+    id: @node.id || :new,
+    title: @page_title,
+    action: @live_action,
+    node: @node,
+    return_to: Routes.node_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th>Servicetypes</th>
+      <th>Content</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="nodes">
+    <%= for node <- @nodes do %>
+      <tr id="node-<%= node.id %>">
+        <td><%= node.hostname %></td>
+        <td><%= node.serviceTypes %></td>
+        <td><%= node.content %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.node_show_path(@socket, :show, node) %></span>
+          <span><%= live_patch "Edit", to: Routes.node_index_path(@socket, :edit, node) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: node.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Node", to: Routes.node_index_path(@socket, :new) %></span>

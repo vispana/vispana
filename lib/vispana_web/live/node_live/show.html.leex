@@ -1,0 +1,32 @@
+<h1>Show Node</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, VispanaWeb.NodeLive.FormComponent,
+    id: @node.id,
+    title: @page_title,
+    action: @live_action,
+    node: @node,
+    return_to: Routes.node_show_path(@socket, :show, @node) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Hostname:</strong>
+    <%= @node.hostname %>
+  </li>
+
+  <li>
+    <strong>Servicetypes:</strong>
+    <%= @node.serviceTypes %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @node.content %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.node_show_path(@socket, :edit, @node), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.node_index_path(@socket, :index) %></span>

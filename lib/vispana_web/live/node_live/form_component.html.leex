@@ -1,0 +1,22 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "node-form",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :hostname %>
+  <%= text_input f, :hostname %>
+  <%= error_tag f, :hostname %>
+
+  <%= label f, :serviceTypes %>
+  <%= multiple_select f, :serviceTypes, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= error_tag f, :serviceTypes %>
+
+  <%= label f, :content %>
+  <%= text_input f, :content %>
+  <%= error_tag f, :content %>
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>
