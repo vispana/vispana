@@ -4,6 +4,7 @@ defmodule Vispana.Cluster do
   """
 
   import Ecto.Query, warn: false
+  import Logger, warn: false
   alias Vispana.Repo
 
   alias Vispana.Cluster.Node
@@ -18,19 +19,35 @@ defmodule Vispana.Cluster do
 
   """
   def list_nodes do
-    [
-      %Node{
-        id: 1,
-        hostname: "host_container_1",
-        serviceTypes: "container"
+    { :ok, result } = fetch()
 
-      },
-      %Node{
-        id: 2,
-        hostname: "host_content_2",
-        serviceTypes: "content"
-      }
-    ]
+    services = result["clusters"]
+      |> Enum.find(fn(val) -> val["type"] == "hosts" end)
+
+
+    services["services"]
+      |> Enum.group_by(&get_key(&1), &get_service_type(&1))
+      |> Enum.map(fn {key, value} -> %Node{id: -1, hostname: key, serviceTypes: value} end)
+
+  end
+
+  def get_key(service) do
+    service["host"]
+  end
+
+  def get_service_type(service) do
+    service["serviceType"]
+  end
+
+  def fetch do
+    case HTTPoison.get("http://gew1-searchvespaepisodeconfig-a-t7hp.gew1.spotify.net:19071/serviceview/v1") do
+      {:ok, %{status_code: 200, body: body}} ->
+        {:ok, Poison.decode!(body)}
+      {:ok, %{status_code: 404}} ->
+        {:error, :not_found}
+      {:error, _err} ->
+        {:error, :internal_server_error}
+    end
   end
 
   @doc """
