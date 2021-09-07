@@ -88,3 +88,25 @@
   display: block;
   margin: -1rem 0 2rem;
 }
+
+.service-type-container {
+  background-color: blueviolet;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.service-type-configserver {
+  background-color: red;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.service-type-storagenode {
+  background-color: blue;
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+

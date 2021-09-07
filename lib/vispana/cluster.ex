@@ -22,12 +22,16 @@ defmodule Vispana.Cluster do
     { :ok, result } = fetch()
 
     services = result["clusters"]
-      |> Enum.find(fn(val) -> val["type"] == "hosts" end)
+       |> Enum.flat_map(&(&1["services"]))
+#      |> Enum.find(fn(val) -> val["type"] == "hosts" end)
 
 
-    services["services"]
+    services
       |> Enum.group_by(&get_key(&1), &get_service_type(&1))
-      |> Enum.map(fn {key, value} -> %Node{id: -1, hostname: key, serviceTypes: value} end)
+      |> Enum.sort_by(fn {host, value} -> host end)
+      |> Enum.with_index(1)
+      |> Enum.map(fn {{host, value}, index} -> %Node{id: index, hostname: host, serviceTypes: value |> Enum.uniq |> Enum.sort } end)
+
 
   end
 
