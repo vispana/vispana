@@ -17,13 +17,9 @@ defmodule VispanaWeb.Router do
   scope "/", VispanaWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
-    live "/nodes", NodeLive.Index, :index
-    live "/nodes/new", NodeLive.Index, :new
-    live "/nodes/:id/edit", NodeLive.Index, :edit
+    live "/admin", PageLive, :index
+    live "/", NodeLive.Index, :index
 
-    live "/nodes/:id", NodeLive.Show, :show
-    live "/nodes/:id/show/edit", NodeLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
