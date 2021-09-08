@@ -1,13 +1,13 @@
 use Mix.Config
 
 # Configure your database
-config :vispana, Vispana.Repo,
-  username: "vispana",
-  password: "vispana",
-  database: "vispana",
-  hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+#config :vispana, Vispana.Repo,
+#  username: "vispana1",
+#  password: "vispana1",
+#  database: "vispana1",
+#  hostname: "localhost1",
+#  show_sensitive_data_on_connection_error: true,
+#  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

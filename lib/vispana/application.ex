@@ -7,8 +7,6 @@ defmodule Vispana.Application do
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Vispana.Repo,
       # Start the Telemetry supervisor
       VispanaWeb.Telemetry,
       # Start the PubSub system
