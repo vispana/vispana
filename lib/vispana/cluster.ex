@@ -16,8 +16,8 @@ defmodule Vispana.Cluster do
       [%Node{}, ...]
 
   """
-  def list_nodes do
-    { :ok, result } = fetch()
+  def list_nodes(config_host) do
+    { :ok, result } = fetch(config_host)
 
     services = result["clusters"]
        |> Enum.flat_map(&(&1["services"]))
@@ -41,8 +41,9 @@ defmodule Vispana.Cluster do
     service["serviceType"]
   end
 
-  def fetch do
-    case HTTPoison.get("http://gew1-searchvespaepisodeconfig-a-t7hp.gew1.spotify.net:19071/serviceview/v1") do
+  def fetch(config_host) do
+    url = config_host <> "/serviceview/v1"
+    case HTTPoison.get(url) do
       {:ok, %{status_code: 200, body: body}} ->
         {:ok, Poison.decode!(body)}
       {:ok, %{status_code: 404}} ->

@@ -5,7 +5,8 @@ defmodule VispanaWeb.NodeLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :nodes, list_nodes())}
+    config_host = _params["config_host"]
+    {:ok, assign(socket, :nodes, list_nodes(config_host))}
   end
 
   @impl true
@@ -19,7 +20,7 @@ defmodule VispanaWeb.NodeLive.Index do
     |> assign(:node, nil)
   end
 
-  defp list_nodes do
-    Cluster.list_nodes()
+  defp list_nodes(config_host) do
+    Cluster.list_nodes(config_host)
   end
 end
