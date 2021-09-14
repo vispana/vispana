@@ -65,11 +65,18 @@ defmodule Vispana.Cluster do
       |> Enum.with_index(1)
       |> Enum.map(fn {host, index} -> %Node{id: index, hostname: host, serviceTypes: ["configserver"] } end)
 
-    Logger.log(:info, Kernel.inspect(configserver_nodes))
+    container_map = services_map["container"]["#content"]["nodes"]["node"]
+      |> Enum.map(fn(container_node) -> container_node["-hostalias"] end)
+      |> Enum.sort
+      |> Enum.with_index(1)
+      |> Enum.map(fn {host, index} -> %Node{id: index, hostname: host, serviceTypes: ["container"] } end)
 
-    container_map = services_map["container"]["nodes"]
-    content_map = services_map["content"]
+    content_map = services_map["content"]["#content"]["group"]["#content"]["group"]
 
+    content_map_2 = content_map
+      |> Enum.map(fn content_node -> %{ distribution_key: content_node["-distribution-key"], nodes: host_alias_from_nodes(content_node) } end)
+
+#    Logger.log(:info, Kernel.inspect(content_map_2))
 
 
     { :ok, result } = fetch(config_host)
@@ -85,6 +92,19 @@ defmodule Vispana.Cluster do
       |> Enum.map(fn {{host, value}, index} -> %Node{id: index, hostname: host, serviceTypes: value |> Enum.uniq |> Enum.sort } end)
 
   end
+
+  def host_alias_from_nodes(content_node) do
+    x  = content_node["#content"]["node"]
+      |> Enum.map(fn val -> print_val(val)  end)
+#    Logger.log(:info, Kernel.inspect(x))
+    content_node["#content"]["node"]
+  end
+
+  def print_val(val) do
+    Logger.log(:info, Kernel.inspect(val))
+    val
+  end
+
 
   def fetch_services_xml(config_host) do
     url = config_host <> "/application/v2/tenant/default/application/default/environment/prod/region/default/instance/default/content/services.xml"
