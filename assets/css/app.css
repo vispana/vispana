@@ -96,14 +96,14 @@
   height: 20px;
 }
 
-.service-type-configserver {
+.service-type-config {
   background-color: red;
   display: inline-flex;
   width: 20px;
   height: 20px;
 }
 
-.service-type-storagenode {
+.service-type-content {
   background-color: blue;
   display: inline-flex;
   width: 20px;

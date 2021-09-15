@@ -49,7 +49,6 @@ defmodule Vispana.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
       {:poison, "~> 5.0"},
-      {:elixir_xml_to_map, "~> 2.0"}
     ]
   end
 

@@ -5,6 +5,7 @@ defmodule Vispana.Cluster.Node do
     field :content, :map
     field :hostname, :string
     field :serviceTypes, {:array, :string}
+    field :vespaId, :integer
 
     timestamps()
   end
