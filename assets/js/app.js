@@ -1,7 +1,7 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import "../css/app.css"
+import "../css/app.scss"
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -14,16 +14,29 @@ import "../css/app.css"
 //
 import "phoenix_html"
 import {Socket} from "phoenix"
-import topbar from "topbar"
+import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
+import "alpinejs"
+import {InitModal} from "./init_modal"
+
+let Hooks = {}
+// Hooks.Example = { mounted() { } }
+Hooks.InitModal = InitModal
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+let liveSocket = new LiveSocket("/live", Socket, {
+  hooks: Hooks,
+  params: {_csrf_token: csrfToken},
+  dom: {
+    onBeforeElUpdated(from, to){
+      if(from.__x){ window.Alpine.clone(from.__x, to) }
+    }
+  }
+})
 
 // Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
-window.addEventListener("phx:page-loading-start", info => topbar.show())
-window.addEventListener("phx:page-loading-stop", info => topbar.hide())
+window.addEventListener("phx:page-loading-start", info => NProgress.start())
+window.addEventListener("phx:page-loading-stop", info => NProgress.done())
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
@@ -33,4 +46,3 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-

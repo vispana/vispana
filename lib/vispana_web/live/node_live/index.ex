@@ -16,7 +16,7 @@ defmodule VispanaWeb.NodeLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Nodes")
+    |> assign(:page_title, "Vispana - Nodes")
     |> assign(:node, nil)
   end
 

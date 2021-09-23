@@ -1,36 +1,146 @@
-<h1>Listing Nodes</h1>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, VispanaWeb.NodeLive.FormComponent,
     id: @node.id || :new,
-    title: @page_title,
+    title: "Vispana"<>@page_title,
     action: @live_action,
     node: @node,
     return_to: Routes.node_index_path(@socket, :index) %>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nodes</th>
-    </tr>
-  </thead>
-  <tbody id="nodes">
-    <%= for node <- @nodes do %>
-      <tr id="node-<%= node.id %>">
-        <td>
-          <%= node.id %>
-        </td>
-        <td>
-          <div><%= node.hostname %></div>
-          <div>
-            <%= for serviceType <- node.serviceTypes do %>
-              <span class="service-type-<%= serviceType %>" title="<%= serviceType %>" ></span>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="flex flex-grow flex-col pt-8 normal-case">
+    <div class="-my-2 overflow-x-auto .overflow-scroll sm:-mx-6 lg:-mx-8">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="shadow border-b border-darkest-blue sm:rounded-lg">
+          <table class="min-w-full min-h-full divide-y divide-darkest-blue">
+            <thead class="bg-standout-blue">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-blue-100 tracking-wider min-w-300">
+                  <span>
+                    Hosts
+                  </span>
+                  <br>
+                </th>
+                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
+                  episode20210910
+                  <br>
+                  <!-- <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> -->
+                  <span class="text-gray-400 text-xs">
+                    cluster:<span class="font-black">episode</span> | docs: 43000000 | redundancy: 1|1|1|*
+                  </span>
+                </th>
+                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
+                  episode20210915
+                  <br>
+                  <span class="text-gray-400 text-xs">
+                    cluster:episode | docs: 43000000 | redundancy: 1|1|1|*
+                  </span>
+                </th>
+                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
+                  show20210921
+                  <br>
+                  <span class="text-gray-400 text-xs">
+                    cluster:show | docs: 12000000 | redundancy: 1|1|1|*
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-standout-blue divide-y divide-darkest-blue">
+              <!-- entry -->
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
+                  <span>gew1-searchvespaepisodecontent-c-04md.gew1.spotify.net</span>
+                  <br>
+                  <span class="px-2 mt-4 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-400 text-white">
+                    role:content
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-start -m-2">
+                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                      group: 1
+                    </div>
+                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                      distribution key: 1
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-start -m-2">
+                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                      group: 1
+                    </div>
+                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                      distribution key: 1
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-start -m-2">
+                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                      group: 3
+                    </div>
+                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                      distribution key: 7
+                    </div>
+                  </div>
+                </td>
+              </tr>
 
+              <%= for node <- @nodes do %>
+                <tr>
+                  <!-- host column -->
+                  <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
+                    <span><%= node.hostname %></span>
+                    <br>
+                    <%= for serviceType <- node.serviceTypes do %>
+                        <span class="px-2 mt-4 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-400 text-white">
+                        role:<%= serviceType %>
+                        </span>
+                    <% end %>
+                  </td>
+
+                  <!-- schema column -->
+                  <td class="px-6 py-4">
+                    <div class="flex justify-start -m-2">
+                      <%= if node.content != nil do %>
+                        <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                          group: <%= node.content[:group] %>
+                        </div>
+                        <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                          distribution key: <%= node.content[:key] %>
+                        </div>
+                      <% end %>
+                    </div>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <div class="flex justify-start -m-2">
+                      <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                        group: 1
+                      </div>
+                      <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                        distribution key: 1
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex justify-start -m-2">
+                      <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                        group: 3
+                      </div>
+                      <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                        distribution key: 7
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

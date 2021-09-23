@@ -1,8 +1,7 @@
 defmodule VispanaWeb.ConfigHostLive.Index do
   use VispanaWeb, :live_view
 
-  alias Vispana.Cluster
-  alias Vispana.Cluster.ConfigHost
+  alias Vispana.Cluster.ReferenceConfigHost
 
   @impl true
   def mount(_params, _session, socket) do
@@ -16,8 +15,8 @@ defmodule VispanaWeb.ConfigHostLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Config Host")
-    |> assign(:config_host, %ConfigHost{url: ""})
+    |> assign(:page_title, "Vispana")
+    |> assign(:config_host, %ReferenceConfigHost{url: ""})
   end
 
 
