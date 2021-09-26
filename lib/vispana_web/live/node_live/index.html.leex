@@ -21,123 +21,54 @@
                   </span>
                   <br>
                 </th>
-                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
-                  episode20210910
-                  <br>
-                  <!-- <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> -->
-                  <span class="text-gray-400 text-xs">
-                    cluster:<span class="font-black">episode</span> | docs: 43000000 | redundancy: 1|1|1|*
-                  </span>
-                </th>
-                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
-                  episode20210915
-                  <br>
-                  <span class="text-gray-400 text-xs">
-                    cluster:episode | docs: 43000000 | redundancy: 1|1|1|*
-                  </span>
-                </th>
-                <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
-                  show20210921
-                  <br>
-                  <span class="text-gray-400 text-xs">
-                    cluster:show | docs: 12000000 | redundancy: 1|1|1|*
-                  </span>
-                </th>
+                <%= for contentClusters <- @nodes.contentClusters do %>
+                  <%= for schema <- contentClusters.schemas do %>
+                    <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
+                      <%= schema.schemaName %>
+                      <br>
+                      <!-- <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> -->
+                      <span class="text-gray-400 text-xs">
+                        cluster:<span class="font-black"><%= contentClusters.clusterId %></span> | docs: <%= schema.docCount %> | <%= contentClusters.partitions %>
+                      </span>
+                    </th>
+                  <% end %>
+                <% end %>
+
               </tr>
             </thead>
             <tbody class="bg-standout-blue divide-y divide-darkest-blue">
-              <!-- entry -->
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
-                  <span>gew1-searchvespaepisodecontent-c-04md.gew1.spotify.net</span>
-                  <br>
-                  <span class="px-2 mt-4 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-400 text-white">
-                    role:content
-                  </span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex justify-start -m-2">
-                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                      group: 1
-                    </div>
-                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                      distribution key: 1
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex justify-start -m-2">
-                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                      group: 1
-                    </div>
-                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                      distribution key: 1
-                    </div>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex justify-start -m-2">
-                    <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                      group: 3
-                    </div>
-                    <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                      distribution key: 7
-                    </div>
-                  </div>
-                </td>
-              </tr>
 
-              <%= for node <- @nodes do %>
-                <tr>
-                  <!-- host column -->
-                  <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
-                    <span><%= node.hostname %></span>
-                    <br>
-                    <%= for serviceType <- node.serviceTypes do %>
+
+              <%= for contentClusters <- @nodes.contentClusters do %>
+                <%= for contentGroup <- contentClusters.contentGroups do %>
+                  <%= for contentNode <- contentGroup.contentNodes do %>
+                    <tr>
+                      <!-- host column -->
+                      <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
+                        <span><%= contentNode.host.hostname %></span>
+                        <br>
                         <span class="px-2 mt-4 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-400 text-white">
-                        role:<%= serviceType %>
+                        role:content
                         </span>
-                    <% end %>
-                  </td>
+                      </td>
 
-                  <!-- schema column -->
-                  <td class="px-6 py-4">
-                    <div class="flex justify-start -m-2">
-                      <%= if node.content != nil do %>
-                        <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                          group: <%= node.content[:group] %>
+                      <!-- schema columns -->
+                      <%= for _ <- contentClusters.schemas do %>
+                      <td class="px-6 py-4">
+                        <div class="flex justify-start -m-2">
+                          <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                            group: <%= contentGroup.key %>
+                          </div>
+                          <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                            distribution key: <%= contentNode.distributionKey %>
+                          </div>
                         </div>
-                        <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                          distribution key: <%= node.content[:key] %>
-                        </div>
+                      </td>
                       <% end %>
-                    </div>
-                  </td>
-
-                  <td class="px-6 py-4">
-                    <div class="flex justify-start -m-2">
-                      <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                        group: 1
-                      </div>
-                      <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                        distribution key: 1
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <div class="flex justify-start -m-2">
-                      <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                        group: 3
-                      </div>
-                      <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                        distribution key: 7
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </tr>
+                  <% end %>
+                <% end %>
               <% end %>
-
-
             </tbody>
           </table>
         </div>

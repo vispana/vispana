@@ -4,7 +4,6 @@ defmodule Vispana.Cluster do
   """
 
   import Logger, warn: false
-  alias Vispana.Cluster.Node
 
   alias Vispana.Cluster.VespaCluster
 
@@ -19,6 +18,7 @@ defmodule Vispana.Cluster do
   alias Vispana.Cluster.ContentNode
 
   alias Vispana.Cluster.Host
+  alias Vispana.Cluster.Schema
 
 
   def fetch(config_host) do
@@ -33,10 +33,15 @@ defmodule Vispana.Cluster do
     end
   end
 
+  def list_nodes(config_host) do
+    vespa_cluster_loader(config_host)
+  end
+
   def vespa_cluster_loader(config_host) do
     {:ok, config_data} = fetch_config_data(config_host)
     {:ok, container_data} = fetch_container_data(config_host)
     {:ok, content_clusters_data} = fetch_and_aggregate_content_data(config_host)
+    {:ok, metrics} = fetch_metrics(config_host)
 
     # config cluster data
     config_nodes = config_data["services"]
@@ -52,57 +57,65 @@ defmodule Vispana.Cluster do
 
     # content clusters data
     content_clusters = content_clusters_data
-      |> Enum.map(fn(content_cluster_data) -> build_content_cluster(content_cluster_data) end)
+    |> Enum.map(fn(content_cluster_data) -> build_content_cluster(content_cluster_data, metrics) end)
 
-    %VespaCluster{configCluster: config_cluster , containerCluster: container_cluster, contentClusters: content_clusters}
+    %VespaCluster{configCluster: config_cluster, containerCluster: container_cluster, contentClusters: content_clusters}
   end
 
-  def build_content_cluster(content_cluster_data) do
+  def build_content_cluster(content_cluster_data, metrics) do
     content_groups = content_cluster_data["node"]
     |> Enum.group_by(fn (node) -> node["group"] end)
-    |> Enum.map(fn {group, contents} -> %ContentGroup{key: group, contentNodes: build_content_nodes(contents)} end)
+    |> Enum.map(fn {group, contents} -> %ContentGroup{key: group, contentNodes: build_content_nodes(contents, metrics)} end)
     |> Enum.sort_by(&(&1.key))
 
     cluster_id = content_cluster_data[:cluster_id]
     distributor_data = content_cluster_data[:distributor]
+
+    schemas = content_cluster_data[:schemas]
+    |> Enum.map(fn (schema) ->
+      # naive way to calculate docs for a given schema by using picking the first group and sum up from every node
+      # note: this is very inefficient, but it's 1AM and I would like to finish it, if important I'll comeback to this! #promise
+      doc_count = List.first(content_groups).contentNodes
+      |> Enum.flat_map(fn content_node ->
+        IO.inspect(content_node.metrics)
+        content_node.metrics
+        |> Enum.filter(fn (metrics) -> metrics["dimensions"]["documenttype"] == schema end)
+        |> Enum.map(fn (metrics) ->
+          docs_active = if metrics["values"]["content.proton.documentdb.documents.active.last"] do
+            metrics["values"]["content.proton.documentdb.documents.active.last"]
+          else
+            0
+          end
+
+          docs_active
+        end)
+      end)
+      |> Enum.sum()
+
+      %Schema{schemaName: schema, docCount: doc_count}
+    end)
+
     partitions = if distributor_data["active_per_leaf_group"] do
       List.first(distributor_data["group"])["partitions"]
     else
       "0"
     end
 
-    %ContentCluster{clusterId: cluster_id, contentGroups: content_groups, partitions: partitions}
+    %ContentCluster{clusterId: cluster_id, contentGroups: content_groups, partitions: partitions, schemas: schemas}
   end
 
-  def build_content_nodes(contents_data) do
+  def build_content_nodes(contents_data, metrics) do
     contents_data
-    |> Enum.map(fn(content) -> %ContentNode{vespaId: content["key"], host: %Host{hostname: content["host"]}, distributionKey: content["key"]} end)
+    |> Enum.map(fn(content) ->
+      # each host should be unique
+      node_metrics = List.first(metrics[content["host"]])
+      search_node_metrics = node_metrics["services"]
+      |> Enum.filter(fn (root) -> root["name"] == "vespa.searchnode" end)
+      |> Enum.flat_map(fn (root) -> root["metrics"] end)
+      {content, search_node_metrics}
+    end)
+    |> Enum.map(fn{content, search_node_metrics} -> %ContentNode{vespaId: content["key"], host: %Host{hostname: content["host"]}, distributionKey: content["key"], metrics: search_node_metrics} end)
     |> Enum.sort_by(&(&1.host.hostname))
-  end
-
-  def list_nodes(config_host) do
-    result = vespa_cluster_loader(config_host)
-    IO.inspect(result)
-
-    {:ok, admin_data} = fetch_config_data(config_host)
-    {:ok, container_data} = fetch_container_data(config_host)
-    {:ok, content_data} = fetch_dispatcher_data(config_host)
-
-    admin_nodes = admin_data["services"]
-      |> Enum.map(fn(admin) -> %Node{vespaId: admin["index"], hostname: admin["hostname"], serviceTypes: ["config"]} end)
-      |> Enum.sort_by(&(&1.hostname))
-
-    container_nodes = container_data["services"]
-      |> Enum.map(fn(container) -> %Node{vespaId: container["index"], hostname: container["hostname"], serviceTypes: ["container"]} end)
-      |> Enum.sort_by(&(&1.hostname))
-
-    content_nodes = content_data["node"]
-      |> Enum.map(fn(content) -> %Node{vespaId: content["key"], hostname: content["host"], serviceTypes: ["content"], content: %{key: content["key"], group: content["group"], port: content["port"]}} end)
-      |> Enum.sort_by(&(&1.hostname))
-
-    admin_nodes ++ container_nodes ++ content_nodes
-      |> Enum.with_index(1)
-      |> Enum.map(fn {node, index} -> %{node | id: index} end)
   end
 
   def fetch_and_aggregate_content_data(config_host) do
@@ -110,10 +123,11 @@ defmodule Vispana.Cluster do
     {:ok, content_data
       |> Enum.map(fn(content_cluster) ->
         {:ok, dispatcher_data} = fetch_dispatcher_data(config_host, content_cluster)
-        {content_cluster, dispatcher_data} end)
-      |> Enum.map(fn{content_cluster, dispatcher_data} ->
+        {:ok, schemas} = fetch_schemas(config_host, content_cluster)
+        {content_cluster, dispatcher_data, schemas} end)
+      |> Enum.map(fn{content_cluster, dispatcher_data, schemas} ->
         {:ok, content_distribution_data} = fetch_content_distribution_data(config_host, content_cluster)
-        Map.merge(dispatcher_data, %{distributor: content_distribution_data, cluster_id: content_cluster})
+        Map.merge(dispatcher_data, %{distributor: content_distribution_data, cluster_id: content_cluster, schemas: schemas})
       end)}
   end
 
@@ -160,16 +174,6 @@ defmodule Vispana.Cluster do
     end
   end
 
-  # Fetches distribution keys and associated hosts
-  def fetch_dispatcher_data(config_host) do
-    url = config_host <> "/config/v1/vespa.config.search.dispatch/episode/search"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
-  end
-
   def fetch_content_distribution_data(config_host, content_cluster) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/#{content_cluster}"
     case HTTPoison.get(url) do
@@ -181,4 +185,29 @@ defmodule Vispana.Cluster do
     end
   end
 
+  def fetch_schemas(config_host, content_cluster) do
+    url = config_host <> "/config/v1/search.config.index-info/#{content_cluster}/?recursive=true"
+    case HTTPoison.get(url) do
+      {:ok, %{status_code: 200, body: body}} ->
+        schemas = Poison.decode!(body)["configs"]
+        |> tl()
+        |> Enum.map(fn(schema_url) -> String.trim(schema_url, "/") end)
+        |> Enum.map(fn(schema_url) -> List.last(String.split(schema_url, "/")) end)
+        {:ok, schemas}
+      {:ok, %{status_code: 404}} -> {:error, :not_found}
+      {:error, _err} -> {:error, :internal_server_error}
+    end
+  end
+
+  def fetch_metrics(config_host) do
+    url = config_host <> "/metrics/v2/values"
+    case HTTPoison.get(url) do
+      {:ok, %{status_code: 200, body: body}} ->
+        schemas = Poison.decode!(body)["nodes"]
+        |> Enum.group_by(fn (node) -> node["hostname"] end)
+        {:ok, schemas}
+      {:ok, %{status_code: 404}} -> {:error, :not_found}
+      {:error, _err} -> {:error, :internal_server_error}
+    end
+  end
 end
