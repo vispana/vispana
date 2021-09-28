@@ -73,8 +73,8 @@ defmodule Vispana.Cluster do
 
     schemas = content_cluster_data[:schemas]
     |> Enum.map(fn (schema) ->
-      # naive way to calculate docs for a given schema by using picking the first group and sum up from every node
-      # note: this is very inefficient, but it's 1AM and I would like to finish it, if important I'll comeback to this! #promise
+      # naive way to calculate docs for a given schema by picking the first group and summing up docs from every node in it.
+      # note: this is very inefficient, but it's 1AM and I would like to finish it, if important I'll comeback to this!
       doc_count = List.first(content_groups).contentNodes
       |> Enum.flat_map(fn content_node ->
         IO.inspect(content_node.metrics)
@@ -96,12 +96,16 @@ defmodule Vispana.Cluster do
     end)
 
     partitions = if distributor_data["active_per_leaf_group"] do
-      List.first(distributor_data["group"])["partitions"]
+      partitions_notation = List.first(distributor_data["group"])["partitions"]
+      # take the length of a partition notation such as *|*|*|*
+      length(String.split(partitions_notation, "|"))
     else
       "0"
     end
+    searchable_copies =  distributor_data["ready_copies"]
+    redundancy = distributor_data["redundancy"]
 
-    %ContentCluster{clusterId: cluster_id, contentGroups: content_groups, partitions: partitions, schemas: schemas}
+    %ContentCluster{clusterId: cluster_id, contentGroups: content_groups, partitions: partitions, searchableCopies: searchable_copies, redundancy: redundancy, schemas: schemas}
   end
 
   def build_content_nodes(contents_data, metrics) do

@@ -23,22 +23,29 @@
                 </th>
                 <%= for contentClusters <- @nodes.contentClusters do %>
                   <%= for schema <- contentClusters.schemas do %>
-                    <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-yellow-400 tracking-wider min-w-300">
-                      <%= schema.schemaName %>
+                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-400 tracking-wider min-w-300">
+                      <span class="text-yellow-400 text-sm"><%= schema.schemaName %></span>
                       <br>
                       <!-- <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> -->
                       <span class="text-gray-400 text-xs">
-                        cluster:<span class="font-black"><%= contentClusters.clusterId %></span> | docs: <%= schema.docCount %> | <%= contentClusters.partitions %>
+                        <span class="text-blue-100">cluster: </span><%= contentClusters.clusterId %> | <span class="text-blue-100">docs:</span> <%= schema.docCount %>
                       </span>
+                      <br />
+                      <span class="text-gray-400 text-xs">
+                        partitions: <%= contentClusters.partitions %> | searchable-copies: <%= contentClusters.searchableCopies %> | redundancy: <%= contentClusters.redundancy %>
+                      </span>
+                      <br />
+                      |<%= for contentGroup <- contentClusters.contentGroups do %>
+                        <span class="text-gray-400 text-xs">
+                          <span>group#<%= contentGroup.key%> </span>: <%= length(contentGroup.contentNodes) %> nodes |
+                        </span>
+                      <% end %>
                     </th>
                   <% end %>
                 <% end %>
-
               </tr>
             </thead>
             <tbody class="bg-standout-blue divide-y divide-darkest-blue">
-
-
               <%= for contentClusters <- @nodes.contentClusters do %>
                 <%= for contentGroup <- contentClusters.contentGroups do %>
                   <%= for contentNode <- contentGroup.contentNodes do %>
@@ -51,19 +58,18 @@
                         role:content
                         </span>
                       </td>
-
                       <!-- schema columns -->
                       <%= for _ <- contentClusters.schemas do %>
-                      <td class="px-6 py-4">
-                        <div class="flex justify-start -m-2">
-                          <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
-                            group: <%= contentGroup.key %>
+                        <td class="px-6 py-4">
+                          <div class="flex justify-start -m-2">
+                            <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
+                              group: <%= contentGroup.key %>
+                            </div>
+                            <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
+                              distribution key: <%= contentNode.distributionKey %>
+                            </div>
                           </div>
-                          <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                            distribution key: <%= contentNode.distributionKey %>
-                          </div>
-                        </div>
-                      </td>
+                        </td>
                       <% end %>
                     </tr>
                   <% end %>
