@@ -34,6 +34,7 @@ defmodule Vispana.Cluster do
   end
 
   def list_nodes(config_host) do
+    log(:info, "Fetching cluster data")
     vespa_cluster_loader(config_host)
   end
 
@@ -77,7 +78,7 @@ defmodule Vispana.Cluster do
       # note: this is very inefficient, but it's 1AM and I would like to finish it, if important I'll comeback to this!
       doc_count = List.first(content_groups).contentNodes
       |> Enum.flat_map(fn content_node ->
-        IO.inspect(content_node.metrics)
+        #IO.inspect(content_node.metrics)
         content_node.metrics
         |> Enum.filter(fn (metrics) -> metrics["dimensions"]["documenttype"] == schema end)
         |> Enum.map(fn (metrics) ->
