@@ -24,19 +24,17 @@
                 <%= for contentClusters <- @nodes.contentClusters do %>
                   <%= for schema <- contentClusters.schemas do %>
                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-400 tracking-wider min-w-300">
-                      <span class="text-yellow-400 text-sm"><%= schema.schemaName %></span>
-                      <br>
-                      <!-- <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> -->
-                      <span class="text-gray-400 text-xs">
+                      <div class="text-yellow-400 text-sm pb-1">
+                        <%= schema.schemaName %>
+                      </div>
+                      <div>
                         <span class="text-blue-100">cluster: </span><%= contentClusters.clusterId %> | <span class="text-blue-100">docs:</span> <%= schema.docCount %>
-                      </span>
-                      <br />
-                      <span class="text-gray-400 text-xs">
+                      </div>
+                      <div>
                         partitions: <%= contentClusters.partitions %> | searchable-copies: <%= contentClusters.searchableCopies %> | redundancy: <%= contentClusters.redundancy %>
-                      </span>
-                      <br />
-                      |<%= for contentGroup <- contentClusters.contentGroups do %>
-                        <span class="text-gray-400 text-xs">
+                      </div>
+                      <%= for contentGroup <- contentClusters.contentGroups do %>
+                        <span>
                           <span>group#<%= contentGroup.key%> </span>: <%= length(contentGroup.contentNodes) %> nodes |
                         </span>
                       <% end %>
