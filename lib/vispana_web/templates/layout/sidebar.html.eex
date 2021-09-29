@@ -10,26 +10,25 @@
         </div>
       </div>
 
-
       <p class="uppercase text-xs text-gray-100 mb-4 tracking-wider">Cluster</p>
 
       <!-- link -->
-      <a href="./index.html" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+      <a href="/nodes?config_host=<%= @conn.params["config_host"]%>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
         <i class="fas fa-server text-xs mr-2"></i>
         Nodes
       </a>
 
-      <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+      <a href="#config_host=<%= @conn.params["config_host"]%>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
         <i class="fas fa-archive text-xs mr-2"></i>
         Application packages
       </a>
 
-      <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+      <a href="#config_host=<%= @conn.params["config_host"]%>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
         <i class="fab fa-searchengin text-xs mr-2"></i>
         Query
       </a>
 
-      <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+      <a href="#config_host=<%= @conn.params["config_host"]%>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
         <i class="fas fa-database text-xs mr-2"></i>
         Sample data
       </a>
