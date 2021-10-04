@@ -46,6 +46,7 @@ module.exports = {
   purge: [
     "../lib/**/*.eex",
     "../lib/**/*.leex",
+    "../lib/**/*.ex",
     "../lib/**/*_view.ex",
     "../lib/**/views/*.ex"
   ]
