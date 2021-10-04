@@ -34,8 +34,10 @@ defmodule Vispana.Cluster do
   end
 
   def list_nodes(config_host) do
-    log(:info, "Fetching cluster data")
-    vespa_cluster_loader(config_host)
+    log(:info, "Fetching cluster data for config host: " <> config_host)
+    cluter_data = vespa_cluster_loader(config_host)
+    log(:info, "Finished fetching data for config host: " <> config_host)
+    cluter_data
   end
 
   def vespa_cluster_loader(config_host) do

@@ -13,20 +13,7 @@
   </head>
   <body class="bg-darkest-blue">
     <!-- strat wrapper -->
-    <div class="h-screen flex flex-row flex-wrap">
-
-      <%= render("sidebar.html", assigns) %>
-
-      <!-- strat content -->
-      <div class="flex-1 p-6 md:mt-16 overflow-x-auto bg-darkest-blue">
-
-        <%= @inner_content %>
-
-      </div>
-      <!-- end content -->
-
-    </div>
+    <%= @inner_content %>
     <!-- end wrapper -->
-
   </body>
 </html>

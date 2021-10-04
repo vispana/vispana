@@ -7,22 +7,49 @@ defmodule VispanaWeb.NodeLive.Index do
   @impl true
   def mount(params, _session, socket) do
     config_host = params["config_host"]
-    refresh_interval = if params["refresh_interval"] do params["refresh_interval"] else 30000 end
     cluster = list_nodes(config_host)
-    if connected?(socket) do
-      Process.send_after(self(), :refresh, refresh_interval)
-    end
+
     socket =
       socket
       |> assign(:nodes, cluster)
       |> assign(:config_host, config_host)
-      |> assign(:refresh_interval, refresh_interval)
+      |> assign(:enable_auto_refresh, false)
+      |> assign(:refresh_interval, -1)
     {:ok, socket}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  @impl true
+  def handle_event("refresh", _value, socket) do
+    log(:info, 'Refresh request')
+    config_host = socket.assigns()[:config_host]
+    cluster_data = list_nodes(config_host)
+    socket =
+      socket
+      |> assign(:nodes, cluster_data)
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("auto_refresh", value, socket) do
+    IO.inspect(value)
+    refresh_interval=String.to_integer(value["interval"])
+    log(:info, "Auto refresh request: " <> value["interval"])
+
+    socket =
+      socket
+      |> assign(:refresh_interval, refresh_interval)
+
+    if connected?(socket) do
+      Process.send_after(self(), :refresh, refresh_interval)
+    end
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -42,8 +69,7 @@ defmodule VispanaWeb.NodeLive.Index do
 
     if connected?(socket) do
       # very unlikely that this will be needed one day, but throttling
-      # base on last time fetched might help in case multiple users are
-      # using vispana
+      # based on last time fetched might help with back pressure
       Process.send_after(self(), :refresh, refresh_interval)
     end
 

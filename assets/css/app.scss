@@ -17,15 +17,6 @@
   @apply w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out;
 }
 
-/* BUTTONS */
-.btn {
-  @apply rounded border border-transparent focus:outline-none;
-
-  &.btn-primary {
-    @apply text-white bg-blue-500 py-2 px-6  hover:bg-blue-600 text-lg;
-  }
-}
-
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {

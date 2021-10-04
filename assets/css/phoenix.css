@@ -17,16 +17,6 @@ h5{font-size: 1.6rem; letter-spacing: 0; line-height: 1.4}
 h6{font-size: 1.4rem; letter-spacing: 0; line-height: 1.2}
 pre{padding: 1em;}
 
-.container{
-  margin: 0 auto;
-  max-width: 80.0rem;
-  padding: 0 2.0rem;
-  position: relative;
-  width: 100%
-}
-select {
-  width: auto;
-}
 
 /* Phoenix promo and logo */
 .phx-hero {

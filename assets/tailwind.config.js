@@ -30,6 +30,7 @@ module.exports = {
   },
   variants: {},
   plugins: [
+    require('daisyui'),
     require('tailwindcss-animatecss')({
       settings: {
         animatedSpeed: 1000,
