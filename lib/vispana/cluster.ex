@@ -35,9 +35,9 @@ defmodule Vispana.Cluster do
 
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
-    cluter_data = vespa_cluster_loader(config_host)
+    cluster_data = vespa_cluster_loader(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
-    cluter_data
+    cluster_data
   end
 
   def vespa_cluster_loader(config_host) do
@@ -140,81 +140,80 @@ defmodule Vispana.Cluster do
 
   def fetch_config_data(config_host) do
     url = config_host <> "/config/v1/cloud.config.cluster-info/admin/cluster-controllers"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn (decoded_body) -> decoded_body end)
+
   end
 
   def fetch_container_data(config_host) do
     url = config_host <> "/config/v1/cloud.config.cluster-info/container"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn (decoded_body) -> decoded_body end)
   end
 
   # Fetches content clusters deployed into the vespa custer
   def fetch_content_cluster_names(config_host) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} ->
-        cluster_names = Poison.decode!(body)["configs"]
-        # ensure we trim '/' from the URI
-        |> Enum.map(fn(content_cluster_url) -> String.trim(content_cluster_url, "/") end)
-        |> Enum.map(fn(content_cluster_url) -> List.last(String.split(content_cluster_url, "/")) end)
-        {:ok, cluster_names}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn(decoded_body) ->
+          cluster_names = decoded_body["configs"]
+          # ensure we trim '/' from the URI
+          |> Enum.map(fn(content_cluster_url) -> String.trim(content_cluster_url, "/") end)
+          |> Enum.map(fn(content_cluster_url) -> List.last(String.split(content_cluster_url, "/")) end)
+          cluster_names
+        end)
+
   end
 
   # Fetches distribution keys and associated hosts
   def fetch_dispatcher_data(config_host, cluster_name) do
     url = config_host <> "/config/v1/vespa.config.search.dispatch/#{cluster_name}/search"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} -> {:ok, Poison.decode!(body)}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn (decoded_body) -> decoded_body end)
   end
 
   def fetch_content_distribution_data(config_host, content_cluster) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/#{content_cluster}"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} ->
-        content_distribution_data = Poison.decode!(body)["cluster"][content_cluster]
-        {:ok, content_distribution_data}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn(decoded_body) -> decoded_body["cluster"][content_cluster] end)
   end
 
   def fetch_schemas(config_host, content_cluster) do
     url = config_host <> "/config/v1/search.config.index-info/#{content_cluster}/?recursive=true"
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} ->
-        schemas = Poison.decode!(body)["configs"]
-        |> tl()
-        |> Enum.map(fn(schema_url) -> String.trim(schema_url, "/") end)
-        |> Enum.map(fn(schema_url) -> List.last(String.split(schema_url, "/")) end)
-        {:ok, schemas}
-      {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
-    end
+    http_get(url)
+    |> http_map(fn(decoded_body) ->
+          schemas = decoded_body["configs"]
+                    |> tl()
+                    |> Enum.map(fn(schema_url) -> String.trim(schema_url, "/") end)
+                    |> Enum.map(fn(schema_url) -> List.last(String.split(schema_url, "/")) end)
+          schemas
+        end)
   end
 
   def fetch_metrics(config_host) do
     url = config_host <> "/metrics/v2/values"
-    case HTTPoison.get(url) do
+    http_get(url)
+    |> http_map(fn(decoded_body) ->
+          schemas = decoded_body["nodes"]
+                    |> Enum.group_by(fn (node) -> node["hostname"] end)
+          schemas
+        end)
+  end
+
+  def http_get(url) do
+    timeout_ms = 30000
+    headers = []
+    options = [recv_timeout: timeout_ms]
+    HTTPoison.get(url, headers, options)
+  end
+
+  def http_map(http_response, mapper_fn) do
+    case http_response do
       {:ok, %{status_code: 200, body: body}} ->
-        schemas = Poison.decode!(body)["nodes"]
-        |> Enum.group_by(fn (node) -> node["hostname"] end)
-        {:ok, schemas}
+        {:ok, mapper_fn.(Poison.decode!(body)) }
       {:ok, %{status_code: 404}} -> {:error, :not_found}
-      {:error, _err} -> {:error, :internal_server_error}
+      {:error, err} -> {:error, {:internal_server_error, err}}
     end
   end
+
 end
