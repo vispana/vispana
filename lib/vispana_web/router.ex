@@ -17,9 +17,8 @@ defmodule VispanaWeb.Router do
   scope "/", VispanaWeb do
     pipe_through :browser
 
-    live "/admin", PageLive, :index
-    live "/nodes", NodeLive.Index, :index
     live "/", ConfigHostLive.Index, :index
+    live "/nodes", NodeLive.Index, :content
 
   end
 

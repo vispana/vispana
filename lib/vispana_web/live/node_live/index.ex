@@ -6,6 +6,7 @@ defmodule VispanaWeb.NodeLive.Index do
 
   @impl true
   def mount(params, _session, socket) do
+    IO.inspect(socket)
     config_host = params["config_host"]
     cluster = list_nodes(config_host)
 
@@ -76,7 +77,7 @@ defmodule VispanaWeb.NodeLive.Index do
     result
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :content, _params) do
     socket
     |> assign(:page_title, "Vispana - Nodes")
     |> assign(:node, nil)

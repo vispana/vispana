@@ -95,7 +95,9 @@
   display: none;
 }
 .invalid-feedback {
+  @extend .text-xs;
+  @extend .text-center;
   color: #a94442;
   display: block;
-  margin: -1rem 0 2rem;
+  margin: 4px 0 0;
 }

@@ -103,7 +103,7 @@ defmodule Vispana.Cluster do
       # take the length of a partition notation such as *|*|*|*
       length(String.split(partitions_notation, "|"))
     else
-      "0"
+      0
     end
     searchable_copies =  distributor_data["ready_copies"]
     redundancy = distributor_data["redundancy"]
