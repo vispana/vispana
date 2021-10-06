@@ -2,7 +2,6 @@ defmodule VispanaWeb.ConfigHostLive.Index do
   import Logger, warn: false
   use VispanaWeb, :live_view
 
-  alias Vispana.Cluster.Backend
   alias Vispana.Cluster.Backend.ConfigHost
 
   @impl true
@@ -19,13 +18,13 @@ defmodule VispanaWeb.ConfigHostLive.Index do
           </div>
           <div class="flex mt-10 card-body w-800 ">
             <%= f = form_for @changeset, "#",
-                id: "invite-form",
+                id: "form",
                 phx_change: "validate",
                 phx_submit: "connect" %>
               <div class="form-control">
-              <label class="label">
-                <span class="label-text">Vespa Configuration URL</span>
-              </label>
+                <label class="label">
+                  <span class="label-text">Vespa Configuration URL</span>
+                </label>
                 <%= text_input f, :url, phx_debounce: "blur", class: "input text-center input-bordered", placeholder: "e.g.: http://localhost:19071" %>
               </div>
               <div class="form-control">
@@ -58,7 +57,7 @@ defmodule VispanaWeb.ConfigHostLive.Index do
       ) do
     changeset =
       config_host
-      |> Backend.change_backend(config_host_params)
+      |> ConfigHost.change_backend(config_host_params)
       |> Map.put(:action, :validate)
 
     {:noreply,
@@ -94,6 +93,6 @@ defmodule VispanaWeb.ConfigHostLive.Index do
 
   defp assign_changeset(%{assigns: %{config_host: config_host}} = socket) do
     socket
-    |> assign(:changeset, Backend.change_backend(config_host))
+    |> assign(:changeset, ConfigHost.change_backend(config_host))
   end
 end

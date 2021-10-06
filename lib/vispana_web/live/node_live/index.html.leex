@@ -16,19 +16,14 @@
   <div>
     <div class="space-x-1 w-full">
       <div class="text-right font-flow" style="text-align: right">
-        <button class="btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0" phx-click="refresh">
-          <i class="fas fa-sync-alt"></i>
-        </button>
-        <select class="select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0">
-          <option value="0" selected="selected">Off</option>
-          <option value="15000">15s</option>
-          <option value="30000">30s</option>
-          <option value="60000">1m</option>
-          <option value="500000">5m</option>
-          <option value="6000000">10m</option>
-          <option value="18000000">30m</option>
-          <option value="36000000">1h</option>
-        </select>
+
+          <%= f = form_for @changeset, "#", id: "form", phx_change: "refresh_interval", class: "block-inline"%>
+            <a class="btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0" phx-click="refresh">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+            <%= select f, :interval, ["Off": -1, "15s": 15000, "30s": 30000, "1m": 60000, "5m": 300000, "10m": 600000, "30m": 1800000, "1h": 3600000],
+            class: "select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0" %>
+        </form>
       </div>
     </div>
   </div>
