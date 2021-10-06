@@ -19,7 +19,6 @@ defmodule VispanaWeb.Router do
 
     live "/", ConfigHostLive.Index, :index
     live "/nodes", NodeLive.Index, :content
-
   end
 
   # Other scopes may use custom stacks.

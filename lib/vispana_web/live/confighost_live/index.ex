@@ -45,28 +45,36 @@ defmodule VispanaWeb.ConfigHostLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
-    socket
-    |> assign_config_host()
-    |> assign_changeset()}
+     socket
+     |> assign_config_host()
+     |> assign_changeset()}
   end
 
   @impl true
-  def handle_event("validate", %{"config_host" => config_host_params}, %{assigns: %{config_host: config_host}} = socket) do
+  def handle_event(
+        "validate",
+        %{"config_host" => config_host_params},
+        %{assigns: %{config_host: config_host}} = socket
+      ) do
     changeset =
       config_host
       |> Backend.change_backend(config_host_params)
       |> Map.put(:action, :validate)
 
     {:noreply,
-      socket
-      |> assign(:changeset, changeset)}
+     socket
+     |> assign(:changeset, changeset)}
   end
 
   @impl true
-  def handle_event("connect", %{"config_host" => config_host_params}, %{assigns: %{config_host: _}} = socket) do
+  def handle_event(
+        "connect",
+        %{"config_host" => config_host_params},
+        %{assigns: %{config_host: _}} = socket
+      ) do
     {:noreply,
-      socket
-      |> redirect(to: "/nodes?config_host="<>config_host_params["url"])}
+     socket
+     |> redirect(to: "/nodes?config_host=" <> config_host_params["url"])}
   end
 
   @impl true
@@ -88,5 +96,4 @@ defmodule VispanaWeb.ConfigHostLive.Index do
     socket
     |> assign(:changeset, Backend.change_backend(config_host))
   end
-
 end

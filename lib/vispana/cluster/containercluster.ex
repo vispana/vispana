@@ -1,3 +1,3 @@
 defmodule Vispana.Cluster.ContainerCluster do
-  defstruct [containerNodes: []]
+  defstruct containerNodes: []
 end

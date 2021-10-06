@@ -6,6 +6,10 @@ defmodule Vispana.Cluster.VespaCluster do
   alias Vispana.Cluster.ContainerCluster
 
   def empty_cluster do
-    %VespaCluster{configCluster: %ConfigCluster{}, containerCluster: %ContainerCluster{}, contentClusters: []}
+    %VespaCluster{
+      configCluster: %ConfigCluster{},
+      containerCluster: %ContainerCluster{},
+      contentClusters: []
+    }
   end
 end
