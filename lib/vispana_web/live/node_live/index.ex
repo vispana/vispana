@@ -6,16 +6,23 @@ defmodule VispanaWeb.NodeLive.Index do
 
   @impl true
   def mount(params, _session, socket) do
-    IO.inspect(socket)
     config_host = params["config_host"]
-    cluster = list_nodes(config_host)
 
     socket =
       socket
-      |> assign(:nodes, cluster)
       |> assign(:config_host, config_host)
       |> assign(:enable_auto_refresh, false)
       |> assign(:refresh_interval, -1)
+
+    socket = if connected?(socket) do
+      cluster = list_nodes(config_host)
+      socket
+      |> assign(:is_loading, false)
+      |> assign(:nodes, cluster)
+    else
+      socket
+      |> assign(:is_loading, true)
+    end
 
     {:ok, socket}
   end
