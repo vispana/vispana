@@ -16,6 +16,7 @@ defmodule VispanaWeb.NodeLive.Index do
       |> assign(:config_host, config_host)
       |> assign(:enable_auto_refresh, false)
       |> assign(:refresh_interval, -1)
+
     {:ok, socket}
   end
 
@@ -29,6 +30,7 @@ defmodule VispanaWeb.NodeLive.Index do
     log(:info, 'Refresh request')
     config_host = socket.assigns()[:config_host]
     cluster_data = list_nodes(config_host)
+
     socket =
       socket
       |> assign(:nodes, cluster_data)
@@ -39,7 +41,7 @@ defmodule VispanaWeb.NodeLive.Index do
   @impl true
   def handle_event("auto_refresh", value, socket) do
     IO.inspect(value)
-    refresh_interval=String.to_integer(value["interval"])
+    refresh_interval = String.to_integer(value["interval"])
     log(:info, "Auto refresh request: " <> value["interval"])
 
     socket =
@@ -58,15 +60,16 @@ defmodule VispanaWeb.NodeLive.Index do
     config_host = socket.assigns()[:config_host]
     refresh_interval = socket.assigns()[:refresh_interval]
 
-    result = try do
-      nodes = list_nodes(config_host)
-      {:noreply, assign(socket, :nodes, nodes)}
-    rescue
-      e in RuntimeError ->
-        error_string = Kernel.inspect(e)
-        log(:info, "Error to refresh page: #{error_string}")
-        {:noreply, assign(socket, :error, error_string)}
-    end
+    result =
+      try do
+        nodes = list_nodes(config_host)
+        {:noreply, assign(socket, :nodes, nodes)}
+      rescue
+        e in RuntimeError ->
+          error_string = Kernel.inspect(e)
+          log(:info, "Error to refresh page: #{error_string}")
+          {:noreply, assign(socket, :error, error_string)}
+      end
 
     if connected?(socket) do
       # very unlikely that this will be needed one day, but throttling
@@ -86,5 +89,4 @@ defmodule VispanaWeb.NodeLive.Index do
   defp list_nodes(config_host) do
     Cluster.list_nodes(config_host)
   end
-
 end
