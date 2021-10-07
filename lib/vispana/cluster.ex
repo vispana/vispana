@@ -29,10 +29,29 @@ defmodule Vispana.Cluster do
   end
 
   def vespa_cluster_loader(config_host) do
-    {:ok, config_data} = fetch_config_data(config_host)
-    {:ok, container_data} = fetch_container_data(config_host)
-    {:ok, content_clusters_data} = fetch_and_aggregate_content_data(config_host)
-    {:ok, metrics} = fetch_metrics(config_host)
+    [config_data, container_data, content_clusters_data, metrics] =
+      [
+        Task.async(fn -> {:ok, config_data} = fetch_config_data(config_host)
+                           config_data
+        end),
+        Task.async(fn -> {:ok, container_data} = fetch_container_data(config_host)
+                           container_data
+        end),
+        Task.async(fn -> {:ok, content_clusters_data} = fetch_and_aggregate_content_data(config_host)
+                           content_clusters_data
+        end),
+        Task.async(fn -> {:ok, metrics} = fetch_metrics(config_host)
+                           metrics
+        end),
+      ]
+      |> Enum.map(&Task.await/1)
+
+
+
+
+
+
+
 
     # config cluster data
     config_nodes =
@@ -276,7 +295,7 @@ defmodule Vispana.Cluster do
     end
   end
 
-  def _list_nodes_mock(config_host) do
+  def _list_nodes_mock(_config_host) do
     %VespaCluster{
       configCluster: %ConfigCluster{
         configNodes: [
