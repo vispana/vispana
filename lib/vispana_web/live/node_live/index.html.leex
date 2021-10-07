@@ -58,7 +58,7 @@
                     <% end %>
                   </tr>
                   <tr>
-                    <th scope="col" class="px-6 text-center text-sm font-medium text-blue-100 tracking-wider min-w-100" style="padding-bottom: 0.75rem;">
+                    <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300">
                       <span>
                         Hosts
                       </span>
@@ -94,7 +94,7 @@
                           <!-- schema columns -->
                           <%= for _ <- contentClusters.schemas do %>
                             <td class="px-6 py-4">
-                              <div class="flex justify-start -m-2">
+                              <div class="flex justify-center -m-2">
                                 <div class="px-2 h-6 text-blue-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-blue-400 m-2">
                                   group: <%= contentGroup.key %>
                                 </div>
