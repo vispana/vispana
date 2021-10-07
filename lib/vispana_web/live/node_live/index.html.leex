@@ -38,6 +38,21 @@
               <table class="min-w-full min-h-full divide-y divide-darkest-blue">
                 <thead class="bg-standout-blue">
                   <tr>
+                    <th style="color: white" >Replica and stuff</th>
+                    <%= for contentClusters <- @nodes.contentClusters do %>
+                      <td style="color: white" colspan="<%= length(contentClusters.schemas) %>">
+                        <div>
+                          partitions: <%= contentClusters.partitions %> | searchable-copies: <%= contentClusters.searchableCopies %> | redundancy: <%= contentClusters.redundancy %>
+                        </div>
+                        <%= for contentGroup <- contentClusters.contentGroups do %>
+                          <span>
+                            <span>group#<%= contentGroup.key%> </span>: <%= length(contentGroup.contentNodes) %> nodes |
+                          </span>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr>
+                  <tr>
                     <th scope="col" class="px-6 py-3 text-center text-sm font-medium text-blue-100 tracking-wider min-w-300">
                       <span>
                         Hosts
@@ -53,14 +68,6 @@
                           <div>
                             <span class="text-blue-100">cluster: </span><%= contentClusters.clusterId %> | <span class="text-blue-100">docs:</span> <%= schema.docCount %>
                           </div>
-                          <div>
-                            partitions: <%= contentClusters.partitions %> | searchable-copies: <%= contentClusters.searchableCopies %> | redundancy: <%= contentClusters.redundancy %>
-                          </div>
-                          <%= for contentGroup <- contentClusters.contentGroups do %>
-                            <span>
-                              <span>group#<%= contentGroup.key%> </span>: <%= length(contentGroup.contentNodes) %> nodes |
-                            </span>
-                          <% end %>
                         </th>
                       <% end %>
                     <% end %>
