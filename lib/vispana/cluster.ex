@@ -23,7 +23,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
-#    cluster_data = _list_nodes_mock(config_host)
+    #    cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -31,27 +31,12 @@ defmodule Vispana.Cluster do
   def vespa_cluster_loader(config_host) do
     [config_data, container_data, content_clusters_data, metrics] =
       [
-        Task.async(fn -> {:ok, config_data} = fetch_config_data(config_host)
-                           config_data
-        end),
-        Task.async(fn -> {:ok, container_data} = fetch_container_data(config_host)
-                           container_data
-        end),
-        Task.async(fn -> {:ok, content_clusters_data} = fetch_and_aggregate_content_data(config_host)
-                           content_clusters_data
-        end),
-        Task.async(fn -> {:ok, metrics} = fetch_metrics(config_host)
-                           metrics
-        end),
+        async_fetch(fn -> fetch_config_data(config_host) end),
+        async_fetch(fn -> fetch_container_data(config_host) end),
+        async_fetch(fn -> fetch_and_aggregate_content_data(config_host) end),
+        async_fetch(fn -> fetch_metrics(config_host) end)
       ]
       |> Enum.map(&Task.await/1)
-
-
-
-
-
-
-
 
     # config cluster data
     config_nodes =
@@ -140,8 +125,8 @@ defmodule Vispana.Cluster do
 
     node_count =
       content_groups
-      |> Enum.map(fn(content_group) -> length(content_group.contentNodes) end)
-      |> Enum.sum
+      |> Enum.map(fn content_group -> length(content_group.contentNodes) end)
+      |> Enum.sum()
 
     %ContentCluster{
       clusterId: cluster_id,
@@ -295,6 +280,13 @@ defmodule Vispana.Cluster do
     end
   end
 
+  def async_fetch(fetch_call) do
+    Task.async(fn ->
+      {:ok, result} = fetch_call.()
+      result
+    end)
+  end
+
   def _list_nodes_mock(_config_host) do
     %VespaCluster{
       configCluster: %ConfigCluster{
@@ -330,7 +322,6 @@ defmodule Vispana.Cluster do
         ]
       },
       contentClusters: [
-
         %ContentCluster{
           clusterId: "content-cluster-1",
           partitions: 2,
@@ -353,7 +344,7 @@ defmodule Vispana.Cluster do
             %Schema{
               schemaName: "schema-4",
               docCount: 400
-            },
+            }
           ],
           contentGroups: [
             %ContentGroup{
@@ -397,7 +388,7 @@ defmodule Vispana.Cluster do
             %Schema{
               schemaName: "schema-7",
               docCount: 300
-            },
+            }
           ],
           contentGroups: [
             %ContentGroup{
@@ -447,13 +438,11 @@ defmodule Vispana.Cluster do
                     hostname: "europe-content-06.vispana.com"
                   },
                   metrics: []
-                },
+                }
               ]
             }
-
           ]
         }
-
       ]
     }
   end
