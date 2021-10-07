@@ -18,23 +18,11 @@ defmodule Vispana.DataCase do
 
   using do
     quote do
-      alias Vispana.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import Vispana.DataCase
     end
-  end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Vispana.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Vispana.Repo, {:shared, self()})
-    end
-
-    :ok
   end
 
   @doc """

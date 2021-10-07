@@ -27,14 +27,4 @@ defmodule VispanaWeb.ChannelCase do
       @endpoint VispanaWeb.Endpoint
     end
   end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Vispana.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Vispana.Repo, {:shared, self()})
-    end
-
-    :ok
-  end
 end

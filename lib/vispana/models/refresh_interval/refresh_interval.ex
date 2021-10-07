@@ -14,5 +14,4 @@ defmodule Vispana.Cluster.Refresher.RefreshInterval do
     |> cast(attrs, Map.keys(@types))
     |> validate_required([:interval], message: "Interval must be set")
   end
-
 end

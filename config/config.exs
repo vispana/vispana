@@ -7,9 +7,6 @@
 # General application configuration
 use Mix.Config
 
-config :vispana,
-  ecto_repos: [Vispana.Repo]
-
 # Configures the endpoint
 config :vispana, VispanaWeb.Endpoint,
   url: [host: "localhost"],
