@@ -20,21 +20,6 @@ defmodule Vispana.Cluster do
   alias Vispana.Cluster.Host
   alias Vispana.Cluster.Schema
 
-  def fetch(config_host) do
-    url = config_host <> "/serviceview/v1"
-
-    case HTTPoison.get(url) do
-      {:ok, %{status_code: 200, body: body}} ->
-        {:ok, Poison.decode!(body)}
-
-      {:ok, %{status_code: 404}} ->
-        {:error, :not_found}
-
-      {:error, _err} ->
-        {:error, :internal_server_error}
-    end
-  end
-
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
@@ -133,13 +118,19 @@ defmodule Vispana.Cluster do
     searchable_copies = distributor_data["ready_copies"]
     redundancy = distributor_data["redundancy"]
 
+    node_count =
+      content_groups
+      |> Enum.map(fn(content_group) -> length(content_group.contentNodes) end)
+      |> Enum.sum
+
     %ContentCluster{
       clusterId: cluster_id,
       contentGroups: content_groups,
       partitions: partitions,
       searchableCopies: searchable_copies,
       redundancy: redundancy,
-      schemas: schemas
+      schemas: schemas,
+      node_count: node_count
     }
   end
 
@@ -282,5 +273,154 @@ defmodule Vispana.Cluster do
       {:error, err} ->
         {:error, {:internal_server_error, err}}
     end
+  end
+
+  def _list_nodes_mock(config_host) do
+    %VespaCluster{
+      configCluster: %ConfigCluster{
+        configNodes: [
+          %ConfigNode{
+            host: %Host{
+              hostname: "europe-config-01.vispana.com"
+            },
+            vespaId: 0
+          },
+          %ConfigNode{
+            host: %Host{
+              hostname: "europe-config-02.vispana.com"
+            },
+            vespaId: 1
+          }
+        ]
+      },
+      containerCluster: %ContainerCluster{
+        containerNodes: [
+          %ContainerNode{
+            host: %Host{
+              hostname: "europe-container-01.vispana.com"
+            },
+            vespaId: 0
+          },
+          %ContainerNode{
+            host: %Host{
+              hostname: "europe-container-02.vispana.com"
+            },
+            vespaId: 2
+          }
+        ]
+      },
+      contentClusters: [
+
+        %ContentCluster{
+          clusterId: "content-cluster-1",
+          partitions: 2,
+          redundancy: 3,
+          searchableCopies: 4,
+          node_count: 0,
+          schemas: [
+            %Schema{
+              schemaName: "schema-1",
+              docCount: 100
+            },
+            %Schema{
+              schemaName: "schema-2",
+              docCount: 200
+            },
+            %Schema{
+              schemaName: "schema-3",
+              docCount: 300
+            },
+            %Schema{
+              schemaName: "schema-4",
+              docCount: 400
+            },
+          ],
+          contentGroups: [
+            %ContentGroup{
+              key: "content-group-0",
+              contentNodes: [
+                %ContentNode{
+                  vespaId: 1,
+                  distributionKey: 1,
+                  host: %Host{
+                    hostname: "europe-content-01.vispana.com"
+                  },
+                  metrics: []
+                },
+                %ContentNode{
+                  vespaId: 2,
+                  distributionKey: 2,
+                  host: %Host{
+                    hostname: "europe-content-02.vispana.com"
+                  },
+                  metrics: []
+                }
+              ]
+            }
+          ]
+        },
+        %ContentCluster{
+          clusterId: "content-cluster-2",
+          partitions: 4,
+          redundancy: 5,
+          searchableCopies: 6,
+          node_count: 0,
+          schemas: [
+            %Schema{
+              schemaName: "schema-5",
+              docCount: 100
+            },
+            %Schema{
+              schemaName: "schema-6",
+              docCount: 200
+            },
+            %Schema{
+              schemaName: "schema-7",
+              docCount: 300
+            },
+          ],
+          contentGroups: [
+            %ContentGroup{
+              key: "content-group-1",
+              contentNodes: [
+                %ContentNode{
+                  vespaId: 1,
+                  distributionKey: 1,
+                  host: %Host{
+                    hostname: "europe-content-01.vispana.com"
+                  },
+                  metrics: []
+                },
+                %ContentNode{
+                  vespaId: 3,
+                  distributionKey: 3,
+                  host: %Host{
+                    hostname: "europe-content-03.vispana.com"
+                  },
+                  metrics: []
+                },
+                %ContentNode{
+                  vespaId: 4,
+                  distributionKey: 4,
+                  host: %Host{
+                    hostname: "europe-content-04.vispana.com"
+                  },
+                  metrics: []
+                },
+                %ContentNode{
+                  vespaId: 5,
+                  distributionKey: 5,
+                  host: %Host{
+                    hostname: "europe-content-05.vispana.com"
+                  },
+                  metrics: []
+                }
+              ]
+            }
+          ]
+        }
+
+      ]
+    }
   end
 end
