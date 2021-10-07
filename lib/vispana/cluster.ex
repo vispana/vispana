@@ -23,6 +23,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
+#    cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -316,7 +317,7 @@ defmodule Vispana.Cluster do
           partitions: 2,
           redundancy: 3,
           searchableCopies: 4,
-          node_count: 0,
+          node_count: 2,
           schemas: [
             %Schema{
               schemaName: "schema-1",
@@ -364,7 +365,7 @@ defmodule Vispana.Cluster do
           partitions: 4,
           redundancy: 5,
           searchableCopies: 6,
-          node_count: 0,
+          node_count: 5,
           schemas: [
             %Schema{
               schemaName: "schema-5",
@@ -406,7 +407,12 @@ defmodule Vispana.Cluster do
                     hostname: "europe-content-04.vispana.com"
                   },
                   metrics: []
-                },
+                }
+              ]
+            },
+            %ContentGroup{
+              key: "content-group-1",
+              contentNodes: [
                 %ContentNode{
                   vespaId: 5,
                   distributionKey: 5,
@@ -414,9 +420,18 @@ defmodule Vispana.Cluster do
                     hostname: "europe-content-05.vispana.com"
                   },
                   metrics: []
-                }
+                },
+                %ContentNode{
+                  vespaId: 6,
+                  distributionKey: 6,
+                  host: %Host{
+                    hostname: "europe-content-06.vispana.com"
+                  },
+                  metrics: []
+                },
               ]
             }
+
           ]
         }
 
