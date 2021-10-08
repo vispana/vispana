@@ -19,6 +19,7 @@ defmodule Vispana.Cluster do
 
   alias Vispana.Cluster.Host
   alias Vispana.Cluster.Schema
+  alias Vispana.Cluster.Metrics
 
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
@@ -31,14 +32,21 @@ defmodule Vispana.Cluster do
   def vespa_cluster_loader(config_host) do
     [config_data, container_data, content_clusters_data, metrics] =
       [
-        async_fetch(fn -> fetch_config_data(config_host) end),
-        async_fetch(fn -> fetch_container_data(config_host) end),
-        async_fetch(fn -> fetch_and_aggregate_content_data(config_host) end),
-        async_fetch(fn -> fetch_metrics(config_host) end)
+        start_async(fn -> fetch_config_data(config_host) end),
+        start_async(fn -> fetch_container_data(config_host) end),
+        start_async(fn -> fetch_and_aggregate_content_data(config_host) end),
+        start_async(fn -> fetch_metrics(config_host) end)
       ]
       |> Enum.map(&Task.await/1)
 
-    # config cluster data
+    %VespaCluster{
+      configCluster: mount_config_cluster(config_data),
+      containerCluster: mount_container_cluster(container_data),
+      contentClusters: mount_content_clusters(content_clusters_data, metrics)
+    }
+  end
+
+  def mount_config_cluster(config_data) do
     config_nodes =
       config_data["services"]
       |> Enum.map(fn config ->
@@ -46,9 +54,10 @@ defmodule Vispana.Cluster do
       end)
       |> Enum.sort_by(& &1.host.hostname)
 
-    config_cluster = %ConfigCluster{configNodes: config_nodes}
+    %ConfigCluster{configNodes: config_nodes}
+  end
 
-    # container cluster data
+  def mount_container_cluster(container_data) do
     container_nodes =
       container_data["services"]
       |> Enum.map(fn container ->
@@ -56,20 +65,14 @@ defmodule Vispana.Cluster do
       end)
       |> Enum.sort_by(& &1.host.hostname)
 
-    container_cluster = %ContainerCluster{containerNodes: container_nodes}
+    %ContainerCluster{containerNodes: container_nodes}
+  end
 
-    # content clusters data
-    content_clusters =
-      content_clusters_data
-      |> Enum.map(fn content_cluster_data ->
-        build_content_cluster(content_cluster_data, metrics)
-      end)
-
-    %VespaCluster{
-      configCluster: config_cluster,
-      containerCluster: container_cluster,
-      contentClusters: content_clusters
-    }
+  def mount_content_clusters(content_clusters_data, metrics) do
+    content_clusters_data
+    |> Enum.map(fn content_cluster_data ->
+      build_content_cluster(content_cluster_data, metrics)
+    end)
   end
 
   def build_content_cluster(content_cluster_data, metrics) do
@@ -140,24 +143,31 @@ defmodule Vispana.Cluster do
   end
 
   def build_content_nodes(contents_data, metrics) do
+    parsed_metrics = parse_metrics(metrics)
+
     contents_data
     |> Enum.map(fn content ->
+      host = content["host"]
+
       # each host should be unique
-      node_metrics = List.first(metrics[content["host"]])
+      node_metrics = List.first(metrics[host])
+
+      parsed_node_metrics = parsed_metrics[host]
 
       search_node_metrics =
         node_metrics["services"]
         |> Enum.filter(fn root -> root["name"] == "vespa.searchnode" end)
         |> Enum.flat_map(fn root -> root["metrics"] end)
 
-      {content, search_node_metrics}
+      {content, search_node_metrics, parsed_node_metrics}
     end)
-    |> Enum.map(fn {content, search_node_metrics} ->
+    |> Enum.map(fn {content, search_node_metrics, parsed_node_metrics} ->
       %ContentNode{
         vespaId: content["key"],
         host: %Host{hostname: content["host"]},
         distributionKey: content["key"],
-        metrics: search_node_metrics
+        metrics: search_node_metrics,
+        status_services: parsed_node_metrics.status_services
       }
     end)
     |> Enum.sort_by(& &1.host.hostname)
@@ -260,6 +270,24 @@ defmodule Vispana.Cluster do
     end)
   end
 
+  # Returns a map of host => %Metrics
+  def parse_metrics(metrics) do
+    metrics
+    |> Enum.map(fn {host, data} -> {host, parse_metrics_from_host(data)} end)
+    |> Map.new(fn {host, data} -> {host, data} end)
+  end
+
+  def parse_metrics_from_host(host_metrics) do
+    host_metric = List.first(host_metrics)
+
+    status_services =
+      host_metric["services"]
+      |> Enum.map(fn ms -> {ms["name"], ms["status"]["code"]} end)
+      |> Map.new(fn {key, value} -> {key, value} end)
+
+    %Metrics{status_services: status_services}
+  end
+
   def http_get(url) do
     timeout_ms = 30000
     headers = []
@@ -280,7 +308,7 @@ defmodule Vispana.Cluster do
     end
   end
 
-  def async_fetch(fetch_call) do
+  def start_async(fetch_call) do
     Task.async(fn ->
       {:ok, result} = fetch_call.()
       result
