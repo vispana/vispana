@@ -114,6 +114,9 @@
                           <%= for contentGroup <- contentCluster.contentGroups do %>
                             <tbody class="bg-standout-blue divide-y divide-darkest-blue">
                                 <tr>
+                                  <th scope="col" class="px-1 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 20px;  min-width: 20px">
+                                    <span>Status</span>
+                                  </th>
                                   <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300px; min-width: 120px">
                                     <span>Hosts in group <%= contentGroup.key %> (<%= length(contentGroup.contentNodes) %>)</span>
                                   </th>
@@ -123,6 +126,12 @@
                                 </tr>
                                 <%= for contentNode <- contentGroup.contentNodes do %>
                                   <tr>
+                                    <!-- status column -->
+                                    <td class="px-1 text-sm pb-1">
+                                      <%= for {service, status} <- contentNode.status_services do %>
+                                        <span title="<%= service %>" class="service_<%= status %>" >.</span>
+                                      <% end %>
+                                    </td>
                                     <!-- host column -->
                                     <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
                                       <span><%= contentNode.host.hostname %></span>
