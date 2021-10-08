@@ -60,7 +60,8 @@ module.exports = {
       "../lib/**/*.ex",
       "../lib/**/*_view.ex",
       "../lib/**/views/*.ex",
-      "../lib/vispana_web/live/node_live/index.html.leex"
+      "../lib/vispana_web/live/node_live/index.html.leex",
+      "../lib/vispana_web/components/menu/menu.ex"
     ]
   }
 }

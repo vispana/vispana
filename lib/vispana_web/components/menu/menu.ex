@@ -4,7 +4,7 @@ defmodule VispanaWeb.Menu do
   @impl true
   def render(assigns) do
     ~L"""
-    <div id="sideBar" class="relative h-screen  flex flex-col flex-wrap p-6 flex-none w-64 md:-ml-64 md:fixed md:top-0 md:z-30 md:h-screen md:shadow-xl animated faster bg-standout-blue">
+    <div id="sideBar" class="relative h-screen  flex flex-col flex-wrap p-6 flex-none w-56 md:-ml-64 md:fixed md:top-0 md:z-30 md:h-screen md:shadow-xl animated faster bg-standout-blue">
       <div class="flex flex-col" >
         <div class="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
           <div class="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
