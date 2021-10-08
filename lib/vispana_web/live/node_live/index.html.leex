@@ -40,7 +40,7 @@
 
               <div class="flex">
                 <!--actual component start-->
-                <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %> cluster', <% end %> ]}" class="w-full">
+                <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %>', <% end %> ]}" class="w-full">
                   <ul class="flex justify-left items-left min-w-full">
                     <template x-for="(tab, index) in tabs" :key="index">
                       <li class="cursor-pointer text-xs py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab"></li>
@@ -71,15 +71,14 @@
                                       <span class="text-white">Redundancy: </span> <span class="text-gray-400"><%= contentCluster.redundancy %></span>
                                   </p>
                                   <p class="mt-2 text-xs">
-                                      <span class="text-white">Groups: </span> <span class="text-gray-400">
+                                      <span class="text-white">Groups: </span>
                                         <%= contentCluster.contentGroups |> Enum.with_index |> Enum.map(fn({contentGroup, index}) -> %>
-                                        <span class="font-bold "><%= contentGroup.key %></span>
-                                          <span>(<%= length(contentGroup.contentNodes) %>)</span>
-                                          <%= if index+1 < length(contentCluster.contentGroups) do %>
-                                            |
-                                          <% end %>
+                                          <span class="text-gray-400">group-<%= contentGroup.key %></span><span class="text-gray-400 italic">(<%= length(contentGroup.contentNodes) %>)</span>
+
+                                            <%= if index+1 < length(contentCluster.contentGroups) do %>
+                                              |
+                                            <% end %>
                                         <% end) %>
-                                      </span>
                                   </p>
                                 </div>
                               </div>
@@ -148,12 +147,6 @@
                 </div>
                 <!--actual component end-->
               </div>
-
-
-                <%= for contentClusters <- @nodes.contentClusters do %>
-
-
-                <% end %>
             <% end %>
           </div>
         </div>

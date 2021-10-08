@@ -24,7 +24,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
-    #    cluster_data = _list_nodes_mock(config_host)
+    #cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -376,7 +376,7 @@ defmodule Vispana.Cluster do
           ],
           contentGroups: [
             %ContentGroup{
-              key: "content-group-0",
+              key: "0",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
@@ -420,7 +420,7 @@ defmodule Vispana.Cluster do
           ],
           contentGroups: [
             %ContentGroup{
-              key: "content-group-1",
+              key: "1",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
@@ -449,7 +449,7 @@ defmodule Vispana.Cluster do
               ]
             },
             %ContentGroup{
-              key: "content-group-1",
+              key: "2",
               contentNodes: [
                 %ContentNode{
                   vespaId: 5,
