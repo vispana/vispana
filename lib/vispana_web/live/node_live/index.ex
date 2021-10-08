@@ -53,7 +53,7 @@ defmodule VispanaWeb.NodeLive.Index do
         %{"refresh_interval" => refresh_params},
         %{assigns: %{refresh: refresh}} = socket
       ) do
-    interval = String.to_integer(Map.get(refresh_params, "interval", -1))
+    interval = String.to_integer(Map.get(refresh_params, "interval", "-1"))
     log(:debug, "Refresh interval: #{interval}")
 
     changeset =
@@ -67,7 +67,7 @@ defmodule VispanaWeb.NodeLive.Index do
       |> assign(:changeset, changeset)
       |> assign(:interval, interval)
 
-    if connected?(socket) do
+    if connected?(socket) and interval > 0 do
       Process.send_after(self(), :refresh, interval)
     end
 

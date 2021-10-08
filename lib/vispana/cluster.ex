@@ -46,13 +46,6 @@ defmodule Vispana.Cluster do
       ]
       |> Enum.map(&Task.await/1)
 
-
-
-
-
-
-
-
     # config cluster data
     config_nodes =
       config_data["services"]

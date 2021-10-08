@@ -13,7 +13,7 @@ module.exports = {
 
       'lg': {'max': '1023px'},
 
-      'xl': {'max': '1279px'},
+      'xl': {'max': '1279px'}
     },
     fontFamily: {
       'sans': ['Ubuntu', 'Sans-serif']
@@ -22,14 +22,14 @@ module.exports = {
       spacing: {
         '72': '18rem',
         '84': '21rem',
-        '96': '24rem',
+        '96': '24rem'
       },
       colors: {
         'darkest-blue': '#141b2d',
         'standout-blue': '#1f2a40'
       },
       minWidth: {
-        '300': '20rem',
+        '300': '20rem'
       },
     },
   },
@@ -45,14 +45,22 @@ module.exports = {
         bounceOutSpeed: 750,
         animationDelaySpeed: 1000
       },
-      variants: ['responsive'],
-    }),
+      variants: ['responsive']
+    })
   ],
-  purge: [
-    "../lib/**/*.eex",
-    "../lib/**/*.leex",
-    "../lib/**/*.ex",
-    "../lib/**/*_view.ex",
-    "../lib/**/views/*.ex"
-  ]
+  purge: { 
+    options: {
+      safelist: [
+        '/data-theme$/'
+      ]
+    },
+    content: [
+      "../lib/**/*.eex",
+      "../lib/**/*.leex",
+      "../lib/**/*.ex",
+      "../lib/**/*_view.ex",
+      "../lib/**/views/*.ex",
+      "../lib/vispana_web/live/node_live/index.html.leex"
+    ]
+  }
 }

@@ -8,6 +8,8 @@
     return_to: Routes.node_index_path(@socket, :index) %>
 <% end %>
 
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
 <!-- menu -->
 <%= live_component VispanaWeb.Menu, id: :menu, config_host: @config_host %>
 
@@ -35,60 +37,122 @@
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div class="shadow border-b border-darkest-blue sm:rounded-lg">
             <%= if @is_loading == false do %>
-                <%= for contentClusters <- @nodes.contentClusters do %>
-                  <div class="text-yellow-400 text-sm pb-1">
-                    <%= contentClusters.clusterId %>
-                  </div>
-                  <div class="px-6 py-0 text-center text-xs font-medium text-gray-400 tracking-wider min-w-300">
-                    <p>
-                      partitions: <%= contentClusters.partitions %> | searchable-copies: <%= contentClusters.searchableCopies %> | redundancy: <%= contentClusters.redundancy %>
-                    </p>
-                    <p>
-                      <%= for contentGroup <- contentClusters.contentGroups do %>
-                        <span>group#<%= contentGroup.key%> </span>: <%= length(contentGroup.contentNodes) %> nodes |
-                      <% end %>
-                    </p>
-                  </div>
-                  <%= for schema <- contentClusters.schemas do %>
-                    <div class="text-yellow-400 text-sm pb-1">
-                      Schema: <%= schema.schemaName %> - Docs: <%= schema.docCount %>
-                    </div>
-                  <% end %>
-                  <div class="text-yellow-400 text-sm pb-1">
-                    <span>Hosts in cluster  (<%= contentClusters.node_count %>)</span>
-                  </div>
 
-                  <table class="min-w-full min-h-full divide-y divide-darkest-blue">
-                      <%= for contentGroup <- contentClusters.contentGroups do %>
-                    <tbody class="bg-standout-blue divide-y divide-darkest-blue">
-                        <tr>
-                          <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300">
-                            <span>Hosts in group <%= contentGroup.key %> (<%= length(contentGroup.contentNodes) %>)</span>
-                          </th>
-                          <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300">
-                            <span>Distribution key</span>
-                          </th>
-                        </tr>
-                        <%= for contentNode <- contentGroup.contentNodes do %>
-                          <tr>
-                            <!-- host column -->
-                            <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
-                              <span><%= contentNode.host.hostname %></span>
-                            </td>
-                            <!-- group/distribution key column -->
-                            <td class="px-6 py-4">
-                              <div class="flex justify-center -m-2">
-                                <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2">
-                                  distribution key: <%= contentNode.distributionKey %>
+              <div class="flex">
+                <!--actual component start-->
+                <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %> cluster', <% end %> ]}" class="w-full">
+                  <ul class="flex justify-left items-left min-w-full">
+                    <template x-for="(tab, index) in tabs" :key="index">
+                      <li class="cursor-pointer text-xs py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab"></li>
+                    </template>
+                    <li class="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-600 border-b-2"></li>
+                  </ul>
+
+                  <div class="w-full text-center mx-auto">
+                    <%= @nodes.contentClusters |> Enum.with_index |> Enum.map(fn({contentCluster, index}) -> %>
+                      <div x-show="activeTab===<%= index %>">
+                        <!-- tab content -->
+                        <div class="flex flex-wrap justify-center mt-6">
+                          <div class="flex-1">
+                            <div class="w-full" style="min-width: 200px; max-width: 300px; margin-right: 0.75rem; margin-bottom: 1rem">
+                              <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="padding: 1.0rem; border-color: #26324a">
+                                <div class="text-yellow-400 text-sm">
+                                  Overview
+                                </div>
+                                <div>
+                                  <p class="mt-2 text-xs">
+                                      <span class="text-white">Partitions: </span> <span class="text-gray-400"><%= contentCluster.partitions %></span>
+                                  </p>
+
+                                  <p class="mt-2 text-xs">
+                                      <span class="text-white">Searchable copies: </span> <span class="text-gray-400"><%= contentCluster.searchableCopies %></span>
+                                  </p>
+                                  <p class="mt-2 text-xs">
+                                      <span class="text-white">Redundancy: </span> <span class="text-gray-400"><%= contentCluster.redundancy %></span>
+                                  </p>
+                                  <p class="mt-2 text-xs">
+                                      <span class="text-white">Groups: </span> <span class="text-gray-400">
+                                        <%= contentCluster.contentGroups |> Enum.with_index |> Enum.map(fn({contentGroup, index}) -> %>
+                                        <span class="font-bold "><%= contentGroup.key %></span>
+                                          <span>(<%= length(contentGroup.contentNodes) %>)</span>
+                                          <%= if index+1 < length(contentCluster.contentGroups) do %>
+                                            |
+                                          <% end %>
+                                        <% end) %>
+                                      </span>
+                                  </p>
                                 </div>
                               </div>
-                            </td>
-                          </tr>
-                        <% end %>
-                    </tbody>
-                      <% end %>
+                            </div>
+                          </div>
+                          <div class="flex flex-2">
+                            <div class="flex flex-grow justify-center">
+                              <%= for schema <- contentCluster.schemas do %>
+                                <div class="w-full" style="min-width: 200px; max-width: 300px; margin-right: 0.75rem; margin-bottom: 1rem">
+                                  <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="padding: 1.0rem; border-color: #26324a">
+                                    <div class="text-yellow-400 text-sm">
+                                      <%= schema.schemaName %>
+                                    </div>
 
-                  </table>
+                                    <div>
+                                        <p class="mt-2 text-xs">
+                                          <span class="text-white">Documents: </span> <span class="text-gray-400"><%= schema.docCount %></span>
+                                        </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="text-yellow-400 text-sm pb-1">
+                          <span>Hosts in cluster  (<%= contentCluster.node_count %>)</span>
+                        </div>
+
+                        <table class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue">
+                          <%= for contentGroup <- contentCluster.contentGroups do %>
+                            <tbody class="bg-standout-blue divide-y divide-darkest-blue">
+                                <tr>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300px; min-width: 120px">
+                                    <span>Hosts in group <%= contentGroup.key %> (<%= length(contentGroup.contentNodes) %>)</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300px;  min-width: 120px">
+                                    <span>Distribution key</span>
+                                  </th>
+                                </tr>
+                                <%= for contentNode <- contentGroup.contentNodes do %>
+                                  <tr>
+                                    <!-- host column -->
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
+                                      <span><%= contentNode.host.hostname %></span>
+                                    </td>
+                                    <!-- group/distribution key column -->
+                                    <td class="px-6 py-4">
+                                      <div class="flex justify-center -m-2">
+                                        <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2" style="min-width: 140px">
+                                          distribution key: <%= contentNode.distributionKey %>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                            </tbody>
+                          <% end %>
+                        </table>
+                      </div>
+                    <% end) %>
+                  </div>
+
+                </div>
+                <!--actual component end-->
+              </div>
+
+
+                <%= for contentClusters <- @nodes.contentClusters do %>
+
+
                 <% end %>
             <% end %>
           </div>
