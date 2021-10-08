@@ -60,16 +60,16 @@
                                   Overview
                                 </div>
                                 <div>
-                                  <p class="mt-2 text-xs text-gray-300">
-                                      <span >Partitions: </span> <span><%= contentCluster.partitions %></span>
+                                  <p class="mt-2 text-xs text-gray-200">
+                                      <span >Partitions: </span> <span class="text-gray-400"><%= contentCluster.partitions %></span>
                                       |
-                                      <span >Searchable copies: </span> <span><%= contentCluster.searchableCopies %></span>
+                                      <span >Searchable copies: </span> <span class="text-gray-400"><%= contentCluster.searchableCopies %></span>
                                       |
-                                      <span >Redundancy: </span> <span><%= contentCluster.redundancy %></span>
+                                      <span >Redundancy: </span> <span class="text-gray-400"><%= contentCluster.redundancy %></span>
                                   </p>
-                                  <p class="mt-2 text-xs text-gray-300">
+                                  <p class="mt-2 text-xs text-gray-200">
                                       <span>Groups: </span>
-                                      <span>
+                                      <span class="text-gray-400">
                                         <%= contentCluster.contentGroups |> Enum.with_index |> Enum.map(fn({contentGroup, index}) -> %>
 
                                           group-<%= contentGroup.key %><span class="italic">(<%= length(contentGroup.contentNodes) %>)</span>
@@ -88,7 +88,7 @@
                             <div class="flex justify-center h-full" style="height: 100%" >
                               <%= for schema <- contentCluster.schemas do %>
                                 <div class="flex-grow flex-wrap" style="min-width: 200px; margin-right: 0.75rem;">
-                                  <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="height: 100%; padding: 1.0rem; border-color: #26324a">
+                                  <div class="flex flex-col justify-center w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="height: 100%; padding: 1.0rem; border-color: #26324a">
                                     <div class="text-yellow-400 text-sm">
                                       <%= schema.schemaName %>
                                     </div>
