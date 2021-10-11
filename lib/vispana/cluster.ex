@@ -263,11 +263,8 @@ defmodule Vispana.Cluster do
 
     http_get(url)
     |> http_map(fn decoded_body ->
-      schemas =
         decoded_body["nodes"]
         |> Enum.group_by(fn node -> node["hostname"] end)
-
-      schemas
     end)
   end
 
