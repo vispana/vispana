@@ -23,6 +23,20 @@ let Hooks = {}
 // Hooks.Example = { mounted() { } }
 Hooks.InitModal = InitModal
 
+
+Hooks.Tooltip = {
+  mounted(){
+    tippy('.tippy', {
+      placement: 'top', // top, right, bottom, left
+      delay: 5, //ms
+      maxWidth: 300, //px or string
+      content(reference) {
+        return reference.getAttribute('data-title');
+      }
+    });
+  }
+}
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,

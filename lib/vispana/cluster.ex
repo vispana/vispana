@@ -23,8 +23,9 @@ defmodule Vispana.Cluster do
 
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
-    cluster_data = vespa_cluster_loader(config_host)
-    #cluster_data = _list_nodes_mock(config_host)
+    #cluster_data = vespa_cluster_loader(config_host)
+    cluster_data = _list_nodes_mock(config_host)
+    IO.inspect(cluster_data)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -384,6 +385,13 @@ defmodule Vispana.Cluster do
                   host: %Host{
                     hostname: "europe-content-01.vispana.com"
                   },
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
+                  },
                   metrics: []
                 },
                 %ContentNode{
@@ -391,6 +399,13 @@ defmodule Vispana.Cluster do
                   distributionKey: 2,
                   host: %Host{
                     hostname: "europe-content-02.vispana.com"
+                  },
+                  status_services: %{
+                    "vespa.config-sentinel" => "down",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
                   },
                   metrics: []
                 }
@@ -428,6 +443,13 @@ defmodule Vispana.Cluster do
                   host: %Host{
                     hostname: "europe-content-01.vispana.com"
                   },
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "down",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
+                  },
                   metrics: []
                 },
                 %ContentNode{
@@ -436,6 +458,13 @@ defmodule Vispana.Cluster do
                   host: %Host{
                     hostname: "europe-content-03.vispana.com"
                   },
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
+                  },
                   metrics: []
                 },
                 %ContentNode{
@@ -443,6 +472,13 @@ defmodule Vispana.Cluster do
                   distributionKey: 4,
                   host: %Host{
                     hostname: "europe-content-04.vispana.com"
+                  },
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
                   },
                   metrics: []
                 }
@@ -457,13 +493,27 @@ defmodule Vispana.Cluster do
                   host: %Host{
                     hostname: "europe-content-05.vispana.com"
                   },
-                  metrics: []
+                  metrics: [],
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
+                  }
                 },
                 %ContentNode{
                   vespaId: 6,
                   distributionKey: 6,
                   host: %Host{
                     hostname: "europe-content-06.vispana.com"
+                  },
+                  status_services: %{
+                    "vespa.config-sentinel" => "up",
+                    "vespa.distributor" => "up",
+                    "vespa.logd" => "up",
+                    "vespa.metricsproxy-container" => "up",
+                    "vespa.searchnode" => "up"
                   },
                   metrics: []
                 }

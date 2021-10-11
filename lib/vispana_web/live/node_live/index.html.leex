@@ -43,7 +43,7 @@
                 <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %>', <% end %> ]}" class="w-full">
                   <ul class="flex justify-left items-left min-w-full">
                     <template x-for="(tab, index) in tabs" :key="index">
-                      <li class="cursor-pointer text-xs py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab"></li>
+                      <li class="cursor-pointer text-sm py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 200px;"></li>
                     </template>
                     <li class="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-600 border-b-2"></li>
                   </ul>
@@ -55,8 +55,8 @@
                         <div class="flex flex-wrap justify-center">
                           <div class="flex-auto mt-6">
                             <div  style="min-width: 200px; margin-right: 0.75rem;">
-                              <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="padding: 1.0rem; border-color: #26324a">
-                                <div class="text-yellow-400 text-sm">
+                              <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 " style="padding: 1.0rem; border-color: #26324a">
+                                <div class="text-yellow-400">
                                   Overview
                                 </div>
                                 <div>
@@ -89,7 +89,7 @@
                               <%= for schema <- contentCluster.schemas do %>
                                 <div class="flex-grow flex-wrap" style="min-width: 200px; margin-right: 0.75rem;">
                                   <div class="flex flex-col justify-center w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="height: 100%; padding: 1.0rem; border-color: #26324a">
-                                    <div class="text-yellow-400 text-sm">
+                                    <div class="text-yellow-400">
                                       <%= schema.schemaName %>
                                     </div>
 
@@ -105,54 +105,64 @@
                           </div>
                         </div>
 
-
-                        <div class="text-yellow-400 text-sm pb-1 mt-4">
-                          <span>Hosts in cluster  (<%= contentCluster.node_count %>)</span>
+                        <!-- Hosts -->
+                        <div class="text-left text-yellow-400 my-4">
+                          <span>Content nodes (<%= contentCluster.node_count %>)</span>
                         </div>
 
-                        <table class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue">
-                          <%= for contentGroup <- contentCluster.contentGroups do %>
+                        <table id="content" class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue"  phx-hook="Tooltip">
+
                             <tbody class="bg-standout-blue divide-y divide-darkest-blue">
                                 <tr>
-                                  <th scope="col" class="px-1 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 20px;  min-width: 20px">
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 20px;  min-width: 20px">
                                     <span>Status</span>
                                   </th>
-                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300px; min-width: 120px">
-                                    <span>Hosts in group <%= contentGroup.key %> (<%= length(contentGroup.contentNodes) %>)</span>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 300px; min-width: 120px">
+                                    <span>Hosts</span>
                                   </th>
-                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding-bottom: 0.75rem; text-align: left; width: 300px;  min-width: 120px">
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 300px;  min-width: 120px">
                                     <span>Distribution key</span>
                                   </th>
                                 </tr>
-                                <%= for contentNode <- contentGroup.contentNodes do %>
-                                  <tr>
-                                    <!-- status column -->
-                                    <td class="px-1 text-sm pb-1">
-                                      <%= for {service, status} <- contentNode.status_services do %>
-                                        <span title="<%= service %>" class="service_<%= status %>" >.</span>
-                                      <% end %>
-                                    </td>
-                                    <!-- host column -->
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400">
-                                      <span><%= contentNode.host.hostname %></span>
-                                    </td>
-                                    <!-- group/distribution key column -->
-                                    <td class="px-6 py-4">
-                                      <div class="flex justify-center -m-2">
-                                        <div class="px-2 h-6 text-green-400 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-400 m-2" style="min-width: 140px">
-                                          distribution key: <%= contentNode.distributionKey %>
+                                <%= for contentGroup <- contentCluster.contentGroups do %>
+                                  <%= for contentNode <- contentGroup.contentNodes do %>
+                                    <tr>
+                                      <!-- status column -->
+                                      <td class="px-1 text-sm pb-1">
+                                        <div class="flex justify-center w-full">
+                                          <%= for {service, status} <- contentNode.status_services do %>
+                                            <div class="flex pr-1">
+                                              <div class="rounded-full px-1 py-1 tippy service_<%= status %>" data-title="<%= service %>"> </div>
+                                            </div>
+                                          <% end %>
                                         </div>
-                                      </div>
-                                    </td>
-                                  </tr>
+                                      </td>
+                                      <!-- host column -->
+                                      <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-300">
+                                        <span><%= contentNode.host.hostname %></span>
+                                      </td>
+
+                                      <!-- group/distribution key column -->
+                                      <td class="px-6 py-4">
+                                        <div class="flex justify-center -m-2">
+                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 140px">
+                                            Group key: <%= contentGroup.key %>
+                                          </div>
+                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 140px">
+                                            Distribution key: <%= contentNode.distributionKey %>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  <% end %>
                                 <% end %>
                             </tbody>
-                          <% end %>
+
                         </table>
+
                       </div>
                     <% end) %>
                   </div>
-
                 </div>
                 <!--actual component end-->
               </div>
