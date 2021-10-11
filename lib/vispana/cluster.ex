@@ -23,8 +23,8 @@ defmodule Vispana.Cluster do
 
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
-    #cluster_data = vespa_cluster_loader(config_host)
-    cluster_data = _list_nodes_mock(config_host)
+    cluster_data = vespa_cluster_loader(config_host)
+    #cluster_data = _list_nodes_mock(config_host)
     IO.inspect(cluster_data)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data

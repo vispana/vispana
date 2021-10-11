@@ -43,7 +43,7 @@
                 <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %>', <% end %> ]}" class="w-full">
                   <ul class="flex justify-left items-left min-w-full">
                     <template x-for="(tab, index) in tabs" :key="index">
-                      <li class="cursor-pointer text-sm py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 200px;"></li>
+                      <li class="cursor-pointer text-sm py-2 px-4 text-gray-500  border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 120px;"></li>
                     </template>
                     <li class="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-600 border-b-2"></li>
                   </ul>
@@ -109,19 +109,28 @@
                         <div class="text-left text-yellow-400 my-4">
                           <span>Content nodes (<%= contentCluster.node_count %>)</span>
                         </div>
-
-                        <table id="content" class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue"  phx-hook="Tooltip">
+                        <div class="mr-3">
+                          <table id="content" class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue"  phx-hook="Tooltip">
 
                             <tbody class="bg-standout-blue divide-y divide-darkest-blue">
                                 <tr>
-                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 20px;  min-width: 20px">
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
                                     <span>Status</span>
                                   </th>
-                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 300px; min-width: 120px">
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
                                     <span>Hosts</span>
                                   </th>
-                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;  width: 300px;  min-width: 120px">
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
                                     <span>Distribution key</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>CPU usage</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>Memory usage</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>Disk usage</span>
                                   </th>
                                 </tr>
                                 <%= for contentGroup <- contentCluster.contentGroups do %>
@@ -138,28 +147,45 @@
                                         </div>
                                       </td>
                                       <!-- host column -->
-                                      <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-300">
-                                        <span><%= contentNode.host.hostname %></span>
+                                      <td class="px-6 py-2 whitespace-nowrap text-xs text-gray-300">
+                                        <p class="overflow-ellipsis overflow-hidden"><%= contentNode.host.hostname %></p>
                                       </td>
 
                                       <!-- group/distribution key column -->
-                                      <td class="px-6 py-4">
+                                      <td class="px-6 py-2">
                                         <div class="flex justify-center -m-2">
-                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 140px">
-                                            Group key: <%= contentGroup.key %>
+                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 80px">
+                                            Group: <%= contentGroup.key %>
                                           </div>
-                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 140px">
-                                            Distribution key: <%= contentNode.distributionKey %>
+                                          <div class="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2" style="min-width: 110px">
+                                            Distribution: <%= contentNode.distributionKey %>
                                           </div>
+                                        </div>
+                                      </td>
+                                      <!-- cpu -->
+                                      <td class="px-6 " style="min-width:100px; max-width:200px">
+                                        <div class="px-6" style="min-width:100px; max-width:200px">
+                                          <progress class="progress progress-success tippy" data-title="1" value="0.1" max="1" data-theme="light"></progress>
+                                        </div>
+                                      </td>
+                                      <!-- memory -->
+                                      <td class="px-6 py-3" style="min-width:100px; max-width:200px">
+                                        <div class="px-6 "  style="min-width:100px; max-width:200px">
+                                          <progress class="progress progress-success tippy" data-title="2" value="0.2" max="1" data-theme="light"></progress>
+                                        </div>
+                                      </td>
+                                      <!-- disk -->
+                                      <td class="px-6" style="min-width:100px; max-width:200px">
+                                        <div class="px-6" style="min-width:100px; max-width:200px">
+                                          <progress class="progress progress-success tippy" data-title="1" value="0.1" max="1" data-theme="light"></progress>
                                         </div>
                                       </td>
                                     </tr>
                                   <% end %>
                                 <% end %>
                             </tbody>
-
-                        </table>
-
+                          </table>
+                        </div>
                       </div>
                     <% end) %>
                   </div>
