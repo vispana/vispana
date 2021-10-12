@@ -165,19 +165,19 @@
                                       <!-- cpu -->
                                       <td class="px-6 " style="min-width:100px; max-width:200px">
                                         <div class="px-6" style="min-width:100px; max-width:200px">
-                                          <progress class="progress progress-success tippy" data-title="1" value="0.1" max="1" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.cpu_usage > 80 do "progress-error" else if contentNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.cpu_usage %>" value="<%= contentNode.cpu_usage %>" max="100" data-theme="light"></progress>
                                         </div>
                                       </td>
                                       <!-- memory -->
                                       <td class="px-6 py-3" style="min-width:100px; max-width:200px">
                                         <div class="px-6 "  style="min-width:100px; max-width:200px">
-                                          <progress class="progress progress-success tippy" data-title="2" value="0.2" max="1" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.memory_usage > 0.8 do "progress-error" else if contentNode.memory_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.memory_usage * 100  %>" value="<%= contentNode.memory_usage %>" max="1" data-theme="light"></progress>
                                         </div>
                                       </td>
                                       <!-- disk -->
                                       <td class="px-6" style="min-width:100px; max-width:200px">
                                         <div class="px-6" style="min-width:100px; max-width:200px">
-                                          <progress class="progress progress-success tippy" data-title="1" value="0.1" max="1" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.disk_usage > 0.8 do "progress-error" else if contentNode.disk_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.disk_usage * 100 %>" value="<%= contentNode.disk_usage %>" max="1" data-theme="light"></progress>
                                         </div>
                                       </td>
                                     </tr>

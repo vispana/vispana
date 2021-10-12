@@ -24,8 +24,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
-    #cluster_data = _list_nodes_mock(config_host)
-    IO.inspect(cluster_data)
+    # cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -168,7 +167,10 @@ defmodule Vispana.Cluster do
         host: %Host{hostname: content["host"]},
         distributionKey: content["key"],
         metrics: search_node_metrics,
-        status_services: parsed_node_metrics.status_services
+        status_services: parsed_node_metrics.status_services,
+        cpu_usage: parsed_node_metrics.cpu_usage,
+        disk_usage: parsed_node_metrics.disk_usage,
+        memory_usage: parsed_node_metrics.memory_usage
       }
     end)
     |> Enum.sort_by(& &1.host.hostname)
@@ -263,8 +265,8 @@ defmodule Vispana.Cluster do
 
     http_get(url)
     |> http_map(fn decoded_body ->
-        decoded_body["nodes"]
-        |> Enum.group_by(fn node -> node["hostname"] end)
+      decoded_body["nodes"]
+      |> Enum.group_by(fn node -> node["hostname"] end)
     end)
   end
 
@@ -278,12 +280,38 @@ defmodule Vispana.Cluster do
   def parse_metrics_from_host(host_metrics) do
     host_metric = List.first(host_metrics)
 
-    status_services =
+    aggregated_metrics =
       host_metric["services"]
-      |> Enum.map(fn ms -> {ms["name"], ms["status"]["code"]} end)
-      |> Map.new(fn {key, value} -> {key, value} end)
+      |> Enum.map(fn ms ->
+        service_status = {ms["name"], ms["status"]["code"]}
+        metrics = ms["metrics"]
 
-    %Metrics{status_services: status_services}
+        cpu = List.first(metrics)["values"]["cpu"]
+        {disk, memory} = if "vespa.searchnode" == ms["name"] do
+          proton = Enum.at(metrics, 1)
+          disk_average = proton["values"]["content.proton.resource_usage.disk.average"]
+          memory_average = proton["values"]["content.proton.resource_usage.memory.average"]
+          {disk_average, memory_average}
+        else
+          {0, 0}
+        end
+        { service_status, cpu, memory, disk }
+      end)
+
+
+    {cpu, memory, disk} = aggregated_metrics
+    |> Enum.reduce({0, 0, 0}, fn(x, acc) ->
+      {acc_cpu, acc_memory, acc_disk} = acc
+      {_, cpu, memory, disk} = x
+      {cpu + acc_cpu, memory + acc_memory, disk + acc_disk}
+    end)
+
+
+    status = aggregated_metrics
+    |> Enum.map(fn {aggregated_metrics, _, _, _} -> aggregated_metrics end)
+    |> Map.new(fn {key, value} -> {key, value} end)
+
+    %Metrics{status_services: status, cpu_usage: cpu, memory_usage: memory, disk_usage: disk}
   end
 
   def http_get(url) do
