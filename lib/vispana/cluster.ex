@@ -24,7 +24,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
-    # cluster_data = _list_nodes_mock(config_host)
+    #cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -417,7 +417,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 61,
+                  memory_usage: 0.4,
+                  disk_usage: 0.5
                 },
                 %ContentNode{
                   vespaId: 2,
@@ -432,7 +435,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 31,
+                  memory_usage: 0.9,
+                  disk_usage: 0.8
                 }
               ]
             }
@@ -475,7 +481,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 73,
+                  memory_usage: 0.53,
+                  disk_usage: 0.7
                 },
                 %ContentNode{
                   vespaId: 3,
@@ -490,7 +499,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 20,
+                  memory_usage: 0.6,
+                  disk_usage: 0.9
                 },
                 %ContentNode{
                   vespaId: 4,
@@ -505,7 +517,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 100,
+                  memory_usage: 0.23,
+                  disk_usage: 0.5
                 }
               ]
             },
@@ -525,7 +540,10 @@ defmodule Vispana.Cluster do
                     "vespa.logd" => "up",
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
-                  }
+                  },
+                  cpu_usage: 90,
+                  memory_usage: 0.4,
+                  disk_usage: 0.2
                 },
                 %ContentNode{
                   vespaId: 6,
@@ -540,7 +558,10 @@ defmodule Vispana.Cluster do
                     "vespa.metricsproxy-container" => "up",
                     "vespa.searchnode" => "up"
                   },
-                  metrics: []
+                  metrics: [],
+                  cpu_usage: 40,
+                  memory_usage: 0.4,
+                  disk_usage: 0.2
                 }
               ]
             }
