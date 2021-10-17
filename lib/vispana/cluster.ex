@@ -40,17 +40,28 @@ defmodule Vispana.Cluster do
       |> Enum.map(fn task -> Task.await(task, :infinity) end)
 
     %VespaCluster{
-      configCluster: mount_config_cluster(config_data),
+      configCluster: mount_config_cluster(config_data, metrics),
       containerClusters: mount_container_cluster(container_data, metrics),
       contentClusters: mount_content_clusters(content_clusters_data, metrics)
     }
   end
 
-  def mount_config_cluster(config_data) do
+  def mount_config_cluster(config_data, metrics) do
+    parsed_metrics = parse_metrics(metrics)
+
     config_nodes =
       config_data["services"]
       |> Enum.map(fn config ->
-        %ConfigNode{vespaId: config["index"], host: %Host{hostname: config["hostname"]}}
+        host = config["hostname"]
+        parsed_node_metrics = parsed_metrics[host]
+
+        %ConfigNode{
+          vespaId: config["index"],
+          host: %Host{hostname: host},
+          status_services: parsed_node_metrics.status_services,
+          cpu_usage: parsed_node_metrics.cpu_usage,
+          disk_usage: parsed_node_metrics.disk_usage,
+          memory_usage: parsed_node_metrics.memory_usage}
       end)
       |> Enum.sort_by(& &1.host.hostname)
 
@@ -69,9 +80,6 @@ defmodule Vispana.Cluster do
       container_cluster_data["services"]
       |> Enum.map(fn container ->
         host = container["hostname"]
-        # each host should be unique
-        # node_metrics = List.first(metrics[host])
-
         parsed_node_metrics = parsed_metrics[host]
         %ContainerNode{
           vespaId: container["index"],

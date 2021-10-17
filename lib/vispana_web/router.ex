@@ -18,6 +18,7 @@ defmodule VispanaWeb.Router do
     pipe_through :browser
 
     live "/", ConfigHostLive.Index, :index
+    live "/config", ConfigLive.Index, :config
     live "/container", ContainerLive.Index, :container
     live "/content", ContentLive.Index, :content
   end
