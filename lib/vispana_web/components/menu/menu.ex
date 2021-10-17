@@ -13,7 +13,7 @@ defmodule VispanaWeb.Menu do
         </div>
 
         <a href="/container?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
-          <i class="fas fa-server text-xs mr-2"></i>
+          <i class="fas fa-microchip text-xs mr-2"></i>
           Container
         </a>
 
@@ -25,16 +25,6 @@ defmodule VispanaWeb.Menu do
         <a href="#config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
           <i class="fas fa-archive text-xs mr-2"></i>
           Application packages
-        </a>
-
-        <a href="#config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
-          <i class="fab fa-searchengin text-xs mr-2"></i>
-          Query
-        </a>
-
-        <a href="#config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
-          <i class="fas fa-database text-xs mr-2"></i>
-          Sample data
         </a>
 
         <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
