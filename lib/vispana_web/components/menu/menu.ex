@@ -12,6 +12,11 @@ defmodule VispanaWeb.Menu do
           </div>
         </div>
 
+        <a href="/container?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+          <i class="fas fa-server text-xs mr-2"></i>
+          Container
+        </a>
+
         <a href="/content?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
           <i class="fas fa-server text-xs mr-2"></i>
           Content

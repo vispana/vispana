@@ -41,7 +41,7 @@ defmodule Vispana.Cluster do
 
     %VespaCluster{
       configCluster: mount_config_cluster(config_data),
-      containerCluster: mount_container_cluster(container_data),
+      containerClusters: mount_container_cluster(container_data, metrics),
       contentClusters: mount_content_clusters(content_clusters_data, metrics)
     }
   end
@@ -57,16 +57,29 @@ defmodule Vispana.Cluster do
     %ConfigCluster{configNodes: config_nodes}
   end
 
-  def mount_container_cluster(containers_data) do
+  def mount_container_cluster(containers_data, metrics) do
       containers_data
-      |> Enum.map(fn container -> build_container_cluster(container) end)
+      |> Enum.map(fn container -> build_container_cluster(container, metrics) end)
   end
 
-  def build_container_cluster({:ok, container_cluster_data}) do
+  def build_container_cluster({:ok, container_cluster_data}, metrics) do
+    parsed_metrics = parse_metrics(metrics)
+
     container_nodes =
       container_cluster_data["services"]
       |> Enum.map(fn container ->
-        %ContainerNode{vespaId: container["index"], host: %Host{hostname: container["hostname"]}}
+        host = container["hostname"]
+        # each host should be unique
+        # node_metrics = List.first(metrics[host])
+
+        parsed_node_metrics = parsed_metrics[host]
+        %ContainerNode{
+          vespaId: container["index"],
+          host: %Host{hostname: host},
+          status_services: parsed_node_metrics.status_services,
+          cpu_usage: parsed_node_metrics.cpu_usage,
+          disk_usage: parsed_node_metrics.disk_usage,
+          memory_usage: parsed_node_metrics.memory_usage}
       end)
       |> Enum.sort_by(& &1.host.hostname)
 
@@ -81,7 +94,7 @@ defmodule Vispana.Cluster do
   end
 
   def build_content_cluster(content_cluster_data, metrics) do
-    IO.inspect(content_cluster_data)
+
     content_groups =
       content_cluster_data["node"]
       |> Enum.group_by(fn node -> node["group"] end)
@@ -394,22 +407,23 @@ defmodule Vispana.Cluster do
           }
         ]
       },
-      containerCluster: [%ContainerCluster{
-        clusterId: "container-cluster",
-        containerNodes: [
-          %ContainerNode{
-            host: %Host{
-              hostname: "europe-container-01.vispana.com"
+      containerClusters: [
+        %ContainerCluster{
+          clusterId: "container-cluster",
+          containerNodes: [
+            %ContainerNode{
+              host: %Host{
+                hostname: "europe-container-01.vispana.com"
+              },
+              vespaId: 0
             },
-            vespaId: 0
-          },
-          %ContainerNode{
-            host: %Host{
-              hostname: "europe-container-02.vispana.com"
-            },
-            vespaId: 2
-          }
-        ]
+            %ContainerNode{
+              host: %Host{
+                hostname: "europe-container-02.vispana.com"
+              },
+              vespaId: 2
+            }
+          ]
       }],
       contentClusters: [
         %ContentCluster{

@@ -107,7 +107,7 @@ defmodule VispanaWeb.ContentLive.Index do
 
   defp apply_action(socket, :content, _params) do
     socket
-    |> assign(:page_title, "Vispana - Content")
+    |> assign(:page_title, "Vispana - Content Overview")
     |> assign(:node, nil)
   end
 
