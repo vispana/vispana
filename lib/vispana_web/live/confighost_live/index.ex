@@ -69,11 +69,13 @@ defmodule VispanaWeb.ConfigHostLive.Index do
   def handle_event(
         "connect",
         %{"config_host" => config_host_params},
-        %{assigns: %{config_host: _}} = socket
+        %{assigns: %{changeset: changeset}} = socket
       ) do
-    {:noreply,
-     socket
-     |> redirect(to: "/content?config_host=" <> config_host_params["url"])}
+    if changeset.valid? do
+      {:noreply, socket |> redirect(to: "/content?config_host=" <> config_host_params["url"])}
+    else
+      {:noreply, socket}
+    end
   end
 
   @impl true
