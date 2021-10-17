@@ -24,7 +24,7 @@ defmodule Vispana.Cluster do
   def list_nodes(config_host) do
     log(:info, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
-    #cluster_data = _list_nodes_mock(config_host)
+    # cluster_data = _list_nodes_mock(config_host)
     log(:info, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
@@ -33,11 +33,11 @@ defmodule Vispana.Cluster do
     [config_data, container_data, content_clusters_data, metrics] =
       [
         start_async(fn -> fetch_config_data(config_host) end),
-        start_async(fn -> fetch_container_data(config_host) end),
+        start_async(fn -> fetch_and_aggregate_container_data(config_host) end),
         start_async(fn -> fetch_and_aggregate_content_data(config_host) end),
         start_async(fn -> fetch_metrics(config_host) end)
       ]
-      |> Enum.map(&Task.await/1)
+      |> Enum.map(fn task -> Task.await(task, :infinity) end)
 
     %VespaCluster{
       configCluster: mount_config_cluster(config_data),
@@ -57,15 +57,20 @@ defmodule Vispana.Cluster do
     %ConfigCluster{configNodes: config_nodes}
   end
 
-  def mount_container_cluster(container_data) do
+  def mount_container_cluster(containers_data) do
+      containers_data
+      |> Enum.map(fn container -> build_container_cluster(container) end)
+  end
+
+  def build_container_cluster({:ok, container_cluster_data}) do
     container_nodes =
-      container_data["services"]
+      container_cluster_data["services"]
       |> Enum.map(fn container ->
         %ContainerNode{vespaId: container["index"], host: %Host{hostname: container["hostname"]}}
       end)
       |> Enum.sort_by(& &1.host.hostname)
 
-    %ContainerCluster{containerNodes: container_nodes}
+    %ContainerCluster{clusterId: container_cluster_data["clusterId"], containerNodes: container_nodes}
   end
 
   def mount_content_clusters(content_clusters_data, metrics) do
@@ -76,6 +81,7 @@ defmodule Vispana.Cluster do
   end
 
   def build_content_cluster(content_cluster_data, metrics) do
+    IO.inspect(content_cluster_data)
     content_groups =
       content_cluster_data["node"]
       |> Enum.group_by(fn node -> node["group"] end)
@@ -198,18 +204,39 @@ defmodule Vispana.Cluster do
      end)}
   end
 
+  def fetch_and_aggregate_container_data(config_host) do
+    {:ok, container_data} = fetch_container_cluster_names(config_host)
+
+    {:ok,
+     container_data
+     |> Enum.map(fn container_cluster ->
+       fetch_container_data(config_host, container_cluster)
+     end)}
+  end
+
   def fetch_config_data(config_host) do
     url = config_host <> "/config/v1/cloud.config.cluster-info/admin/cluster-controllers"
-
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end)
   end
 
-  def fetch_container_data(config_host) do
-    url = config_host <> "/config/v1/cloud.config.cluster-info/container"
-
+  def fetch_container_data(config_host, container_cluster) do
+    url = config_host <> "/config/v1/cloud.config.cluster-info/" <> container_cluster
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end)
+  end
+
+  # Fetches content clusters deployed into the vespa custer
+  def fetch_container_cluster_names(config_host) do
+    url = config_host <> "/config/v1/cloud.config.cluster-info/"
+    http_get(url)
+    |> http_map(fn decoded_body ->
+      decoded_body["configs"]
+      # ensure we trim '/' from the URI
+      |> Enum.map(fn container_cluster_url -> String.trim(container_cluster_url, "/") end)
+      |> Enum.map(fn container_cluster_url -> List.last(String.split(container_cluster_url, "/")) end)
+      |> Enum.filter(fn clusterId -> clusterId != "admin" end)
+      end)
   end
 
   # Fetches content clusters deployed into the vespa custer
@@ -300,10 +327,10 @@ defmodule Vispana.Cluster do
 
 
     {cpu, memory, disk} = aggregated_metrics
-    |> Enum.reduce({0, 0, 0}, fn(x, acc) ->
+    |> Enum.reduce({0, 0, 0}, fn(metric, acc) ->
       {acc_cpu, acc_memory, acc_disk} = acc
-      {_, cpu, memory, disk} = x
-      {cpu + acc_cpu, memory + acc_memory, disk + acc_disk}
+      {_, cpu, memory, disk} = metric
+      {ensure_metric(cpu) + acc_cpu, ensure_metric(memory) + acc_memory, ensure_metric(disk) + acc_disk}
     end)
 
 
@@ -312,6 +339,14 @@ defmodule Vispana.Cluster do
     |> Map.new(fn {key, value} -> {key, value} end)
 
     %Metrics{status_services: status, cpu_usage: cpu, memory_usage: memory, disk_usage: disk}
+  end
+
+  def ensure_metric(metric_value) do
+    if  metric_value == nil do
+      0
+    else
+      metric_value
+    end
   end
 
   def http_get(url) do
@@ -359,7 +394,8 @@ defmodule Vispana.Cluster do
           }
         ]
       },
-      containerCluster: %ContainerCluster{
+      containerCluster: [%ContainerCluster{
+        clusterId: "container-cluster",
         containerNodes: [
           %ContainerNode{
             host: %Host{
@@ -374,7 +410,7 @@ defmodule Vispana.Cluster do
             vespaId: 2
           }
         ]
-      },
+      }],
       contentClusters: [
         %ContentCluster{
           clusterId: "content-cluster-1",

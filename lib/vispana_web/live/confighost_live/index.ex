@@ -73,7 +73,7 @@ defmodule VispanaWeb.ConfigHostLive.Index do
       ) do
     {:noreply,
      socket
-     |> redirect(to: "/nodes?config_host=" <> config_host_params["url"])}
+     |> redirect(to: "/content?config_host=" <> config_host_params["url"])}
   end
 
   @impl true

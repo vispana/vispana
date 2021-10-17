@@ -1,3 +1,4 @@
 defmodule Vispana.Cluster.ContainerCluster do
-  defstruct containerNodes: []
+  @enforce_keys [:clusterId]
+  defstruct [:clusterId, containerNodes: []]
 end

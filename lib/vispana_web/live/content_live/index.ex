@@ -1,4 +1,4 @@
-defmodule VispanaWeb.NodeLive.Index do
+defmodule VispanaWeb.ContentLive.Index do
   import Logger, warn: false
 
   use VispanaWeb, :live_view
