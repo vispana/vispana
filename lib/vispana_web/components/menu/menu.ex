@@ -44,11 +44,6 @@ defmodule VispanaWeb.Menu do
           <i class="fas fa-archive text-xs mr-2"></i>
           Application packages
         </a>
-
-        <a href="#" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "about" do "text-yellow-400" else "text-gray-300" end %>'>
-          <i class="fas fa-info-circle text-xs mr-2"></i>
-          About
-        </a>
       </div>
     </div>
     """

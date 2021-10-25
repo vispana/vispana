@@ -1,13 +1,3 @@
-
-<%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, VispanaWeb.ConfigLive.FormComponent,
-    id: @node.id || :new,
-    title: "Vispana"<>@page_title,
-    action: @live_action,
-    node: @node,
-    return_to: Routes.config_index_path(@socket, :container) %>
-<% end %>
-
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
 <!-- menu -->
@@ -107,6 +97,7 @@
           </div>
         </div>
       </div>
+      <%= live_component VispanaWeb.Copyright, id: :copyright %>
     </div>
   </div>
   <!-- end content -->
