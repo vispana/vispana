@@ -1,6 +1,19 @@
 defmodule VispanaWeb.Menu do
   use VispanaWeb, :live_component
 
+  import Logger, warn: false
+
+  @impl true
+  def mount(socket) do
+    view = case socket.view do
+      VispanaWeb.ConfigLive.Index -> "config"
+      VispanaWeb.ContainerLive.Index -> "container"
+      VispanaWeb.ContentLive.Index -> "content"
+      _ -> raise "No views match"
+    end
+    {:ok, socket |> assign(:view, view)}
+  end
+
   @impl true
   def render(assigns) do
     ~L"""
@@ -12,27 +25,27 @@ defmodule VispanaWeb.Menu do
           </div>
         </div>
 
-        <a href="/config?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+        <a href="/config?config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "config" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-project-diagram text-xs mr-2"></i>
           Config
         </a>
 
-        <a href="/container?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+        <a href="/container?config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white  transition ease-in-out duration-500 <%= if @view == "container" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-microchip text-xs mr-2"></i>
           Container
         </a>
 
-        <a href="/content?config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+        <a href="/content?config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "content" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-hdd text-xs mr-2"></i>
           Content
         </a>
 
-        <a href="#config_host=<%= @config_host %>" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+        <a href="#config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "packages" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-archive text-xs mr-2"></i>
           Application packages
         </a>
 
-        <a href="#" class="mb-3 capitalize font-medium text-sm hover:text-white text-yellow-400 transition ease-in-out duration-500">
+        <a href="#" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "about" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-info-circle text-xs mr-2"></i>
           About
         </a>
