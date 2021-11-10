@@ -1,0 +1,72 @@
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/github-dark-dimmed.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+
+<!-- menu -->
+<%= live_component VispanaWeb.Menu, id: :menu, config_host: @config_host %>
+
+<div class="flex-1 h-screen p-6 md:mt-16 overflow-x-auto">
+  <!-- top bar -->
+  <div>
+    <div class="space-x-1 w-full">
+      <div class="text-right font-flow" style="text-align: right">
+
+          <%= f = form_for @changeset, "#", id: "form", phx_change: "refresh_interval", class: "block-inline"%>
+            <a class="btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0" phx-click="refresh">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+            <%= select f, :interval, ["Off": -1, "15s": 15000, "30s": 30000, "1m": 60000, "5m": 300000, "10m": 600000, "30m": 1800000, "1h": 3600000],
+            class: "select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0" %>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- body content -->
+  <div class="flex-1 max-h-full max-w-full bg-darkest-blue">
+    <div class="flex flex-grow flex-col pt-2 normal-case">
+      <div class="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto">
+        <div class="pb-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow border-b border-darkest-blue sm:rounded-lg">
+            <%= if @is_loading == false do %>
+              <!-- actual component start-->
+              <div class="bg-standout-blue p-4 mt-4">
+                <div>
+                  <p> Published at: <%= (@nodes.appPackage.buildTimestamp) %> </p>
+                  <p> Generation: <%= (@nodes.appPackage.generation) %>  </p>
+                  <p> Version: <%= (@nodes.appPackage.vespaVersion) %>  </p>
+                </div>
+
+                <!-- actual component start-->
+                <div class="flex pt-4"  phx-hook="CodeHighlight">
+                  <div x-data="{ activeTab: 0, tabs: [ <%= for file <- @nodes.appPackage.viewContent do %>'<%= file.title %>', <% end %> ]}" class="w-full max-w-full">
+                    <ul class="flex justify-left items-left min-w-full">
+                      <template x-for="(tab, index) in tabs" :key="index">
+                        <li class="cursor-pointer py-2 px-4 border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'text-gray-500 border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 120px;"></li>
+                      </template>
+                      <li class="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-600 border-b-2"></li>
+                    </ul>
+
+                    <div class="w-full mx-auto overflow-x-auto">
+                      <%= @nodes.appPackage.viewContent |> Enum.with_index |> Enum.map(fn({file, index}) -> %>
+                        <div class="max-w-full w-full overflow-x-auto" x-show="activeTab===<%= index %>" style="max-width: 100%;">
+                          <pre>
+                            <code class="max-w-full w-full language-xml hljs overflow-x-auto" style="max-width: 100%;"><%= file.content %>
+                            </code>
+                          </pre>
+                        </div>
+                      <% end) %>
+                    </div>
+                  </div>
+                  <!--actual component end-->
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <%= live_component VispanaWeb.Copyright, id: :copyright %>
+    </div>
+  </div>
+  <!-- end content -->
+</div>

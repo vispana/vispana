@@ -1,6 +1,9 @@
 defmodule Vispana.Cluster.VespaCluster do
-  defstruct [:configCluster, :containerClusters, :contentClusters]
 
+
+  defstruct [:configCluster, :containerClusters, :contentClusters, :appPackage]
+
+  alias Vispana.Cluster.AppPackage
   alias Vispana.Cluster.VespaCluster
   alias Vispana.Cluster.ConfigCluster
 
@@ -8,7 +11,8 @@ defmodule Vispana.Cluster.VespaCluster do
     %VespaCluster{
       configCluster: %ConfigCluster{},
       containerClusters: [],
-      contentClusters: []
+      contentClusters: [],
+      appPackage: %AppPackage{}
     }
   end
 end

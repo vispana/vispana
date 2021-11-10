@@ -1,3 +1,3 @@
 defmodule Vispana.Cluster.ConfigCluster do
-  defstruct configNodes: []
+  defstruct [:servicesXml, :hostsXml, configNodes: []]
 end
