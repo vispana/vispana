@@ -1,0 +1,104 @@
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+<!-- menu -->
+<%= live_component VispanaWeb.Menu, id: :menu, config_host: @config_host %>
+
+<div class="flex-1 h-screen p-6 md:mt-16 overflow-x-auto">
+  <!-- top bar -->
+  <div>
+    <div class="space-x-1 w-full">
+      <div class="text-right font-flow" style="text-align: right">
+
+          <%= f = form_for @changeset, "#", id: "form", phx_change: "refresh_interval", class: "block-inline"%>
+            <a class="btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0" phx-click="refresh">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+            <%= select f, :interval, ["Off": -1, "15s": 15000, "30s": 30000, "1m": 60000, "5m": 300000, "10m": 600000, "30m": 1800000, "1h": 3600000],
+            class: "select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0" %>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- body content -->
+  <div class="flex-1 max-h-full bg-darkest-blue">
+    <div class="flex flex-grow flex-col pt-2 normal-case">
+      <div class="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto">
+        <div class="pb-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow border-b border-darkest-blue sm:rounded-lg">
+            <%= if @is_loading == false do %>
+
+              <div class="flex">
+                <!--actual component start-->
+                <div x-data="{ activeTab: 0, tabs: ['admin']}" class="w-full">
+                  <ul class="flex justify-left items-left min-w-full">
+                    <template x-for="(tab, index) in tabs" :key="index">
+                      <li class="cursor-pointer py-2 px-4 border-b-2 " :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'text-gray-500 border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 120px;"></li>
+                    </template>
+                    <li class="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-600 border-b-2"></li>
+                  </ul>
+
+                  <div class="w-full text-center mx-auto">
+
+                      <div x-show="activeTab===0">
+                        <!-- Hosts -->
+                        <div class="text-left text-yellow-400 my-4">
+                          <span>Config nodes (<%= length(@nodes.configCluster.configNodes) %>)</span>
+                        </div>
+                        <div class="mr-3">
+                          <table id="content" class="min-w-full min-h-full divide-y divide-darkest-blue rounded-md shadow-md border border-1 border-standout-blue"  phx-hook="Tooltip">
+
+                            <tbody class="bg-standout-blue divide-y divide-darkest-blue">
+                                <tr>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>Status</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>Hosts</span>
+                                  </th>
+                                  <th scope="col" class="px-6 text-sm font-medium text-blue-100 tracking-wider" style="padding: 1rem;">
+                                    <span>CPU usage</span>
+                                  </th>
+                                </tr>
+                                <%= for configNode <- @nodes.configCluster.configNodes do %>
+                                  <tr>
+                                    <!-- status column -->
+                                    <td class="px-1 text-sm pb-1">
+                                      <div class="flex justify-center w-full">
+                                        <%= for {service, status} <- configNode.status_services do %>
+                                          <div class="flex pr-1">
+                                            <div class="rounded-full px-1 py-1 tippy service_<%= status %>" data-title="<%= service %>"> </div>
+                                          </div>
+                                        <% end %>
+                                      </div>
+                                    </td>
+                                    <!-- host column -->
+                                    <td class="px-6 py-2 whitespace-nowrap text-xs text-gray-300">
+                                      <p class="overflow-ellipsis overflow-hidden"><%= configNode.host.hostname %></p>
+                                    </td>
+
+                                    <!-- cpu -->
+                                    <td class="px-6 " style="min-width:100px; max-width:200px">
+                                      <div style="min-width:100px; max-width:200px; margin: auto">
+                                        <progress class='progress <%= if configNode.cpu_usage > 80 do "progress-error" else if configNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= configNode.cpu_usage %>" value="<%= configNode.cpu_usage %>" max="100" data-theme="light"></progress>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% end %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <!--actual component end-->
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <%= live_component VispanaWeb.Copyright, id: :copyright %>
+    </div>
+  </div>
+  <!-- end content -->
+</div>
