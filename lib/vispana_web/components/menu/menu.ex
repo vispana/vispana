@@ -9,6 +9,7 @@ defmodule VispanaWeb.Menu do
       VispanaWeb.ConfigLive.Index -> "config"
       VispanaWeb.ContainerLive.Index -> "container"
       VispanaWeb.ContentLive.Index -> "content"
+      VispanaWeb.AppPackageLive.Index -> "apppackage"
       _ -> raise "No views match"
     end
     {:ok, socket |> assign(:view, view)}
@@ -40,9 +41,9 @@ defmodule VispanaWeb.Menu do
           Content
         </a>
 
-        <a href="#config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "packages" do "text-yellow-400" else "text-gray-300" end %>'>
+        <a href="/apppackage?config_host=<%= @config_host %>" class='mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 <%= if @view == "apppackage" do "text-yellow-400" else "text-gray-300" end %>'>
           <i class="fas fa-archive text-xs mr-2"></i>
-          Application packages
+          Application package
         </a>
       </div>
     </div>

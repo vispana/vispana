@@ -18,6 +18,7 @@ defmodule Vispana.Cluster do
   alias Vispana.Cluster.ContentNode
 
   alias Vispana.Cluster.Host
+  alias Vispana.Cluster.AppPackage
   alias Vispana.Cluster.Schema
   alias Vispana.Cluster.Metrics
 
@@ -30,11 +31,12 @@ defmodule Vispana.Cluster do
   end
 
   def vespa_cluster_loader(config_host) do
-    [config_data, container_data, content_clusters_data, metrics] =
+    [config_data, container_data, content_clusters_data, app_package,  metrics] =
       [
         start_async(fn -> fetch_config_data(config_host) end),
         start_async(fn -> fetch_and_aggregate_container_data(config_host) end),
         start_async(fn -> fetch_and_aggregate_content_data(config_host) end),
+        start_async(fn -> fetch_app_package(config_host) end),
         start_async(fn -> fetch_metrics(config_host) end)
       ]
       |> Enum.map(fn task -> Task.await(task, :infinity) end)
@@ -42,7 +44,8 @@ defmodule Vispana.Cluster do
     %VespaCluster{
       configCluster: mount_config_cluster(config_data, metrics),
       containerClusters: mount_container_cluster(container_data, metrics),
-      contentClusters: mount_content_clusters(content_clusters_data, metrics)
+      contentClusters: mount_content_clusters(content_clusters_data, metrics),
+      appPackage: app_package
     }
   end
 
@@ -122,7 +125,6 @@ defmodule Vispana.Cluster do
         doc_count =
           List.first(content_groups).contentNodes
           |> Enum.flat_map(fn content_node ->
-            # IO.inspect(content_node.metrics)
             content_node.metrics
             |> Enum.filter(fn metrics -> metrics["dimensions"]["documenttype"] == schema end)
             |> Enum.map(fn metrics ->
@@ -298,14 +300,84 @@ defmodule Vispana.Cluster do
 
     http_get(url)
     |> http_map(fn decoded_body ->
-      schemas =
         decoded_body["configs"]
         |> tl()
         |> Enum.map(fn schema_url -> String.trim(schema_url, "/") end)
         |> Enum.map(fn schema_url -> List.last(String.split(schema_url, "/")) end)
-
-      schemas
     end)
+  end
+
+  # FIXME this assumes tenant is default, may cause issues for vespa cloud
+  def fetch_app_package(config_host) do
+    url = config_host <> "/application/v2/tenant/default/application/?recursive=true"
+    config_host <> "/ApplicationStatus"
+
+    http_get(url)
+    |> http_map(fn decoded_body ->
+      if length(decoded_body) < 1 do
+        :no_package
+      else
+        # FIXME this assumes a single app
+        app_url = List.first(decoded_body)
+        {:ok, result} = http_get(app_url)
+        |> http_map(fn app_decoded ->
+            generation = app_decoded["generation"]
+            version = List.first(app_decoded["modelVersions"], "N/A")
+            build_time = fetch_build_time(app_url)
+            schemas = fetch_schemas_content(app_url)
+            hosts = fetch_hosts_content(app_url)
+            services_xml = fetch_services_xml_content(app_url)
+
+            # method that helps the UI to generalize better
+            view_content = [%{title: 'services.xml', content: services_xml}, %{title: 'hosts.xml', content: hosts}]
+            ++ (schemas |> Enum.map(fn {key, value} -> %{title: key, content: value} end))
+
+            %AppPackage{buildTimestamp: build_time, generation: generation, vespaVersion: version, schemas: schemas, hosts: hosts, services: services_xml, viewContent: view_content}
+        end)
+        result
+      end
+    end)
+  end
+
+  def fetch_build_time(app_url) do
+    services_url = app_url <> "/content/build-meta.json"
+    {:ok, result} = http_get(services_url)
+    |> http_map(fn decoded_response -> DateTime.from_unix!(decoded_response["buildTime"], :millisecond) end)
+    result
+  end
+
+  def fetch_schemas_content(app_url) do
+    schemas_dir_url = app_url <> "/content/schemas/"
+    # TODO figure out why I need :ok here
+    {:ok, result } = http_get(schemas_dir_url)
+    |> http_map(fn schemas_urls ->
+      schemas_urls
+      |> Enum.map(fn schema_url ->
+
+        # parse URL to appropriate schema name
+        schema_name = List.last(String.split(schema_url, "/"))
+        # TODO figure out why I need :ok here
+        {:ok, schema} = http_get(schema_url)
+        |> http_map(fn schema -> schema end, false)
+        {schema_name, schema}
+      end)
+    |> Enum.into(%{})
+    end)
+    result
+  end
+
+  def fetch_services_xml_content(app_url) do
+    services_url = app_url <> "/content/services.xml"
+    {:ok, result} = http_get(services_url)
+    |> http_map(fn services_xml -> services_xml end, false)
+    result
+  end
+
+  def fetch_hosts_content(app_url) do
+    hosts_url = app_url <> "/content/hosts.xml"
+    {:ok, result} = http_get(hosts_url)
+    |> http_map(fn hosts_xml -> hosts_xml end, false)
+    result
   end
 
   def fetch_metrics(config_host) do
@@ -377,11 +449,14 @@ defmodule Vispana.Cluster do
     HTTPoison.get(url, headers, options)
   end
 
-  def http_map(http_response, mapper_fn) do
+  def http_map(http_response, mapper_fn, decode_json \\ true) do
     case http_response do
       {:ok, %{status_code: 200, body: body}} ->
-        {:ok, mapper_fn.(Poison.decode!(body))}
-
+        if(decode_json) do
+          {:ok, mapper_fn.(Poison.decode!(body))}
+        else
+          {:ok, mapper_fn.(body)}
+        end
       {:ok, %{status_code: 404}} ->
         {:error, :not_found}
 
@@ -443,19 +518,19 @@ defmodule Vispana.Cluster do
           schemas: [
             %Schema{
               schemaName: "schema-1",
-              docCount: 100
+              docCount: 100,
             },
             %Schema{
               schemaName: "schema-2",
-              docCount: 200
+              docCount: 200,
             },
             %Schema{
               schemaName: "schema-3",
-              docCount: 300
+              docCount: 300,
             },
             %Schema{
               schemaName: "schema-4",
-              docCount: 400
+              docCount: 400,
             }
           ],
           contentGroups: [
@@ -511,15 +586,15 @@ defmodule Vispana.Cluster do
           schemas: [
             %Schema{
               schemaName: "schema-5",
-              docCount: 100
+              docCount: 100,
             },
             %Schema{
               schemaName: "schema-6",
-              docCount: 200
+              docCount: 200,
             },
             %Schema{
               schemaName: "schema-7",
-              docCount: 300
+              docCount: 300,
             }
           ],
           contentGroups: [
