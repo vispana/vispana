@@ -56,7 +56,6 @@ defmodule Vispana.ClusterLoader do
   end
 
   defp mount_config_cluster(config_data, metrics) do
-    IO.inspect(metrics)
     parsed_metrics = parse_metrics(metrics)
 
     config_nodes =
