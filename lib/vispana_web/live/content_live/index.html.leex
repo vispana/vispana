@@ -27,7 +27,6 @@
         <div class="pb-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div class="shadow border-b border-darkest-blue sm:rounded-lg">
             <%= if @is_loading == false do %>
-
               <div class="flex">
                 <!--actual component start-->
                 <div x-data="{ activeTab: 0, tabs: [ <%= for contentCluster <- @nodes.contentClusters do %>'<%= contentCluster.clusterId %>', <% end %> ]}" class="w-full">

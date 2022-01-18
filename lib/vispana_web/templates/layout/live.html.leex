@@ -1,11 +1,24 @@
 <main role="main" class="h-screen flex flex-row flex-wrap">
-  <p class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
-
-  <p class="alert alert-danger" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
-
+  <%= unless is_nil(live_flash(@flash, :error)) do %>
+    <div x-data="{ notification: true, content: '<%= live_flash(@flash, :error) %>'}" class="fixed top-5 right-5" style="width: 400px">
+        <div x-show="notification" x-transition
+            class="flex items-center justify-between max-w-xs p-4 bg-standout-blue border rounded-md shadow-sm border-red-400">
+            <div class="flex items-center" style="width: 350px">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd" />
+              </svg>
+              <p class="ml-3 text-sm font-bold text-red-600 truncate" style="width:80%"><%= live_flash(@flash, :error) %></p>
+            </div>
+            <span @click="notification=false;" class="inline-flex items-center cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </span>
+        </div>
+    </div>
+  <% end %>
     <%= @inner_content %>
 </main>
