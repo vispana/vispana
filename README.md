@@ -1,6 +1,6 @@
 # Vispana
 
-Vispana is a [Vespa](https://vespa.ai/) client tool designed to quickly understand the status of a cluster.
+Vispana is a [Vespa.ai](https://vespa.ai/) web client tool designed to quickly understand the status of a cluster.
 
 ## How to run
 
