@@ -80,7 +80,7 @@
                                     <!-- cpu -->
                                     <td class="px-6 " style="min-width:100px; max-width:200px">
                                       <div style="min-width:100px; max-width:200px; margin: auto">
-                                        <progress class='progress <%= if containerNode.cpu_usage > 80 do "progress-error" else if containerNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= containerNode.cpu_usage %>" value="<%= containerNode.cpu_usage %>" max="100" data-theme="light"></progress>
+                                        <progress class='progress <%= if containerNode.cpu_usage > 80 do "progress-error" else if containerNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= Float.round(containerNode.cpu_usage, 2) %>%" value="<%= containerNode.cpu_usage %>" max="100" data-theme="light"></progress>
                                       </div>
                                     </td>
                                   </tr>

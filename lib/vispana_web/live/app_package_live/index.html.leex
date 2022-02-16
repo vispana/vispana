@@ -33,7 +33,7 @@
           </div>
           <div id="component_code" class="flex pt-4"  phx-hook="CodeHighlight">
             <div x-data="{ activeTab: 0, tabs: [ <%= for file <- @nodes.appPackage.viewContent do %>'<%= file.title %>', <% end %> ]}" class="w-full max-w-full min-w-full">
-              <ul class="flex justify-left items-left">
+              <ul class="flex justify-left items-left overflow-x-auto">
                 <template x-for="(tab, index) in tabs" :key="index">
                   <li class="cursor-pointer py-2 px-4 border-b-2" :class="activeTab===index ? 'text-yellow-400 border-yellow-400' : 'text-gray-500 border-gray-500'" @click="activeTab = index" x-text="tab" style="min-width: 200px;"></li>
                 </template>

@@ -24,7 +24,7 @@
   <div class="flex-1 max-h-full bg-darkest-blue">
     <div class="flex flex-grow flex-col pt-2 normal-case">
       <div class="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto">
-        <div class="pb-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="pb-2 align-middle inline-block min-w-full w-full sm:px-6 lg:px-8">
           <div class="shadow border-b border-darkest-blue sm:rounded-lg">
             <%= if @is_loading == false do %>
               <div class="flex">
@@ -43,7 +43,7 @@
                         <!-- tab content -->
                         <div class="flex flex-wrap justify-center">
                           <div class="flex-auto mt-6">
-                            <div  style="min-width: 200px; margin-right: 0.75rem;">
+                            <div  style="min-width: 200px;">
                               <div class="w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 " style="padding: 1.0rem; border-color: #26324a">
                                 <div class="text-yellow-400">
                                   Overview
@@ -73,8 +73,8 @@
                               </div>
                             </div>
                           </div>
-                          <div class="flex-auto md:mt-4 mt-6">
-                            <div class="flex justify-center h-full" style="height: 100%" >
+                          <div class="w-full overflow-x-auto md:mt-4 mt-6 pb-6">
+                            <div class="flex w-full h-full" style="height: 100%" >
                               <%= for schema <- contentCluster.schemas do %>
                                 <div class="flex-grow flex-wrap" style="min-width: 200px; margin-right: 0.75rem;">
                                   <div class="flex flex-col justify-center w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style="height: 100%; padding: 1.0rem; border-color: #26324a">
@@ -95,7 +95,7 @@
                         </div>
 
                         <!-- Hosts -->
-                        <div class="text-left text-yellow-400 my-4">
+                        <div class="text-left text-yellow-400 mb-4">
                           <span>Content nodes (<%= contentCluster.node_count %>)</span>
                         </div>
                         <div class="mr-3">
@@ -154,19 +154,19 @@
                                       <!-- cpu -->
                                       <td class="px-6 " style="min-width:100px; max-width:200px">
                                         <div class="px-6" style="min-width:100px; max-width:200px">
-                                          <progress class='progress <%= if contentNode.cpu_usage > 80 do "progress-error" else if contentNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.cpu_usage %>" value="<%= contentNode.cpu_usage %>" max="100" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.cpu_usage > 80 do "progress-error" else if contentNode.cpu_usage > 50 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= Float.round(contentNode.cpu_usage, 2) %>%" value="<%= contentNode.cpu_usage %>" max="100" data-theme="light"></progress>
                                         </div>
                                       </td>
                                       <!-- memory -->
                                       <td class="px-6 py-3" style="min-width:100px; max-width:200px">
                                         <div class="px-6 "  style="min-width:100px; max-width:200px">
-                                          <progress class='progress <%= if contentNode.memory_usage > 0.8 do "progress-error" else if contentNode.memory_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.memory_usage * 100  %>" value="<%= contentNode.memory_usage %>" max="1" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.memory_usage > 0.8 do "progress-error" else if contentNode.memory_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= Float.round(contentNode.memory_usage * 100, 2)  %>%" value="<%= contentNode.memory_usage %>" max="1" data-theme="light"></progress>
                                         </div>
                                       </td>
                                       <!-- disk -->
                                       <td class="px-6" style="min-width:100px; max-width:200px">
                                         <div class="px-6" style="min-width:100px; max-width:200px">
-                                          <progress class='progress <%= if contentNode.disk_usage > 0.8 do "progress-error" else if contentNode.disk_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= contentNode.disk_usage * 100 %>" value="<%= contentNode.disk_usage %>" max="1" data-theme="light"></progress>
+                                          <progress class='progress <%= if contentNode.disk_usage > 0.8 do "progress-error" else if contentNode.disk_usage > 0.5 do "progress-warning" else "progress-success" end end %> progress-success tippy' data-title="<%= Float.round(contentNode.disk_usage * 100, 2) %>%" value="<%= contentNode.disk_usage %>" max="1" data-theme="light"></progress>
                                         </div>
                                       </td>
                                     </tr>

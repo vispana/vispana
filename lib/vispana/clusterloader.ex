@@ -401,28 +401,38 @@ defmodule Vispana.ClusterLoader do
 
   defp parse_metrics_from_host(host_metrics) do
     host_metric = List.first(host_metrics)
-
     aggregated_metrics =
       host_metric["services"]
-      |> Enum.map(fn ms ->
-        service_status = {ms["name"], ms["status"]["code"]}
-        metrics = ms["metrics"]
+      |> Enum.map(fn service_metric_per_host ->
+        service_status = {service_metric_per_host["name"], service_metric_per_host["status"]["code"]}
+        metrics = service_metric_per_host["metrics"]
 
-        cpu = List.first(metrics)["values"]["cpu"]
-        {disk, memory} = if "vespa.searchnode" == ms["name"] do
-          proton = Enum.at(metrics, 1)
-          disk_average = proton["values"]["content.proton.resource_usage.disk.average"]
-          memory_average = proton["values"]["content.proton.resource_usage.memory.average"]
-          {disk_average, memory_average}
+        # cpu_util is only available on newer versions of vespa (>7.484.7)
+        cpu = List.first(metrics)["values"]["cpu_util"]
+        {disk, memory} = if "vespa.searchnode" == service_metric_per_host["name"] do
+
+          system_metrics = metrics
+          |> Enum.filter(fn metric ->
+            metric["values"]["content.proton.resource_usage.disk.average"] || metric["values"]["content.proton.resource_usage.memory.average"]
+          end)
+
+          if length(system_metrics) > 0 do
+            proton_metrics = Enum.at(system_metrics, 0)
+            disk_average = proton_metrics["values"]["content.proton.resource_usage.disk.average"]
+            memory_average = proton_metrics["values"]["content.proton.resource_usage.memory.average"]
+            {disk_average, memory_average}
+          else
+            {0.0, 0.0}
+          end
         else
-          {0, 0}
+          {0.0, 0.0}
         end
         { service_status, cpu, memory, disk }
       end)
 
 
     {cpu, memory, disk} = aggregated_metrics
-    |> Enum.reduce({0, 0, 0}, fn(metric, acc) ->
+    |> Enum.reduce({0.0, 0.0, 0.0}, fn(metric, acc) ->
       {acc_cpu, acc_memory, acc_disk} = acc
       {_, cpu, memory, disk} = metric
       {ensure_metric(cpu) + acc_cpu, ensure_metric(memory) + acc_memory, ensure_metric(disk) + acc_disk}
