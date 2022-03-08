@@ -1,7 +1,5 @@
+#!/bin/bash
+
 mix deps.get
-
-cd assets || echo "[ERROR] could not find directory 'assets'" && exit 1
-npm install
-
-cd ..
+npm install --prefix ./assets
 mix phx.server
