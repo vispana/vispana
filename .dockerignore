@@ -1,0 +1,7 @@
+.idea
+_build
+assets/node_modules
+deps
+
+assets/package-lock.json
+mix.lock
