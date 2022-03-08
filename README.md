@@ -40,10 +40,9 @@ If you don't want to use the script, you can always run the commands yourself.
 
 ```shell
 mix deps.get
-npm --prefix ./assets install ./package.json
+npm install --prefix ./assets
 mix phx.server
 ```
-
 
 ## Contributing
 
