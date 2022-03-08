@@ -47,6 +47,8 @@ defmodule VispanaWeb do
       use Phoenix.LiveView,
         layout: {VispanaWeb.LayoutView, "live.html"}
 
+      import VispanaWeb.Helpers
+
       unquote(view_helpers())
     end
   end
