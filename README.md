@@ -9,7 +9,7 @@ Vispana is a [Vespa.ai](https://vespa.ai/) web client tool designed to quickly u
 1. [Quickstart](#quickstart)
 2. [Running Locally](#running-locally)
 3. [Contributing](#contributing)
-2. [Known Limitations](#known-limitations)
+4. [Known Limitations](#known-limitations)
 
 ---
 
