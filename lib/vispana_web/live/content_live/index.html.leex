@@ -61,7 +61,7 @@
                                       <span class="text-gray-400">
                                         <%= contentCluster.contentGroups |> Enum.with_index |> Enum.map(fn({contentGroup, index}) -> %>
 
-                                          group-<%= contentGroup.key %><span class="italic">(<%= length(contentGroup.contentNodes) %>)</span>
+                                          '<%= contentGroup.name %>':<span class="italic">(<%= length(contentGroup.contentNodes) %>)</span>
 
                                             <%= if index+1 < length(contentCluster.contentGroups) do %>
                                               |
@@ -84,7 +84,15 @@
 
                                     <div>
                                         <p class="mt-2 text-xs">
-                                          <span class="text-white">Documents: </span> <span class="text-gray-400"><%= format_number(schema.docCount) %></span>
+                                          <span class="text-white">Documents: </span>
+                                          <span class="text-gray-400">
+                                            <%= schema.docCountByGroup  |> Enum.with_index |> Enum.map(fn({docCount, index}) -> %>
+                                              '<%= elem(docCount, 0) %>': <%= format_number(elem(docCount, 1)) %>
+                                              <%= if index+1 < length(contentCluster.contentGroups) do %>
+                                              |
+                                              <% end %>
+                                            <% end) %>
+                                          </span>
                                         </p>
                                     </div>
                                   </div>
