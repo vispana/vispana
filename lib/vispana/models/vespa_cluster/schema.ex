@@ -1,4 +1,4 @@
 defmodule Vispana.Cluster.Schema do
-  @enforce_keys [:schemaName, :docCountByGroup]
-  defstruct [:schemaName, :docCountByGroup]
+  @enforce_keys [:schemaName, :docCount, :docCountByGroup]
+  defstruct [:schemaName, :docCount, :docCountByGroup]
 end

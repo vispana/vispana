@@ -1,0 +1,56 @@
+<div id="<%= @id %>">
+  <%= if @state == "OPEN" do %>
+  <div
+    id="modal-<%= @id %>"
+    phx-hook="InitModal"
+    phx-target="#<%= @id %>"
+    x-data="{ open: false }"
+    x-init="() => {
+      setTimeout(() => open = true, 100);
+      $watch('open', isOpen => $dispatch('modal-change', { open: isOpen, id: '#<%= @id %>' }))
+    }"
+    x-on:close-now="open = false"
+    x-show="open"
+    class="fixed w-full h-full inset-x-0 bottom-0 z-50 px-4 pb-4 sm:inset-0 overflow-y-auto"
+    >
+
+    <!-- BACKDROP -->
+    <div
+      x-show="open"
+      x-transition:enter="ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 transition-opacity"
+    >
+      <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+    </div>
+
+    <!-- MODAL DIALOG -->
+    <div
+      x-show="open"
+      x-transition:enter="ease-out duration-300"
+      x-transition:enter-start="opacity-0 mb-2 sm:mb-8 sm:mt-2 sm:scale-95"
+      x-transition:enter-end="opacity-100 mb-8 sm:mt-8 sm:scale-100"
+      x-transition:leave="ease-in duration-200"
+      x-transition:leave-start="opacity-100  mb-8 sm:mt-8  sm:scale-100"
+      x-transition:leave-end="opacity-0  mb-2 sm:mb-8 sm:mt-2  sm:scale-95"
+      class="relative px-4 mx-auto my-8 shadow-lg sm:px-0" style="min-width: 500px; max-width: 700px">
+      <div @click.away="open = false" @keydown.escape.window="open = false" class="relative flex flex-col bg-standout-blue border rounded-lg" style="border-color: #26324a">
+        <!-- MODAL HEADER -->
+        <div class="text-right pr-3 pt-1 rounded-t">
+          <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
+            &times;
+          </button>
+        </div>
+        <!-- MODAL BODY -->
+        <div class="relative flex-auto p-4 pt-0">
+          <%= render_block(@inner_block, modal_id: @id) %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

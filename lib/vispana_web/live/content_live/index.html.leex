@@ -38,7 +38,7 @@
                   </ul>
 
                   <div class="w-full text-center mx-auto">
-                    <%= @nodes.contentClusters |> Enum.with_index |> Enum.map(fn({contentCluster, index}) -> %>
+                    <%= for {contentCluster, index} <- @nodes.contentClusters |> Enum.with_index do %>
                       <div x-show="activeTab===<%= index %>">
                         <!-- tab content -->
                         <div class="flex flex-wrap justify-center">
@@ -57,15 +57,16 @@
                                       <span >Redundancy: </span> <span class="text-gray-400"><%= contentCluster.redundancy %></span>
                                   </p>
                                   <p class="mt-2 text-xs text-gray-200">
-                                      <span>Groups: </span>
+                                      <span class="font-extrabold">Groups: </span>
                                       <span class="text-gray-400">
                                         <%= contentCluster.contentGroups |> Enum.with_index |> Enum.map(fn({contentGroup, index}) -> %>
 
-                                          '<%= contentGroup.name %>':<span class="italic">(<%= length(contentGroup.contentNodes) %>)</span>
+                                          <span class="text-gray-200"><%= contentGroup.name %></span>
+                                          <span class="italic">(<%= length(contentGroup.contentNodes) %>)</span>
 
-                                            <%= if index+1 < length(contentCluster.contentGroups) do %>
-                                              |
-                                            <% end %>
+                                          <%= if index+1 < length(contentCluster.contentGroups) do %>
+                                            |
+                                          <% end %>
                                         <% end) %>
                                       </span>
                                   </p>
@@ -85,16 +86,33 @@
                                     <div>
                                         <p class="mt-2 text-xs">
                                           <span class="text-white">Documents: </span>
-                                          <span class="text-gray-400">
-                                            <%= schema.docCountByGroup  |> Enum.with_index |> Enum.map(fn({docCount, index}) -> %>
-                                              '<%= elem(docCount, 0) %>': <%= format_number(elem(docCount, 1)) %>
-                                              <%= if index+1 < length(contentCluster.contentGroups) do %>
-                                              |
-                                              <% end %>
-                                            <% end) %>
-                                          </span>
+                                          <button
+                                            class="text-blue-400 underline"
+                                            phx-click="open"
+                                            phx-target="#modal-<%= contentCluster.clusterId %>-<%= schema.schemaName%>">
+                                              <%= format_number(schema.docCount) %>
+                                          </button>
                                         </p>
                                     </div>
+                                    <%= live_component VispanaWeb.Modal, id: "modal-" <> contentCluster.clusterId <> "-" <> schema.schemaName, title: "Modal one title" do %>
+                                      <div class="text-yellow-400">
+                                        Documents by group
+                                      </div>
+                                      <br />
+                                      <span>
+                                        <%= for docCount <- schema.docCountByGroup do %>
+                                          <span class="text-yellow-400">
+                                            <%= elem(docCount, 0) %>:
+                                          </span>
+                                          <% doc_count_value = elem(docCount, 1) %>
+                                          <%= format_number(doc_count_value) %>
+                                          <%= if (doc_count_value - schema.docCount) != 0 do %>
+                                            <span class='text-red-400'>(<%= format_number((doc_count_value - schema.docCount)) %>) </span>
+                                          <% end %>
+                                          <br />
+                                        <% end %>
+                                      </span>
+                                    <% end %>
                                   </div>
                                 </div>
                               <% end %>
@@ -184,7 +202,7 @@
                           </table>
                         </div>
                       </div>
-                    <% end) %>
+                    <% end %>
                   </div>
                 </div>
                 <!--actual component end-->

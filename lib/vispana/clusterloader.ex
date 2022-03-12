@@ -122,7 +122,11 @@ defmodule Vispana.ClusterLoader do
             |> Enum.filter(fn distributor_data -> distributor_data["index"] == Integer.to_string(group) end)
             |> Enum.map(fn distributor_data -> distributor_data["name"] end))
 
-        %ContentGroup{key: group, name: group_name, contentNodes: build_content_nodes(contents, metrics)}
+        if group_name do
+          %ContentGroup{key: group, name: group_name, contentNodes: build_content_nodes(contents, metrics)}
+        else
+          %ContentGroup{key: group, name: "flat", contentNodes: build_content_nodes(contents, metrics)}
+        end
       end)
       |> Enum.sort_by(& &1.key)
 
@@ -157,7 +161,12 @@ defmodule Vispana.ClusterLoader do
           {content_group.name, doc_count}
         end)
         |> Enum.into(%{})
-        %Schema{schemaName: schema, docCountByGroup: doc_count_by_group}
+
+        max_doc_count = doc_count_by_group
+        |> Enum.map(fn ({_, doc_count_in_group}) -> doc_count_in_group end)
+        |> Enum.max()
+
+        %Schema{schemaName: schema, docCount: max_doc_count, docCountByGroup: doc_count_by_group}
 
       end)
 
@@ -548,24 +557,29 @@ defmodule Vispana.ClusterLoader do
           schemas: [
             %Schema{
               schemaName: "schema-1",
-              docCountByGroup: %{0 => 100},
+              docCount: 100,
+              docCountByGroup: %{"0" => 100},
             },
             %Schema{
               schemaName: "schema-2",
-              docCountByGroup: %{0 => 200},
+              docCount: 200,
+              docCountByGroup: %{"0" => 200},
             },
             %Schema{
               schemaName: "schema-3",
-              docCountByGroup: %{0 => 300},
+              docCount: 300,
+              docCountByGroup: %{"0" => 300},
             },
             %Schema{
               schemaName: "schema-4",
-              docCountByGroup: %{0 => 400},
+              docCount: 400,
+              docCountByGroup: %{"0" => 400}
             }
           ],
           contentGroups: [
             %ContentGroup{
               key: "0",
+              name: "0",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
@@ -616,20 +630,24 @@ defmodule Vispana.ClusterLoader do
           schemas: [
             %Schema{
               schemaName: "schema-5",
-              docCountByGroup: %{0 => 100, 1 => 100},
+              docCount: 100,
+              docCountByGroup: %{"1" => 100, "2" => 100},
             },
             %Schema{
               schemaName: "schema-6",
-              docCountByGroup: %{0 => 200, 1 => 200},
+              docCount: 200,
+              docCountByGroup: %{"1" => 200, "2" => 200},
             },
             %Schema{
               schemaName: "schema-7",
-              docCountByGroup: %{0 => 300, 1 => 300},
+              docCount: 300,
+              docCountByGroup: %{"1" => 300, "2" => 300},
             }
           ],
           contentGroups: [
             %ContentGroup{
               key: "1",
+              name: "1",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
