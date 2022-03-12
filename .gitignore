@@ -37,3 +37,7 @@ npm-debug.log
 .idea/
 vispana.iml
 .vscode
+
+# Yarn/NPM files (these change machine to machine).
+**/package-lock.json
+**/yarn.lock

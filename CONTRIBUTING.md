@@ -20,7 +20,7 @@ If you're new to Elixir, you'll need to set up your system.
    * **Note**: Official instructions may not work for recent **Ubuntu/Debian** distro releases.
    * Debian/PopOS/Ubuntu developers can use [asdf](https://thinkingelixir.com/install-elixir-using-asdf/) instead.
 2. Install [NodeJS](https://nodejs.org/en/download/).
-   * Consider using a version manage like [nvm](https://github.com/nvm-sh/nvm).
+   * Consider using a version manager like [nvm](https://github.com/nvm-sh/nvm).
 3. *Optional*: IntelliJ IDEA users may want to install the [Erlang](https://plugins.jetbrains.com/plugin/7083-erlang) and [Elixir](https://plugins.jetbrains.com/plugin/7522-elixir) plugins.
 
 ## Local Development
