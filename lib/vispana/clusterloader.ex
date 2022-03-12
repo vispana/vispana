@@ -111,12 +111,22 @@ defmodule Vispana.ClusterLoader do
   end
 
   defp build_content_cluster(content_cluster_data, metrics) do
-
     content_groups =
       content_cluster_data["node"]
       |> Enum.group_by(fn node -> node["group"] end)
       |> Enum.map(fn {group, contents} ->
-        %ContentGroup{key: group, contentNodes: build_content_nodes(contents, metrics)}
+
+        group_name =
+          List.first(
+            content_cluster_data[:distributor]["group"]
+            |> Enum.filter(fn distributor_data -> distributor_data["index"] == Integer.to_string(group) end)
+            |> Enum.map(fn distributor_data -> distributor_data["name"] end))
+
+        if group_name do
+          %ContentGroup{key: group, name: group_name, contentNodes: build_content_nodes(contents, metrics)}
+        else
+          %ContentGroup{key: group, name: "flat", contentNodes: build_content_nodes(contents, metrics)}
+        end
       end)
       |> Enum.sort_by(& &1.key)
 
@@ -128,8 +138,10 @@ defmodule Vispana.ClusterLoader do
       |> Enum.map(fn schema ->
         # naive way to calculate docs for a given schema by picking the first group and summing up docs from every node in it.
         # note: this is very inefficient, but it's 1AM and I would like to finish it, if important I'll comeback to this!
-        doc_count =
-          List.first(content_groups).contentNodes
+        doc_count_by_group = content_groups
+        |> Enum.map(fn content_group ->
+
+          doc_count = content_group.contentNodes
           |> Enum.flat_map(fn content_node ->
             content_node.metrics
             |> Enum.filter(fn metrics -> metrics["dimensions"]["documenttype"] == schema end)
@@ -146,7 +158,16 @@ defmodule Vispana.ClusterLoader do
           end)
           |> Enum.sum()
 
-        %Schema{schemaName: schema, docCount: doc_count}
+          {content_group.name, doc_count}
+        end)
+        |> Enum.into(%{})
+
+        max_doc_count = doc_count_by_group
+        |> Enum.map(fn ({_, doc_count_in_group}) -> doc_count_in_group end)
+        |> Enum.max()
+
+        %Schema{schemaName: schema, docCount: max_doc_count, docCountByGroup: doc_count_by_group}
+
       end)
 
     partitions =
@@ -289,21 +310,18 @@ defmodule Vispana.ClusterLoader do
   # Fetches distribution keys and associated hosts
   defp fetch_dispatcher_data(config_host, cluster_name) do
     url = config_host <> "/config/v1/vespa.config.search.dispatch/#{cluster_name}/search"
-
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end, url)
   end
 
   defp fetch_content_distribution_data(config_host, content_cluster) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/#{content_cluster}"
-
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body["cluster"][content_cluster] end, url)
   end
 
   defp fetch_schemas(config_host, content_cluster) do
     url = config_host <> "/config/v1/search.config.index-info/#{content_cluster}/?recursive=true"
-
     http_get(url)
     |> http_map(fn decoded_body ->
         decoded_body["configs"]
@@ -540,23 +558,28 @@ defmodule Vispana.ClusterLoader do
             %Schema{
               schemaName: "schema-1",
               docCount: 100,
+              docCountByGroup: %{"0" => 100},
             },
             %Schema{
               schemaName: "schema-2",
               docCount: 200,
+              docCountByGroup: %{"0" => 200},
             },
             %Schema{
               schemaName: "schema-3",
               docCount: 300,
+              docCountByGroup: %{"0" => 300},
             },
             %Schema{
               schemaName: "schema-4",
               docCount: 400,
+              docCountByGroup: %{"0" => 400}
             }
           ],
           contentGroups: [
             %ContentGroup{
               key: "0",
+              name: "0",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
@@ -608,19 +631,23 @@ defmodule Vispana.ClusterLoader do
             %Schema{
               schemaName: "schema-5",
               docCount: 100,
+              docCountByGroup: %{"1" => 100, "2" => 100},
             },
             %Schema{
               schemaName: "schema-6",
               docCount: 200,
+              docCountByGroup: %{"1" => 200, "2" => 200},
             },
             %Schema{
               schemaName: "schema-7",
               docCount: 300,
+              docCountByGroup: %{"1" => 300, "2" => 300},
             }
           ],
           contentGroups: [
             %ContentGroup{
               key: "1",
+              name: "1",
               contentNodes: [
                 %ContentNode{
                   vespaId: 1,
