@@ -487,8 +487,15 @@ defmodule Vispana.ClusterLoader do
         else
           {:ok, mapper_fn.(body)}
         end
-      {:ok, %{status_code: 404}} ->
-        {:error, "404: " <> url}
+      {:ok, %{status_code: 404, body: body}} ->
+        log(:info, body)
+        if String.contains?(body, "No such application id") do
+          {:error, "No application deployed in the cluster"}
+        else
+          {:error, "404: " <> url}
+        end
+
+
       {:ok, %{status_code: 500}} ->
         {:error, "Vespa internal error: " <> url <> ". Error: " <> Kernel.inspect(http_response)}
       {:error, %HTTPoison.Error{reason: reason}} ->
