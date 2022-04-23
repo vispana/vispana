@@ -490,7 +490,7 @@ defmodule Vispana.ClusterLoader do
       {:ok, %{status_code: 404, body: body}} ->
         log(:info, body)
         if String.contains?(body, "No such application id") do
-          {:error, "No application deployed in the cluster"}
+          {:error, "Config node is running, but no application is deployed in the cluster"}
         else
           {:error, "404: " <> url}
         end
