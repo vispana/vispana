@@ -265,20 +265,20 @@ defmodule Vispana.ClusterLoader do
   end
 
   defp fetch_config_data(config_host) do
-    url = config_host <> "/config/v1/cloud.config.cluster-info/admin/cluster-controllers"
+    url = config_host <> "/config/v2/cloud.config.cluster-info/admin/cluster-controllers"
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end, url)
   end
 
   defp fetch_container_data(config_host, container_cluster) do
-    url = config_host <> "/config/v1/cloud.config.cluster-info/" <> container_cluster
+    url = config_host <> "/config/v2/cloud.config.cluster-info/" <> container_cluster
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end, url)
   end
 
   # Fetches content clusters deployed into the vespa custer
   defp fetch_container_cluster_names(config_host) do
-    url = config_host <> "/config/v1/cloud.config.cluster-info/"
+    url = config_host <> "/config/v2/cloud.config.cluster-info/"
     http_get(url)
     |> http_map(fn decoded_body ->
       decoded_body["configs"]
@@ -291,7 +291,7 @@ defmodule Vispana.ClusterLoader do
 
   # Fetches content clusters deployed into the vespa custer
   defp fetch_content_cluster_names(config_host) do
-    url = config_host <> "/config/v1/vespa.config.content.distribution/"
+    url = config_host <> "/config/v2/vespa.config.content.distribution/"
 
     http_get(url)
     |> http_map(fn decoded_body ->
@@ -309,19 +309,19 @@ defmodule Vispana.ClusterLoader do
 
   # Fetches distribution keys and associated hosts
   defp fetch_dispatcher_data(config_host, cluster_name) do
-    url = config_host <> "/config/v1/vespa.config.search.dispatch/#{cluster_name}/search"
+    url = config_host <> "/config/v2/vespa.config.search.dispatch/#{cluster_name}/search"
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body end, url)
   end
 
   defp fetch_content_distribution_data(config_host, content_cluster) do
-    url = config_host <> "/config/v1/vespa.config.content.distribution/#{content_cluster}"
+    url = config_host <> "/config/v2/vespa.config.content.distribution/#{content_cluster}"
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body["cluster"][content_cluster] end, url)
   end
 
   defp fetch_schemas(config_host, content_cluster) do
-    url = config_host <> "/config/v1/search.config.index-info/#{content_cluster}/?recursive=true"
+    url = config_host <> "/config/v2/search.config.index-info/#{content_cluster}/?recursive=true"
     http_get(url)
     |> http_map(fn decoded_body ->
         decoded_body["configs"]
