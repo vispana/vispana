@@ -23,10 +23,10 @@ defmodule Vispana.ClusterLoader do
   alias Vispana.Cluster.Metrics
 
   def load(config_host) do
-    log(:info, "Fetching cluster data for config host: " <> config_host)
+    log(:debug, "Fetching cluster data for config host: " <> config_host)
     cluster_data = vespa_cluster_loader(config_host)
     # cluster_data = _list_nodes_mock(config_host)
-    log(:info, "Finished fetching data for config host: " <> config_host)
+    log(:debug, "Finished fetching data for config host: " <> config_host)
     cluster_data
   end
 
@@ -289,10 +289,10 @@ defmodule Vispana.ClusterLoader do
       end, url)
   end
 
-  # Fetches content clusters deployed into the vespa custer
+  # Fetches content clusters deployed into the vespa cluster
   defp fetch_content_cluster_names(config_host) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/"
-
+    log(:info, "Url to fetch content: " <> url)
     http_get(url)
     |> http_map(fn decoded_body ->
       cluster_names =
@@ -307,21 +307,39 @@ defmodule Vispana.ClusterLoader do
     end, url)
   end
 
+  # Fetches vespa version
+  defp fetch_vespa_major_version(config_host) do
+    url = config_host <> "/config/v2/tenant/default/application/default/cloud.config.model"
+    http_get(url)
+    |> http_map(fn decoded_body -> hd(String.split(decoded_body["vespaVersion"], ".")) end, url)
+  end
+
   # Fetches distribution keys and associated hosts
   defp fetch_dispatcher_data(config_host, cluster_name) do
-    url = config_host <> "/config/v1/vespa.config.search.dispatch/#{cluster_name}/search"
-    http_get(url)
-    |> http_map(fn decoded_body -> decoded_body end, url)
+    {:ok, vespa_version} = fetch_vespa_major_version(config_host)
+    if vespa_version == "7" do
+      url = config_host <> "/config/v1/vespa.config.search.dispatch/#{cluster_name}/search"
+      log(:debug, "Fetching dispatcher data from: " <> url)
+      http_get(url)
+      |> http_map(fn decoded_body -> decoded_body end, url)
+    else
+      url = config_host <> "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/#{cluster_name}/search"
+      log(:debug, "Fetching dispatcher data from: " <> url)
+      http_get(url)
+      |> http_map(fn decoded_body -> decoded_body end, url)
+    end
   end
 
   defp fetch_content_distribution_data(config_host, content_cluster) do
     url = config_host <> "/config/v1/vespa.config.content.distribution/#{content_cluster}"
+    log(:debug, "Fetching content distribution data from: " <> url)
     http_get(url)
     |> http_map(fn decoded_body -> decoded_body["cluster"][content_cluster] end, url)
   end
 
   defp fetch_schemas(config_host, content_cluster) do
     url = config_host <> "/config/v1/search.config.index-info/#{content_cluster}/?recursive=true"
+    log(:debug, "Fetching schemas data from: " <> url)
     http_get(url)
     |> http_map(fn decoded_body ->
         decoded_body["configs"]
@@ -334,6 +352,7 @@ defmodule Vispana.ClusterLoader do
   # FIXME this assumes tenant is default, may cause issues for vespa cloud
   defp fetch_app_package(config_host) do
     url = config_host <> "/application/v2/tenant/default/application/?recursive=true"
+    log(:debug, "Fetching application package data from: " <> url)
     config_host <> "/ApplicationStatus"
 
     http_get(url)
@@ -368,14 +387,15 @@ defmodule Vispana.ClusterLoader do
 
   defp fetch_schemas_content(app_url) do
     schemas_dir_url = app_url <> "/content/schemas/"
+    log(:debug, "Fetching content of schemas' directory from: " <> schemas_dir_url)
     # TODO figure out why I need :ok here
     {:ok, result } = http_get(schemas_dir_url)
     |> http_map(fn schemas_urls ->
       schemas_urls
       |> Enum.map(fn schema_url ->
-
         # parse URL to appropriate schema name
         schema_name = List.last(String.split(schema_url, "/"))
+        log(:debug, "Fetching schema content from: " <> schema_url)
         # TODO figure out why I need :ok here
         {:ok, schema} = http_get(schema_url)
         |> http_map(fn schema -> schema end, schema_url, false)
@@ -388,6 +408,7 @@ defmodule Vispana.ClusterLoader do
 
   defp fetch_services_xml_content(app_url) do
     services_url = app_url <> "/content/services.xml"
+    log(:debug, "Fetching services.xml from: " <> services_url)
     {:ok, result} = http_get(services_url)
     |> http_map(fn services_xml -> services_xml end, services_url, false)
     result
@@ -395,6 +416,7 @@ defmodule Vispana.ClusterLoader do
 
   defp fetch_hosts_content(app_url) do
     hosts_url = app_url <> "/content/hosts.xml"
+    log(:debug, "Fetching hosts.xml from: " <> hosts_url)
     {:ok, result} = http_get(hosts_url)
     |> http_map(fn hosts_xml -> hosts_xml end, hosts_url, false)
     result
@@ -402,7 +424,7 @@ defmodule Vispana.ClusterLoader do
 
   defp fetch_metrics(config_host) do
     url = config_host <> "/metrics/v2/values"
-
+    log(:debug, "Fetching metrics from: " <> url)
     http_get(url)
     |> http_map(fn decoded_body ->
       decoded_body["nodes"]
