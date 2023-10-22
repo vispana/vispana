@@ -1,4 +1,4 @@
-FROM elixir:1.12
+FROM elixir:1.15
 
 # Container setup. Docker caches a layer for each RUN statement.
 RUN mkdir -p /app/assets  # The directory structure we will need to run the app.
