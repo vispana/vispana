@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.invalid-feedback {
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #a94442;
+    display: block;
+    margin: 4px 0 0;
+}
