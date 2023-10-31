@@ -1,6 +1,6 @@
 package com.vispana.model;
 
+import java.util.List;
 import java.util.Map;
 
-// Configuration Node
-public record ConfigurationNodes(Map<String, ConfigurationCluster> configurationNodes) {}
+public record ConfigurationNodes(Map<String, List<ConfigurationNode>> configurationNodes) {}

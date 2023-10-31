@@ -4,6 +4,7 @@ import '../../../resources/static/main.css'
 // react imports
 import React from 'react'
 import {NavLink, Outlet, useLoaderData} from "react-router-dom";
+import vispanaFixture from "./vispana-fixture";
 
 function Layout() {
     const vespaState = useLoaderData();
@@ -18,7 +19,8 @@ function Layout() {
                         <div
                             className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
                             <a href="/">
-                                <img alt="" src="/img/icons8-hive-64.png" className="icon icon-tabler icon-tabler-stack"/>
+                                <img alt="" src="/img/icons8-hive-64.png"
+                                     className="icon icon-tabler icon-tabler-stack"/>
                             </a>
                         </div>
                     </div>
@@ -98,17 +100,15 @@ function Layout() {
 }
 
 export async function loader({request}) {
-    console.log(`Entered into layoutLoader: ${JSON.stringify(request)}`)
     const url = new URL(request.url);
     const configHost = url.searchParams.get("config_host");
-    console.log(`[LayoutLoader] config host: ${configHost}`)
     return await getVespaState(configHost);
 }
 
 async function getVespaState(configHost) {
     return {
         "queryConfigHost": configHost,
-        "state": {}
+        "state": vispanaFixture()
     }
 }
 

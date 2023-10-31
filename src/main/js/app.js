@@ -14,7 +14,7 @@ import Layout, {loader as layoutLoader} from "./routes/layout/layout";
 import Config from "./routes/config/config"
 import Container from "./routes/container/container";
 import Content from "./routes/content/content";
-import AppPackage from "./routes/apppackage/apppackage";
+import AppPackage from "./routes/apppackage/app-package";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
