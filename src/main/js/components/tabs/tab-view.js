@@ -23,7 +23,7 @@ function TabView({ tabs }) {
                         </Tab>))}
 
                 {/* Support tab to fill up the screen*/}
-                <Tab className="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-500 border-b-2"
+                <Tab key={tabs.length + 1} className="flex-grow text-xs py-2 px-4 text-gray-500 border-gray-500 border-b-2"
                      disabled={true}>
                 </Tab>
             </TabList>
@@ -35,7 +35,7 @@ function TabView({ tabs }) {
                     </TabPanel>))}
 
             {/* Support tab to fill up the screen*/}
-            <TabPanel></TabPanel>
+            <TabPanel key={tabs.length}></TabPanel>
         </Tabs>
         </div>
     )

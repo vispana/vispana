@@ -1,14 +1,16 @@
 import React from 'react'
 
-function SimpleGridRow({data}) {
-    const {id, host, processesStatus, hostMetrics} = data;
+function SimpleGridRow({data, hasDistributionKey = false}) {
+    const {id, host, processesStatus, hostMetrics, group} = data;
 
     return (
         <>
             <tr>
                 {renderProcessesStatus()}
                 {renderHost()}
+                {hasDistributionKey ? renderDistributionKey() : <></>}
                 {renderMetrics()}
+
             </tr>
         </>
     )
@@ -50,6 +52,25 @@ function SimpleGridRow({data}) {
         return (
             <td className="px-6 py-2 whitespace-nowrap text-xs text-gray-300">
                 <p className="overflow-ellipsis overflow-hidden">{host.hostname}</p>
+            </td>
+        )
+    }
+
+    function renderDistributionKey() {
+        return (
+            <td className="px-6 py-2">
+                <div className="flex justify-center -m-2">
+                    <div
+                        className="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2"
+                        style={{minWidth: "80px"}}>
+                        Group: {group.id}
+                    </div>
+                    <div
+                        className="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2"
+                        style={{minWidth: "110px"}}>
+                        Distribution: {group.distribution}
+                    </div>
+                </div>
             </td>
         )
     }
@@ -100,10 +121,9 @@ function SimpleGridRow({data}) {
             </>
         )
     }
-
 }
 
-export function header() {
+export function header(hasDistributionKey = false) {
     return <>
         <tr>
             <th scope="col" className="px-6 text-sm font-medium text-blue-100 tracking-wider"
@@ -114,6 +134,12 @@ export function header() {
                 style={{padding: "1rem"}}>
                 <span>Hosts</span>
             </th>
+            {hasDistributionKey ?
+                <th scope="col" className="px-6 text-sm font-medium text-blue-100 tracking-wider"
+                    style={{padding: "1rem"}}>
+                    <span>Distribution key</span>
+                </th> : <></>
+            }
             <th scope="col" className="px-6 text-sm font-medium text-blue-100 tracking-wider"
                 style={{padding: "1rem"}}>
                 <span>CPU usage</span>

@@ -1,4 +1,8 @@
-package com.vispana.model;
+package com.vispana.model.container;
+
+import com.vispana.model.Host;
+import com.vispana.model.HostMetrics;
+import com.vispana.model.Status;
 
 import java.util.Map;
 

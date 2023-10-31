@@ -5,6 +5,14 @@ import com.vispana.model.*;
 import java.util.List;
 import java.util.Map;
 
+import com.vispana.model.apppackage.ApplicationPackage;
+import com.vispana.model.config.ConfigCluster;
+import com.vispana.model.config.ConfigNode;
+import com.vispana.model.config.ConfigNodes;
+import com.vispana.model.container.ContainerCluster;
+import com.vispana.model.container.ContainerNode;
+import com.vispana.model.container.ContainerNodes;
+import com.vispana.model.content.*;
 import org.springframework.stereotype.Component;
 
 
@@ -13,18 +21,72 @@ public class VespaClient {
 
     public VispanaRoot assemble() {
         var configurationNodes = configNodes();
-        var containerNodes = getContainerNodes();
-        var contentNodes = Map.of("content", new ContentNodeCluster());
+        var containerNodes = containerNodes();
+        var contentNodes = contentNodes();
 
         return new VispanaRoot(
-                new ConfigurationNodes(configurationNodes),
+                new ConfigNodes(configurationNodes),
                 new ContainerNodes(containerNodes),
                 new ContentNodes(contentNodes),
                 new ApplicationPackage()
         );
     }
 
-    private static Map<String, List<ContainerNode>> getContainerNodes() {
+    private static List<ContentCluster> contentNodes() {
+        var contentNodeOne = contentNode(
+                "node1",
+                new Host("vespa-content-0.vespa.sparse-suggestions.svc.cluster.local", 19071),
+                Map.of("vespa.config-sentinel", Status.DOWN,
+                        "vespa.container", Status.UP,
+                        "vespa.logd", Status.UNKNOWN,
+                        "vespa.metricsproxy-container", Status.UP),
+                new HostMetrics(0.2786367906108, 0.578492, 0.852123),
+                new Group(new GroupKey("0"), "0"));
+
+        var contentNodeTwo = contentNode(
+                "node2",
+                new Host("vespa-content-1.vespa.sparse-suggestions.svc.cluster.local", 19071),
+                Map.of("vespa.config-sentinel", Status.UP,
+                        "vespa.container", Status.UP,
+                        "vespa.logd", Status.UNKNOWN,
+                        "vespa.metricsproxy-container", Status.UP),
+                new HostMetrics(88.2786367906108, 37.8492, 3.852123),
+                new Group(new GroupKey("0"), "1"));
+
+        var contentNodeThree = contentNode(
+                "node3",
+                new Host("vespa-content-2.vespa.sparse-suggestions.svc.cluster.local", 19071),
+                Map.of("vespa.config-sentinel", Status.UP,
+                        "vespa.container", Status.UP,
+                        "vespa.logd", Status.DOWN,
+                        "vespa.metricsproxy-container", Status.UNKNOWN),
+                new HostMetrics(50.2786367906108, 37.8492, 3.852123),
+                new Group(new GroupKey("1"), "0"));
+
+
+        var contentClusterOne = new ContentCluster(
+                "content1",
+                new ContentOverview(2, 2, 2, Map.of(new GroupKey("0"), 2, new GroupKey("1"), 2)),
+                List.of(
+                        new ContentStoredData(new Schema("artist20230411"), Map.of(new GroupKey("0"), 15000L, new GroupKey("1"), 15001L)),
+                        new ContentStoredData(new Schema("suggestion20231017"), Map.of(new GroupKey("0"), 100L, new GroupKey("1"), 1231L))
+                ),
+                List.of(contentNodeOne, contentNodeTwo));
+
+        var contentClusterTwo = new ContentCluster(
+                "content2",
+                new ContentOverview(2, 2, 2, Map.of(new GroupKey("0"), 2)),
+                List.of(new ContentStoredData(new Schema("artist20230411"), Map.of(new GroupKey("0"), 3L))),
+                List.of(contentNodeThree));
+        return List.of(contentClusterOne, contentClusterTwo);
+    }
+
+    private static ContentNode contentNode(String id, Host host, Map<String, Status> processes, HostMetrics hostMetrics, Group group) {
+        return new ContentNode(id, host, processes, hostMetrics, group);
+    }
+
+
+    private static List<ContainerCluster> containerNodes() {
         var containerNodeOne = containerNode(
                 "node1",
                 new Host("vespa-container-0.vespa.sparse-suggestions.svc.cluster.local", 19071),
@@ -53,14 +115,14 @@ public class VespaClient {
                 new HostMetrics(50.2786367906108, 37.8492, 3.852123));
 
 
-        return Map.of("feed", List.of(containerNodeOne, containerNodeTwo), "query", List.of(containerNodeThree));
+        return List.of(new ContainerCluster("feed", List.of(containerNodeOne, containerNodeTwo)), new ContainerCluster("query", List.of(containerNodeThree)));
     }
 
     private static ContainerNode containerNode(String id, Host host, Map<String, Status> processes, HostMetrics hostMetrics) {
         return new ContainerNode(id, host, processes, hostMetrics);
     }
 
-    private static Map<String, List<ConfigurationNode>> configNodes() {
+    private static List<ConfigCluster> configNodes() {
         var configNodeOne = configNode(
                 "node1",
                 new Host("vespa-config-0.vespa.sparse-suggestions.svc.cluster.local", 19071),
@@ -95,10 +157,10 @@ public class VespaClient {
                 new HostMetrics(50.2786367906108, 37.8492, 3.852123));
 
 
-        return Map.of("admin", List.of(configNodeOne, configNodeTwo), "admin2", List.of(configNodeThree));
+        return List.of(new ConfigCluster("admin", List.of(configNodeOne, configNodeTwo)), new ConfigCluster("admin2", List.of(configNodeThree)));
     }
 
-    private static ConfigurationNode configNode(String id, Host host, Map<String, Status> processes, HostMetrics hostMetrics) {
-        return new ConfigurationNode(id, host, processes, hostMetrics);
+    private static ConfigNode configNode(String id, Host host, Map<String, Status> processes, HostMetrics hostMetrics) {
+        return new ConfigNode(id, host, processes, hostMetrics);
     }
 }

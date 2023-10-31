@@ -11,22 +11,17 @@ import TabView from "../../components/tabs/tab-view";
 function Container() {
     const {vespaState} = useOutletContext();
 
-    const configurationNodes = vespaState
+    const tabs = vespaState
         .state
-        .containers
-        .containerNodes;
-
-    const tabs = Object.keys(configurationNodes)
-        .map(configCluster => {
-            const configNodes = configurationNodes[configCluster]
+        .container
+        .clusters
+        .map(cluster => {
             return {
-                "header": configCluster,
-                "content": <SimpleGrid header="Container nodes">
-                    {configNodes
-                        .map(node => {
-                            return <SimpleGridRow key={node.id} data={node}/>
-                        })}
-                </SimpleGrid>
+                "header": cluster.name,
+                "content":
+                    <SimpleGrid header="Container nodes">
+                        { cluster.nodes.map(node => (<SimpleGridRow key={node.name} data={node}/>)) }
+                    </SimpleGrid>
             }
         })
 

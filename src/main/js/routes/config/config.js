@@ -11,22 +11,17 @@ import SimpleGridRow from "../../components/simple-grid/simple-grid-row";
 function Config() {
     const {vespaState} = useOutletContext();
 
-    const configurationNodes = vespaState
+    const tabs = vespaState
         .state
-        .configs
-        .configurationNodes;
-
-    const tabs = Object.keys(configurationNodes)
-        .map(configCluster => {
-            const configNodes = configurationNodes[configCluster]
+        .config
+        .clusters
+        .map(cluster => {
             return {
-                "header": configCluster,
-                "content": <SimpleGrid header="Config nodes">
-                    {configNodes
-                        .map(node => {
-                            return <SimpleGridRow key={node.id} data={node}/>
-                        })}
-                </SimpleGrid>
+                "header": cluster.name,
+                "content":
+                    <SimpleGrid header="Config nodes">
+                        { cluster.nodes.map(node => (<SimpleGridRow key={node.name} data={node}/>)) }
+                    </SimpleGrid>
             }
         })
 
