@@ -1,4 +1,4 @@
-package com.vispana.model;
+package com.vispana.api.model;
 
 public enum Status{
     UP,

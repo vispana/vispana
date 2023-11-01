@@ -1,9 +1,6 @@
-// necessary import to bundle CSS into a package with postcss
-import '../../../resources/static/main.css'
-
-// react imports
 import React from 'react'
 import {useOutletContext} from "react-router-dom";
+
 import TabView from "../../components/tabs/tab-view";
 import SimpleGrid from "../../components/simple-grid/simple-grid";
 import SimpleGridRow from "../../components/simple-grid/simple-grid-row";
@@ -25,11 +22,7 @@ function Config() {
             }
         })
 
-    return (
-        <>
-            <TabView tabs={tabs}></TabView>
-        </>
-    );
+    return (<TabView tabs={tabs}></TabView>);
 }
 
 export default Config;

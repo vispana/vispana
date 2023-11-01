@@ -1,6 +1,5 @@
-package com.vispana.model.config;
+package com.vispana.api.model.config;
 
 import java.util.List;
-import java.util.Map;
 
 public record ConfigNodes(List<ConfigCluster> clusters) {}

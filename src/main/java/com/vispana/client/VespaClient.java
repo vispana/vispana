@@ -1,18 +1,18 @@
-package com.vispana;
+package com.vispana.client;
 
-import com.vispana.model.*;
+import com.vispana.api.model.*;
 
 import java.util.List;
 import java.util.Map;
 
-import com.vispana.model.apppackage.ApplicationPackage;
-import com.vispana.model.config.ConfigCluster;
-import com.vispana.model.config.ConfigNode;
-import com.vispana.model.config.ConfigNodes;
-import com.vispana.model.container.ContainerCluster;
-import com.vispana.model.container.ContainerNode;
-import com.vispana.model.container.ContainerNodes;
-import com.vispana.model.content.*;
+import com.vispana.api.model.apppackage.ApplicationPackage;
+import com.vispana.api.model.config.ConfigCluster;
+import com.vispana.api.model.config.ConfigNode;
+import com.vispana.api.model.config.ConfigNodes;
+import com.vispana.api.model.container.ContainerCluster;
+import com.vispana.api.model.container.ContainerNode;
+import com.vispana.api.model.container.ContainerNodes;
+import com.vispana.api.model.content.*;
 import org.springframework.stereotype.Component;
 
 
@@ -68,15 +68,15 @@ public class VespaClient {
                 "content1",
                 new ContentOverview(2, 2, 2, Map.of(new GroupKey("0"), 2, new GroupKey("1"), 2)),
                 List.of(
-                        new ContentStoredData(new Schema("artist20230411"), Map.of(new GroupKey("0"), 15000L, new GroupKey("1"), 15001L)),
-                        new ContentStoredData(new Schema("suggestion20231017"), Map.of(new GroupKey("0"), 100L, new GroupKey("1"), 1231L))
+                        new ContentData(new Schema("artist20230411", "schema artist20230411 {}"), List.of(new SchemaDocCount(new GroupKey("0"), 49321345L), new SchemaDocCount(new GroupKey("1"), 49321341L))),
+                        new ContentData(new Schema("suggestion20231017", "schema suggestion20231017 {}"), List.of(new SchemaDocCount(new GroupKey("0"), 100L), new SchemaDocCount(new GroupKey("1"), 1231L)))
                 ),
                 List.of(contentNodeOne, contentNodeTwo));
 
         var contentClusterTwo = new ContentCluster(
                 "content2",
                 new ContentOverview(2, 2, 2, Map.of(new GroupKey("0"), 2)),
-                List.of(new ContentStoredData(new Schema("artist20230411"), Map.of(new GroupKey("0"), 3L))),
+                List.of(new ContentData(new Schema("artist20230411", "schema artist20230411 {}"), List.of(new SchemaDocCount(new GroupKey("0"), 3L)))),
                 List.of(contentNodeThree));
         return List.of(contentClusterOne, contentClusterTwo);
     }

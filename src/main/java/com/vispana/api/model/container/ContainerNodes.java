@@ -1,4 +1,4 @@
-package com.vispana.model.container;
+package com.vispana.api.model.container;
 
 import java.util.List;
 

@@ -12,11 +12,11 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.container-clustercontroller": "DOWN",
-                                "vespa.config-sentinel": "DOWN",
-                                "vespa.configserver": "UP",
-                                "vespa.logd": "UP",
                                 "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UP",
+                                "vespa.configserver": "UP",
+                                "vespa.config-sentinel": "DOWN",
+                                "vespa.container-clustercontroller": "DOWN",
                                 "vespa.slobrok": "UP"
                             },
                             "hostMetrics": {
@@ -32,11 +32,11 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.container-clustercontroller": "UP",
-                                "vespa.config-sentinel": "UP",
-                                "vespa.configserver": "DOWN",
-                                "vespa.logd": "DOWN",
                                 "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "DOWN",
+                                "vespa.configserver": "DOWN",
+                                "vespa.config-sentinel": "UP",
+                                "vespa.container-clustercontroller": "UP",
                                 "vespa.slobrok": "UNKNOWN"
                             },
                             "hostMetrics": {
@@ -57,11 +57,11 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.container-clustercontroller": "UP",
-                                "vespa.config-sentinel": "UP",
-                                "vespa.configserver": "UP",
-                                "vespa.logd": "UNKNOWN",
                                 "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UNKNOWN",
+                                "vespa.configserver": "UP",
+                                "vespa.config-sentinel": "UP",
+                                "vespa.container-clustercontroller": "UP",
                                 "vespa.slobrok": "UNKNOWN"
                             },
                             "hostMetrics": {
@@ -86,10 +86,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UP",
                                 "vespa.config-sentinel": "DOWN",
-                                "vespa.container": "UP",
-                                "vespa.logd": "UNKNOWN"
+                                "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UNKNOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 0.2786367906108,
@@ -104,10 +104,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UP",
                                 "vespa.config-sentinel": "UP",
-                                "vespa.container": "UP",
-                                "vespa.logd": "UNKNOWN"
+                                "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UNKNOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 88.2786367906108,
@@ -127,10 +127,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UNKNOWN",
                                 "vespa.config-sentinel": "UP",
-                                "vespa.container": "UP",
-                                "vespa.logd": "DOWN"
+                                "vespa.metricsproxy-container": "UNKNOWN",
+                                "vespa.logd": "DOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 50.2786367906108,
@@ -155,25 +155,39 @@ export default function vispanaFixture() {
                             "0": 2
                         }
                     },
-                    "storedData": [
+                    "contentData": [
                         {
                             "schema": {
-                                "schemaName": "artist20230411"
+                                "schemaName": "artist20230411",
+                                "schemaContent": "schema artist20230411 {}"
                             },
-                            "documentsPerGroup": {
-                                "1": 15001,
-                                "0": 15000
-                            },
-                            "maxDocPerGroup": 15001
+                            "schemaDocCountPerGroup": [
+                                {
+                                    "group": "0",
+                                    "documents": 49321345
+                                },
+                                {
+                                    "group": "1",
+                                    "documents": 49321341
+                                }
+                            ],
+                            "maxDocPerGroup": 49321345
                         },
                         {
                             "schema": {
-                                "schemaName": "suggestion20231017"
+                                "schemaName": "suggestion20231017",
+                                "schemaContent": "schema suggestion20231017 {}"
                             },
-                            "documentsPerGroup": {
-                                "1": 1231,
-                                "0": 100
-                            },
+                            "schemaDocCountPerGroup": [
+                                {
+                                    "group": "0",
+                                    "documents": 100
+                                },
+                                {
+                                    "group": "1",
+                                    "documents": 1231
+                                }
+                            ],
                             "maxDocPerGroup": 1231
                         }
                     ],
@@ -185,10 +199,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UP",
                                 "vespa.config-sentinel": "DOWN",
-                                "vespa.container": "UP",
-                                "vespa.logd": "UNKNOWN"
+                                "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UNKNOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 0.2786367906108,
@@ -207,10 +221,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UP",
                                 "vespa.config-sentinel": "UP",
-                                "vespa.container": "UP",
-                                "vespa.logd": "UNKNOWN"
+                                "vespa.metricsproxy-container": "UP",
+                                "vespa.logd": "UNKNOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 88.2786367906108,
@@ -234,14 +248,18 @@ export default function vispanaFixture() {
                             "0": 2
                         }
                     },
-                    "storedData": [
+                    "contentData": [
                         {
                             "schema": {
-                                "schemaName": "artist20230411"
+                                "schemaName": "artist20230411",
+                                "schemaContent": "schema artist20230411 {}"
                             },
-                            "documentsPerGroup": {
-                                "0": 3
-                            },
+                            "schemaDocCountPerGroup": [
+                                {
+                                    "group": "0",
+                                    "documents": 3
+                                }
+                            ],
                             "maxDocPerGroup": 3
                         }
                     ],
@@ -253,10 +271,10 @@ export default function vispanaFixture() {
                                 "port": 19071
                             },
                             "processesStatus": {
-                                "vespa.metricsproxy-container": "UNKNOWN",
                                 "vespa.config-sentinel": "UP",
-                                "vespa.container": "UP",
-                                "vespa.logd": "DOWN"
+                                "vespa.metricsproxy-container": "UNKNOWN",
+                                "vespa.logd": "DOWN",
+                                "vespa.container": "UP"
                             },
                             "hostMetrics": {
                                 "cpuUsage": 50.2786367906108,
@@ -274,5 +292,4 @@ export default function vispanaFixture() {
         },
         "applicationPackage": {}
     }
-
 }

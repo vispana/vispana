@@ -1,4 +1,4 @@
-package com.vispana.model.config;
+package com.vispana.api.model.config;
 
 import java.util.List;
 

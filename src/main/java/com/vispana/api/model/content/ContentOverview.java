@@ -1,4 +1,4 @@
-package com.vispana.model.content;
+package com.vispana.api.model.content;
 
 import java.util.Map;
 

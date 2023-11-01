@@ -1,8 +1,8 @@
-package com.vispana.model.content;
+package com.vispana.api.model.content;
 
-import com.vispana.model.Host;
-import com.vispana.model.HostMetrics;
-import com.vispana.model.Status;
+import com.vispana.api.model.Host;
+import com.vispana.api.model.HostMetrics;
+import com.vispana.api.model.Status;
 
 import java.util.Map;
 
