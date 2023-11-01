@@ -1,4 +1,4 @@
 package com.vispana.api.model.apppackage;
 
 // Application package
-public record ApplicationPackage() {}
+public record ApplicationPackage(String appPackageGeneration, String servicesContent, String hostsContent) {}

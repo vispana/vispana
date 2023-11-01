@@ -251,8 +251,8 @@ export default function vispanaFixture() {
                     "contentData": [
                         {
                             "schema": {
-                                "schemaName": "artist20230411",
-                                "schemaContent": "schema artist20230411 {}"
+                                "schemaName": "artist20233011",
+                                "schemaContent": "schema artist20233011 {}"
                             },
                             "schemaDocCountPerGroup": [
                                 {
@@ -290,6 +290,10 @@ export default function vispanaFixture() {
                 }
             ]
         },
-        "applicationPackage": {}
+        "applicationPackage": {
+            "appPackageGeneration": "51",
+            "servicesContent": "        <services version=\"1.0\">\n            <container id=\"query\" version=\"1.0\">\n                ...\n            </container>\n            <nodes>\n            ...\n            </nodes>\n        </services>\n",
+            "hostsContent": "<?xml version='1.0' encoding='UTF-8'?>\n        <hosts>\n          <host name=\"vespa-admin-0.vespa.semantic-vespa-gke.svc.cluster.local\">\n            <alias>admin-0</alias>\n          </host>\n</xml>\n"
+        }
     }
 }

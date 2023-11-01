@@ -68,14 +68,14 @@ function Content() {
         </div>;
     }
 
-    function renderSchemas(storedData) {
+    function renderSchemas(contentData) {
         const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
         return (
             <>
                 <div className="w-full overflow-x-auto md:mt-4 mt-6 pb-6">
                     <div className="flex w-full h-full" style={{height: "100%"}}>
-                        {storedData
+                        {contentData
                         .map((data, index) => {
                             return (
                                 <div key={index} className="flex-grow flex-wrap" style={{minWidth: "200px", marginRight: "0.75rem"}}>

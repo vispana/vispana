@@ -23,12 +23,13 @@ public class VespaClient {
         var configurationNodes = configNodes();
         var containerNodes = containerNodes();
         var contentNodes = contentNodes();
+        var applicationPackage = applicationPackage();
 
         return new VispanaRoot(
                 new ConfigNodes(configurationNodes),
                 new ContainerNodes(containerNodes),
                 new ContentNodes(contentNodes),
-                new ApplicationPackage()
+                applicationPackage
         );
     }
 
@@ -76,7 +77,7 @@ public class VespaClient {
         var contentClusterTwo = new ContentCluster(
                 "content2",
                 new ContentOverview(2, 2, 2, Map.of(new GroupKey("0"), 2)),
-                List.of(new ContentData(new Schema("artist20230411", "schema artist20230411 {}"), List.of(new SchemaDocCount(new GroupKey("0"), 3L)))),
+                List.of(new ContentData(new Schema("artist20233011", "schema artist20233011 {}"), List.of(new SchemaDocCount(new GroupKey("0"), 3L)))),
                 List.of(contentNodeThree));
         return List.of(contentClusterOne, contentClusterTwo);
     }
@@ -162,5 +163,28 @@ public class VespaClient {
 
     private static ConfigNode configNode(String id, Host host, Map<String, Status> processes, HostMetrics hostMetrics) {
         return new ConfigNode(id, host, processes, hostMetrics);
+    }
+
+    private static ApplicationPackage applicationPackage() {
+        var service = """
+                        <services version="1.0">
+                            <container id="query" version="1.0">
+                                ...
+                            </container>
+                            <nodes>
+                            ...
+                            </nodes>
+                        </services>
+                """;
+
+        var hosts = """
+                <?xml version='1.0' encoding='UTF-8'?>
+                        <hosts>
+                          <host name="vespa-admin-0.vespa.semantic-vespa-gke.svc.cluster.local">
+                            <alias>admin-0</alias>
+                          </host>
+                </xml>
+                """;
+        return new ApplicationPackage("51", service, hosts);
     }
 }
