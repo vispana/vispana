@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/vispana/vispana",
   "dependencies": {
-    "@floating-ui/react": "^0.26.1",
-    "@tippyjs/react": "^4.2.6",
     "daisyui": "^3.9.3",
     "install": "^0.13.0",
     "npm": "^10.2.1",
