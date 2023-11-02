@@ -1,9 +1,9 @@
-export default function vispanaFixture() {
+export default function vispanaFixture(configCluster="admin") {
     return {
         "config": {
             "clusters": [
                 {
-                    "name": "admin",
+                    "name": configCluster,
                     "nodes": [
                         {
                             "name": "node1",

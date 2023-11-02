@@ -2,12 +2,54 @@
 import '../../../resources/static/main.css'
 
 // react imports
-import React from 'react'
-import {NavLink, Outlet, useLoaderData} from "react-router-dom";
-import vispanaFixture from "./vispana-fixture";
+import React, {useEffect, useState} from 'react'
+import {NavLink, Outlet, useFetcher, useLoaderData} from "react-router-dom";
+import VispanaApiClient from "../../client/vispana-api-client";
 
 function Layout() {
-    const vespaState = useLoaderData();
+    const loaderData = useLoaderData();
+    const fetcher = useFetcher();
+
+    // create 'vespaState' state
+    const [vespaState, setVespaState] = useState(loaderData);
+
+    // refresh interval state
+    const refreshIconClass = "fas fa-sync-alt"
+    const [refreshInterval, setRefreshInterval] = useState(-1);
+    const [refreshIcon, setRefreshIcon] = useState(refreshIconClass);
+
+    // store application URI for redirecting once refresh is triggered.
+    // there's probably a better alternative than calling 'fetcher.load', however it's
+    // 4AM and it's working.
+    const parentUri = `/app?config_host=${vespaState.queryConfigHost}`;
+
+    // Code below sets the expected effects once refreshes changes
+    useEffect(() => {
+        // only schedule refreshes if interval is bigger than 0
+        if(refreshInterval > 0) {
+            const interval = setInterval(() => {
+                if (document.visibilityState === "visible") {
+                    fetcher.load(parentUri);
+                }
+            }, refreshInterval);
+            return () => clearInterval(interval);
+        }
+    }, [refreshInterval]);
+
+    useEffect(() => {
+        if (fetcher.data) {
+            setVespaState(fetcher.data)
+        }
+    }, [fetcher.data]);
+
+    useEffect(() => {
+        if(fetcher.state === "idle") {
+            setRefreshIcon(refreshIconClass)
+        } else {
+            setRefreshIcon(refreshIconClass + " fa-spin text-yellow-400")
+        }
+    }, [fetcher.state]);
+
 
     return (<>
         <main role="main" className="h-screen flex flex-row flex-wrap">
@@ -49,15 +91,17 @@ function Layout() {
                 <div>
                     <div className="space-x-1 w-full">
                         <div className="text-right font-flow" style={{textAlign: "right"}}>
-                            <form action="#" className="block-inline" id="form" method="post">
-                                <input name="_csrf_token" type="hidden"
-                                       value="KykoB1t1XQMnHWEMFRlyAAcaGygBPyI8djdojM0KhmPbal7fIHpodmMh"/>
+
                                 <a className="text-xs btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0"
-                                   style={{marginRight: '2px'}}>
-                                    <i className="fas fa-sync-alt"></i>
+                                   style={{marginRight: '2px'}} onClick={() => {
+                                    fetcher.load(`/app?config_host=${vespaState.queryConfigHost}`)
+                                }}>
+                                    <i className={refreshIcon}></i>
                                 </a>
                                 <select className="select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0"
-                                        id="form_interval" name="refresh_interval[interval]" defaultValue={-1}>
+                                        id="form_interval" name="refresh_interval[interval]" defaultValue={-1} onChange={(event) => {
+                                            setRefreshInterval(Number(event.target.value))
+                                }}>
                                     <option value="-1">Off</option>
                                     <option value="15000">15s</option>
                                     <option value="30000">30s</option>
@@ -67,7 +111,7 @@ function Layout() {
                                     <option value="1800000">30m</option>
                                     <option value="3600000">1h</option>
                                 </select>
-                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -91,7 +135,7 @@ function Layout() {
     function navLinkStyle() {
         return ({isActive}) => {
             if (isActive) {
-                return "mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 text-yellow-400"
+                return "mb-3 capitalize font-medium text-sm transition ease-in-out duration-100 text-yellow-400"
             } else {
                 return "mb-3 capitalize font-medium text-sm hover:text-white transition ease-in-out duration-500 text-gray-300"
             }
@@ -106,9 +150,11 @@ export async function loader({request}) {
 }
 
 async function getVespaState(configHost) {
+    const vispanaClient = new VispanaApiClient(configHost)
+    const vespaState = await vispanaClient.fetchVespaState()
     return {
         "queryConfigHost": configHost,
-        "state": vispanaFixture()
+        "state": vespaState
     }
 }
 

@@ -11,7 +11,7 @@
     margin: 4px 0 0;
 }
 
-li:focus, li:active {
+li:focus, li:active, select:focus, select:active {
     outline: none !important;
     text-decoration: none !important;
     box-shadow: none !important;
