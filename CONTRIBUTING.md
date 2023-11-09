@@ -38,11 +38,12 @@ To run locally, execute:
 
 The service will be available at [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Commiting to the repository
+## Git commit into to the repository
 
 We advise to add [scope](https://ec.europa.eu/component-library/v1.15.0/eu/docs/conventions/git/#:~:text=feat%3A%20A%20new%20feature,bug%20nor%20adds%20a%20feature)
 to the beginning of git commit message, as the release process rely on it for automatically generating the semantic version.
 
+Possible scopes:
 ```
 feat: A new feature
 fix: A bug fix
