@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: "[Review] - Build project & check style"
 
 on:
   pull_request:
@@ -30,4 +30,4 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B fmt:check package --file pom.xml
