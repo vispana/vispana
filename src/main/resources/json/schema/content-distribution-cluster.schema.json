@@ -1,0 +1,59 @@
+{
+  "type" : "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "active_per_leaf_group": {
+            "type": "boolean"
+          },
+          "ready_copies": {
+            "type": "integer"
+          },
+          "redundancy": {
+            "type": "integer"
+          },
+          "initial_redundancy": {
+            "type": "integer"
+          },
+          "group": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "capacity": {
+                  "type": "number"
+                },
+                "partitions": {
+                  "type": "string"
+                },
+                "nodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "integer"
+                      },
+                      "retired": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "javaType" : "com.vispana.client.vespa.model.content.Node",
+  "type" : "object",
+  "properties" : {
+    "key" : {
+      "type" : "integer"
+    },
+    "group" : {
+      "type" : "integer"
+    },
+    "host" : {
+      "type" : "string"
+    },
+    "port" : {
+      "type" : "integer"
+    }
+  }
+}

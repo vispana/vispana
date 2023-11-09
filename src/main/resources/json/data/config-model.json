@@ -1,0 +1,5632 @@
+{
+  "vespaVersion": "7.594.36",
+  "hosts": [
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.0",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 0,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.1",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 1,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.2",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 2,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.3",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 3,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 3,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.4",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 4,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 4,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.5",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 5,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 5,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.6",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 6,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 6,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.7",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 7,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 7,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.8",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 8,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 8,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "qrserver",
+          "type": "qrserver",
+          "configid": "container/container.9",
+          "clustertype": "",
+          "clustername": "container",
+          "index": 9,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 9,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "container",
+          "type": "container",
+          "configid": "feed/container.0",
+          "clustertype": "",
+          "clustername": "feed",
+          "index": 0,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 10,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "container",
+          "type": "container",
+          "configid": "feed/container.1",
+          "clustertype": "",
+          "clustername": "feed",
+          "index": 1,
+          "ports": [
+            {
+              "number": 8080,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19100,
+              "tags": "external http"
+            },
+            {
+              "number": 19101,
+              "tags": "messaging rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 11,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "configserver",
+          "type": "configserver",
+          "configid": "admin/configservers/configserver.0",
+          "clustertype": "admin",
+          "clustername": "admin",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19070,
+              "tags": "config rpc"
+            },
+            {
+              "number": 19071,
+              "tags": "state config http"
+            }
+          ]
+        },
+        {
+          "name": "logserver",
+          "type": "logserver",
+          "configid": "admin/logserver",
+          "clustertype": "admin",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19080,
+              "tags": "rpc logtp"
+            },
+            {
+              "number": 19081,
+              "tags": "unused"
+            },
+            {
+              "number": 19082,
+              "tags": "unused"
+            },
+            {
+              "number": 19083,
+              "tags": "unused"
+            }
+          ]
+        },
+        {
+          "name": "slobrok",
+          "type": "slobrok",
+          "configid": "admin/slobrok.0",
+          "clustertype": "slobrok",
+          "clustername": "admin",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19099,
+              "tags": "status admin rpc"
+            },
+            {
+              "number": 19100,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "container-clustercontroller",
+          "type": "container-clustercontroller",
+          "configid": "admin/cluster-controllers/0",
+          "clustertype": "",
+          "clustername": "cluster-controllers",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19050,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19101,
+              "tags": "external http"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 12,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "configserver",
+          "type": "configserver",
+          "configid": "admin/configservers/configserver.1",
+          "clustertype": "admin",
+          "clustername": "admin",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19070,
+              "tags": "config rpc"
+            },
+            {
+              "number": 19071,
+              "tags": "state config http"
+            }
+          ]
+        },
+        {
+          "name": "slobrok",
+          "type": "slobrok",
+          "configid": "admin/slobrok.1",
+          "clustertype": "slobrok",
+          "clustername": "admin",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19099,
+              "tags": "status admin rpc"
+            },
+            {
+              "number": 19100,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "container-clustercontroller",
+          "type": "container-clustercontroller",
+          "configid": "admin/cluster-controllers/1",
+          "clustertype": "",
+          "clustername": "cluster-controllers",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19050,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19101,
+              "tags": "external http"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 13,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "configserver",
+          "type": "configserver",
+          "configid": "admin/configservers/configserver.2",
+          "clustertype": "admin",
+          "clustername": "admin",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19070,
+              "tags": "config rpc"
+            },
+            {
+              "number": 19071,
+              "tags": "state config http"
+            }
+          ]
+        },
+        {
+          "name": "slobrok",
+          "type": "slobrok",
+          "configid": "admin/slobrok.2",
+          "clustertype": "slobrok",
+          "clustername": "admin",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19099,
+              "tags": "status admin rpc"
+            },
+            {
+              "number": 19100,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "container-clustercontroller",
+          "type": "container-clustercontroller",
+          "configid": "admin/cluster-controllers/2",
+          "clustertype": "",
+          "clustername": "cluster-controllers",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19050,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19101,
+              "tags": "external http"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 14,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/1",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/1",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/1/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/1",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 1,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 15,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/2",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/2",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/2/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/2",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 2,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 16,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/3",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 3,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/3",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 3,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/3/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/3",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 3,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 17,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/7",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 7,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/7",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 7,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/7/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/7",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 7,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 18,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/4",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 4,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/4",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 4,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/4/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/4",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 4,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 19,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/5",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 5,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/5",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 5,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/5/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/5",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 5,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 20,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/6",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 6,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/6",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 6,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/6/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/6",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 6,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 21,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/8",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 8,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/8",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 8,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/8/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/8",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 8,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 22,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/9",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 9,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/9",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 9,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/9/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/9",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 9,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 23,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/10",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 10,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/10",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 10,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/10/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/10",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 10,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 24,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/11",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 11,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/11",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 11,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/11/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/11",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 11,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 25,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/12",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 12,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/12",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 12,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/12/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/12",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 12,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 26,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/13",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 13,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/13",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 13,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/13/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/13",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 13,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 27,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/14",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 14,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/14",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 14,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/14/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/14",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 14,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 28,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/15",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 15,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/15",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 15,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/15/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/15",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 15,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 29,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/16",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 16,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/16",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 16,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/16/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/16",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 16,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 30,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/17",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 17,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/17",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 17,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/17/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/17",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 17,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 31,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/18",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 18,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/18",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 18,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/18/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/18",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 18,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 32,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/19",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 19,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/19",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 19,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/19/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/19",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 19,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 33,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/20",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 20,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/20",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 20,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/20/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/20",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 20,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 34,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/21",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 21,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/21",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 21,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/21/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/21",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 21,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 35,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/22",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 22,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/22",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 22,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/22/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/22",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 22,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 36,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/23",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 23,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/23",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 23,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/23/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/23",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 23,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 37,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "host.net",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "abc/storage/24",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 24,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "abc/search/cluster.abc/24",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 24,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "abc/search/cluster.abc/24/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "abc",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "abc/distributor/24",
+          "clustertype": "content",
+          "clustername": "abc",
+          "index": 24,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/host.net",
+          "clustertype": "admin",
+          "clustername": "metrics",
+          "index": 38,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/host.net",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

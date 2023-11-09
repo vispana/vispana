@@ -1,0 +1,238 @@
+{
+  "clusterId": "container",
+  "nodeCount": 10,
+  "nodeIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "services": [
+    {
+      "index": 0,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "hostname": "host.net",
+      "ports": [
+        {
+          "number": 8080,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19100,
+          "tags": "external http"
+        },
+        {
+          "number": 19101,
+          "tags": "messaging rpc"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    }
+  ]
+}

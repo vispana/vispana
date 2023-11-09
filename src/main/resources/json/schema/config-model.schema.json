@@ -1,0 +1,59 @@
+{
+  "type" : "object",
+  "properties" : {
+    "vespaVersion" : {
+      "type" : "string"
+    },
+    "hosts" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "services" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "type" : "string"
+                },
+                "type" : {
+                  "type" : "string"
+                },
+                "configid" : {
+                  "type" : "string"
+                },
+                "clustertype" : {
+                  "type" : "string"
+                },
+                "clustername" : {
+                  "type" : "string"
+                },
+                "index" : {
+                  "type" : "integer"
+                },
+                "ports" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "number" : {
+                        "type" : "integer"
+                      },
+                      "tags" : {
+                        "type" : "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

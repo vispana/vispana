@@ -1,0 +1,6 @@
+{
+  "children": [],
+  "configs": [
+    "http://host.net:19071/config/v1/vespa.config.content.distribution/abc"
+  ]
+}

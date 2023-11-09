@@ -1,0 +1,112 @@
+{
+  "node": [
+    {
+      "key": 0,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 1,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 2,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 3,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 4,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 5,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 6,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 7,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 8,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 9,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 10,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 11,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 12,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 13,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 14,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 15,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 16,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 17,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    }
+  ]
+}

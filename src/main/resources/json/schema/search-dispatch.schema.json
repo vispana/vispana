@@ -1,0 +1,11 @@
+{
+  "type" : "object",
+  "properties" : {
+    "node" : {
+      "type" : "array",
+      "items": {
+        "$ref": "search-dispatch-node.schema.json"
+      }
+    }
+  }
+}

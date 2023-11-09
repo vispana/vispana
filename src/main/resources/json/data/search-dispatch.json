@@ -1,0 +1,164 @@
+{
+  "minActivedocsPercentage": 97.0,
+  "minGroupCoverage": 100.0,
+  "maxNodesDownPerGroup": 0,
+  "distributionPolicy": "ADAPTIVE",
+  "maxHitsPerNode": 2147483647,
+  "topKProbability": 0.9999,
+  "useMultilevelDispatch": false,
+  "useLocalNode": false,
+  "searchableCopies": 1,
+  "minSearchCoverage": 100.0,
+  "minWaitAfterCoverageFactor": 0.0,
+  "maxWaitAfterCoverageFactor": 1.0,
+  "numJrtTransportThreads": 8,
+  "numJrtConnectionsPerNode": 8,
+  "warmuptime": 5.0,
+  "node": [
+    {
+      "key": 1,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 2,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 3,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 7,
+      "group": 0,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 4,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 5,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 6,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 8,
+      "group": 1,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 9,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 10,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 11,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 12,
+      "group": 2,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 13,
+      "group": 3,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 14,
+      "group": 3,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 15,
+      "group": 3,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 16,
+      "group": 3,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 17,
+      "group": 4,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 18,
+      "group": 4,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 19,
+      "group": 4,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 20,
+      "group": 4,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 21,
+      "group": 5,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 22,
+      "group": 5,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 23,
+      "group": 5,
+      "host": "host.com",
+      "port": 19103
+    },
+    {
+      "key": 24,
+      "group": 5,
+      "host": "host.com",
+      "port": 19103
+    }
+  ],
+  "mergeGroupingResultInSearchInvokerEnabled": false
+}

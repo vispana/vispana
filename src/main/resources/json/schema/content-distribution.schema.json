@@ -1,0 +1,14 @@
+{
+  "type" : "object",
+  "properties" : {
+    "children" : {
+      "type" : "array"
+    },
+    "configs" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    }
+  }
+}

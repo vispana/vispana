@@ -1,35 +1,11 @@
-FROM elixir:1.15
-
-# Container setup. Docker caches a layer for each RUN statement.
-RUN mkdir -p /app/assets  # The directory structure we will need to run the app.
-# The Node install script runs `apt-get update` for us.
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt install -y nodejs
-# Check that we have NPM.
-RUN npm --version
-# Get the rest of our container-level dependencies.
-RUN apt install -y git nodejs inotify-tools chromium-driver
-# Install local mix/Elixir application dependencies.
-RUN mix local.hex --force && \
-  mix local.rebar --force && \
-  mix archive.install --force hex phx_new
-
-# Uses the `.dockerignore` file to exclude certain files and directories.
-COPY . /app
-
-# Get and compile deps first - NPM needs `deps/phoenix/package.json`.
+FROM amazoncorretto:21.0.1
 WORKDIR /app
-RUN mix deps.get
-RUN mix deps.compile
 
-# Build our web UI.
-WORKDIR /app/assets
-RUN npm rebuild node-sass
-RUN npm install
+# As github actions lacks support for Java 21, let's send all files and use Docker to build the
+# image and run it
+COPY ./ .
 
-# Compile our Elixir application.
-WORKDIR /app
-RUN mix compile
+RUN mvn spring-boot:run
 
-# Expose the proper port and run the server!
+# Expose the port that your Spring Boot application listens on (default is 8080)
 EXPOSE 4000
-CMD ["mix", "phx.server"]
