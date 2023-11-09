@@ -60,9 +60,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: |
-            - vispana/vispana:${{ steps.tag_version.outputs.new_tag }}
-            - vispana/vispana:latest
+          tags: vispana/vispana:${{ steps.tag_version.outputs.new_tag }},vispana/vispana:latest
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
