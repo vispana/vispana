@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.invalid-feedback {
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #a94442;
+    display: block;
+    margin: 4px 0 0;
+}
+
+li:focus, li:active, select:focus, select:active {
+    outline: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+}
+
+div.service_up {
+    display: inline-block;
+    color: #20711d;
+    background-color: #20711d;
+}
+
+div.service_down {
+    display: inline-block;
+    color: #ff0121;
+    background-color: #ff0121;
+}
+
+div.service_unknown {
+    display: inline-block;
+    color: gray;
+    background-color: gray;
+}
+
+.component-no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.component-no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

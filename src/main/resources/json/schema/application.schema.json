@@ -1,0 +1,17 @@
+{
+  "type" : "object",
+  "properties" : {
+    "generation" : {
+      "type" : "integer"
+    },
+    "applicationPackageFileReference" : {
+      "type" : "string"
+    },
+    "modelVersions" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    }
+  }
+}

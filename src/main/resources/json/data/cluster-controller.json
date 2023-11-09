@@ -1,0 +1,65 @@
+{
+  "clusterId": "cluster-controllers",
+  "nodeCount": 3,
+  "nodeIndices": [
+    0,
+    1,
+    2
+  ],
+  "services": [
+    {
+      "index": 0,
+      "hostname": "host.com",
+      "ports": [
+        {
+          "number": 19050,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19101,
+          "tags": "external http"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "hostname": "host.com",
+      "ports": [
+        {
+          "number": 19050,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19101,
+          "tags": "external http"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "hostname": "host.com",
+      "ports": [
+        {
+          "number": 19050,
+          "tags": "state external query http"
+        },
+        {
+          "number": 19101,
+          "tags": "external http"
+        },
+        {
+          "number": 19102,
+          "tags": "admin rpc"
+        }
+      ]
+    }
+  ]
+}

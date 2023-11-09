@@ -1,0 +1,10 @@
+{
+  "children": [
+    "http://host.net:19071/config/v1/cloud.config.cluster-info/admin/"
+  ],
+  "configs": [
+    "http://host.net:19071/config/v1/cloud.config.cluster-info/admin",
+    "http://host.net:19071/config/v1/cloud.config.cluster-info/container",
+    "http://host.net:19071/config/v1/cloud.config.cluster-info/feed"
+  ]
+}

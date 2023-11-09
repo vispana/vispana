@@ -1,0 +1,11 @@
+{
+  "type" : "object",
+  "properties" : {
+    "configs" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    }
+  }
+}

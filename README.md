@@ -2,7 +2,7 @@
 
 Vispana is a [Vespa.ai](https://vespa.ai/) web client tool designed to quickly understand the status of a cluster.
 
-![Vispana](/assets/static/img/vispana-ss.png)
+![Vispana](src/main/resources/static/img/vispana-ss.png)
 
 #### Contents
 

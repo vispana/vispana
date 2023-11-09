@@ -1,0 +1,59 @@
+{
+  "type" : "object",
+  "properties" : {
+    "minActivedocsPercentage" : {
+      "type" : "number"
+    },
+    "minGroupCoverage" : {
+      "type" : "number"
+    },
+    "maxNodesDownPerGroup" : {
+      "type" : "integer"
+    },
+    "distributionPolicy" : {
+      "type" : "string"
+    },
+    "maxHitsPerNode" : {
+      "type" : "integer"
+    },
+    "topKProbability" : {
+      "type" : "number"
+    },
+    "useMultilevelDispatch" : {
+      "type" : "boolean"
+    },
+    "useLocalNode" : {
+      "type" : "boolean"
+    },
+    "searchableCopies" : {
+      "type" : "integer"
+    },
+    "minSearchCoverage" : {
+      "type" : "number"
+    },
+    "minWaitAfterCoverageFactor" : {
+      "type" : "number"
+    },
+    "maxWaitAfterCoverageFactor" : {
+      "type" : "number"
+    },
+    "numJrtTransportThreads" : {
+      "type" : "integer"
+    },
+    "numJrtConnectionsPerNode" : {
+      "type" : "integer"
+    },
+    "warmuptime" : {
+      "type" : "number"
+    },
+    "node" : {
+      "type" : "array",
+      "items": {
+        "$ref": "search-dispatch-node.schema.json"
+      }
+    },
+    "mergeGroupingResultInSearchInvokerEnabled" : {
+      "type" : "boolean"
+    }
+  }
+}
