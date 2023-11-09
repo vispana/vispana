@@ -5,7 +5,7 @@ WORKDIR /app
 # image and run it
 COPY ./ .
 
-RUN mvn spring-boot:run
+RUN ./mvnw spring-boot:run
 
 # Expose the port that your Spring Boot application listens on (default is 8080)
 EXPOSE 4000
