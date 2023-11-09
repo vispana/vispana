@@ -39,9 +39,7 @@ Then run the start script!
 If you don't want to use the script, you can always run the commands yourself.
 
 ```shell
-mix deps.get
-npm install --prefix ./assets
-mix phx.server
+mvn spring-boot:run
 ```
 
 ## Contributing
