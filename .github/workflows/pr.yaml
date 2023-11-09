@@ -13,7 +13,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  review:
     runs-on: ubuntu-latest
     permissions:
       contents: write
