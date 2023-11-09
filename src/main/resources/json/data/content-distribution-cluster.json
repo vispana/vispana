@@ -1,0 +1,163 @@
+{
+  "cluster": {
+    "abc": {
+      "active_per_leaf_group": true,
+      "ready_copies": 6,
+      "redundancy": 6,
+      "initial_redundancy": 6,
+      "group": [
+        {
+          "index": "invalid",
+          "name": "invalid",
+          "capacity": 24.0,
+          "partitions": "1|1|1|1|1|*",
+          "nodes": []
+        },
+        {
+          "index": "0",
+          "name": "contentaa",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 1,
+              "retired": false
+            },
+            {
+              "index": 2,
+              "retired": false
+            },
+            {
+              "index": 3,
+              "retired": false
+            },
+            {
+              "index": 7,
+              "retired": false
+            }
+          ]
+        },
+        {
+          "index": "1",
+          "name": "contentab",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 4,
+              "retired": false
+            },
+            {
+              "index": 5,
+              "retired": false
+            },
+            {
+              "index": 6,
+              "retired": false
+            },
+            {
+              "index": 8,
+              "retired": false
+            }
+          ]
+        },
+        {
+          "index": "2",
+          "name": "contentac",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 9,
+              "retired": false
+            },
+            {
+              "index": 10,
+              "retired": false
+            },
+            {
+              "index": 11,
+              "retired": false
+            },
+            {
+              "index": 12,
+              "retired": false
+            }
+          ]
+        },
+        {
+          "index": "3",
+          "name": "contentad",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 13,
+              "retired": false
+            },
+            {
+              "index": 14,
+              "retired": false
+            },
+            {
+              "index": 15,
+              "retired": false
+            },
+            {
+              "index": 16,
+              "retired": false
+            }
+          ]
+        },
+        {
+          "index": "4",
+          "name": "contentae",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 17,
+              "retired": false
+            },
+            {
+              "index": 18,
+              "retired": false
+            },
+            {
+              "index": 19,
+              "retired": false
+            },
+            {
+              "index": 20,
+              "retired": false
+            }
+          ]
+        },
+        {
+          "index": "5",
+          "name": "contentaf",
+          "capacity": 4.0,
+          "partitions": "",
+          "nodes": [
+            {
+              "index": 21,
+              "retired": false
+            },
+            {
+              "index": 22,
+              "retired": false
+            },
+            {
+              "index": 23,
+              "retired": false
+            },
+            {
+              "index": 24,
+              "retired": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

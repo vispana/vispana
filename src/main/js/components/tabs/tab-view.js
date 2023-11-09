@@ -10,14 +10,13 @@ function TabView({ tabs }) {
     })
 
     return (
-        <div className="w-full">
+        <div className="w-full max-w-full min-w-full">
         <Tabs>
-            <TabList className="flex justify-left items-left min-w-full">
+            <TabList className="flex justify-left items-left component-no-scrollbar overflow-x-scroll">
                 { tabs
                     .map((tab, index) => (
-                        <Tab className="cursor-pointer py-2 px-4 border-b-2 text-gray-500 border-gray-500"
+                        <Tab className="min-w-fit cursor-pointer py-2 px-4 border-b-2 text-gray-500 border-gray-500 "
                              selectedClassName="cursor-pointer py-2 px-4 border-b-2 text-yellow-400 border-yellow-400"
-                             style={{minWidth: "120px"}}
                              key={index}>
                             {tab.header}
                         </Tab>))}

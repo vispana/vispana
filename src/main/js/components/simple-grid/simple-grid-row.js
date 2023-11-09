@@ -63,7 +63,7 @@ function SimpleGridRow({data, hasDistributionKey = false}) {
                     <div
                         className="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2"
                         style={{minWidth: "80px"}}>
-                        Group: {group.id}
+                        Group: {group.key}
                     </div>
                     <div
                         className="px-2 h-6 text-green-300 text-xs font-extrabold rounded-md flex items-center justify-center border-dashed border border-green-300 m-2"
@@ -150,7 +150,7 @@ export function header(hasDistributionKey = false) {
             </th>
             <th scope="col" className="px-6 text-sm font-medium text-blue-100 tracking-wider"
                 style={{padding: "1rem"}}>
-                <span>Memory usage</span>
+                <span>Disk usage</span>
             </th>
         </tr>
     </>

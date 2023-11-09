@@ -20,7 +20,7 @@ function AppPackage() {
                 .contentData
                 .map(data => {
                     return {
-                        "tabName": data.schema.schemaName,
+                        "tabName": `${data.schema.schemaName}.sd`,
                         "payload": data.schema.schemaContent,
                         "contentType": "yaml"
                     };

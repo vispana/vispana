@@ -14,7 +14,7 @@ export default class VispanaApiClient {
 			}
 		};
 
-		return fetch('/api/', options)
+		return fetch(`/api/overview?config_host=${configHost}/`, options)
 			.then(response => response.json())
 	}
 }

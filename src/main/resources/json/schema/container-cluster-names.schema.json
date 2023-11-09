@@ -1,0 +1,45 @@
+{
+  "type" : "object",
+  "properties" : {
+    "clusterId" : {
+      "type" : "string"
+    },
+    "nodeCount" : {
+      "type" : "integer"
+    },
+    "nodeIndices" : {
+      "type" : "array",
+      "items" : {
+        "type" : "integer"
+      }
+    },
+    "services" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "index" : {
+            "type" : "integer"
+          },
+          "hostname" : {
+            "type" : "string"
+          },
+          "ports" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "number" : {
+                  "type" : "integer"
+                },
+                "tags" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

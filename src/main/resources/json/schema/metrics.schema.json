@@ -1,0 +1,201 @@
+{
+  "type" : "object",
+  "properties" : {
+    "nodes" : {
+      "type" : "array",
+      "items" : {
+        "javaType": "com.vispana.client.vespa.model.MetricsNode",
+        "type" : "object",
+        "properties" : {
+          "hostname" : {
+            "type" : "string"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "services" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "name" : {
+                  "type" : "string"
+                },
+                "timestamp" : {
+                  "type" : "integer"
+                },
+                "status" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "string"
+                    },
+                    "description" : {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "metrics" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : {
+                      "values" : {
+                        "type" : "object",
+                        "properties" : {
+                          "memory_virt" : {
+                            "type" : "integer"
+                          },
+                          "memory_rss" : {
+                            "type" : "integer"
+                          },
+                          "cpu" : {
+                            "type" : "number"
+                          },
+                          "cpu_util" : {
+                            "type" : "number"
+                          },
+                          "content.proton.documentdb.matching.rank_profile.rerank_time.average" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.matching.rank_profile.query_setup_time.average" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.matching.rank_profile.query_latency.average" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.matching.docs_matched.rate" : {
+                            "type" : "number"
+                          },
+                          "content.proton.documentdb.matching.docs_reranked.rate" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.documents.active.last" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.documents.ready.last" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.documents.total.last" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.documentdb.memory_usage.allocated_bytes.last" : {
+                            "type" : "integer",
+                            "minimum" : 9223372036854775807
+                          },
+                          "content.proton.documentdb.disk_usage.last" : {
+                            "type" : "integer",
+                            "minimum" : 9223372036854775807
+                          },
+                          "content.proton.transactionlog.disk_usage.last" : {
+                            "type" : "integer",
+                            "minimum" : 9223372036854775807
+                          },
+                          "content.proton.resource_usage.disk.average" : {
+                            "type" : "number"
+                          },
+                          "content.proton.resource_usage.memory.average" : {
+                            "type" : "number"
+                          },
+                          "content.proton.resource_usage.feeding_blocked.last" : {
+                            "type" : "integer"
+                          },
+                          "content.proton.search_protocol.query.latency.average" : {
+                            "type" : "number"
+                          },
+                          "content.proton.search_protocol.docsum.latency.average" : {
+                            "type" : "number"
+                          },
+                          "content.proton.search_protocol.docsum.requested_documents.rate" : {
+                            "type" : "number"
+                          },
+                          "serverActiveThreads.average" : {
+                            "type" : "number"
+                          },
+                          "jdisc.gc.ms.average" : {
+                            "type" : "integer"
+                          },
+                          "http.status.2xx.rate" : {
+                            "type" : "number"
+                          },
+                          "mem.heap.free.average" : {
+                            "type" : "integer"
+                          },
+                          "degraded_queries.rate" : {
+                            "type" : "number"
+                          },
+                          "failed_queries.rate" : {
+                            "type" : "integer"
+                          },
+                          "hits_per_query.average" : {
+                            "type" : "number"
+                          },
+                          "queries.rate" : {
+                            "type" : "number"
+                          },
+                          "query_latency.average" : {
+                            "type" : "number"
+                          },
+                          "query_latency.95percentile" : {
+                            "type" : "number"
+                          },
+                          "query_latency.99percentile" : {
+                            "type" : "number"
+                          },
+                          "totalhits_per_query.average" : {
+                            "type" : "number"
+                          },
+                          "http.status.4xx.rate" : {
+                            "type" : "integer"
+                          },
+                          "feed.operations.rate" : {
+                            "type" : "integer"
+                          }
+                        }
+                      },
+                      "dimensions" : {
+                        "type" : "object",
+                        "properties" : {
+                          "serviceId" : {
+                            "type" : "string"
+                          },
+                          "rankProfile" : {
+                            "type" : "string"
+                          },
+                          "documenttype" : {
+                            "type" : "string"
+                          },
+                          "gcName" : {
+                            "type" : "string"
+                          },
+                          "httpMethod" : {
+                            "type" : "string"
+                          },
+                          "reason" : {
+                            "type" : "string"
+                          },
+                          "chain" : {
+                            "type" : "string"
+                          },
+                          "status" : {
+                            "type" : "string"
+                          },
+                          "api" : {
+                            "type" : "string"
+                          },
+                          "operation" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

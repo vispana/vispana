@@ -10,11 +10,6 @@ module.exports = {
         path: __dirname,
         filename: './src/main/resources/static/built/bundle.js'
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'Development',
-        }),
-    ],
     devServer: {
         historyApiFallback: true
     },

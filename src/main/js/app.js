@@ -1,8 +1,5 @@
 'use strict';
 
-// necessary import to bundle CSS into a package with postcss
-import '../resources/static/main.css'
-
 // react imports
 import React from 'react'
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom"

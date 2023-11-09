@@ -39,3 +39,12 @@ div.service_unknown {
     color: gray;
     background-color: gray;
 }
+
+.component-no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.component-no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

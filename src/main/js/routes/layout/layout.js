@@ -151,7 +151,7 @@ export async function loader({request}) {
 
 async function getVespaState(configHost) {
     const vispanaClient = new VispanaApiClient(configHost)
-    const vespaState = await vispanaClient.fetchVespaState()
+    const vespaState = await vispanaClient.fetchVespaState(configHost)
     return {
         "queryConfigHost": configHost,
         "state": vespaState

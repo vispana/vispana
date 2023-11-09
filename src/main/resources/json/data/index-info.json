@@ -1,0 +1,8 @@
+{
+  "configs": [
+    "http://host.net:19071/config/v1/search.config.index-info/abc/search/cluster.def",
+    "http://host.net:19071/config/v1/search.config.index-info/abc/search/cluster.def/def",
+    "http://host.net:19071/config/v1/search.config.index-info/abc/search/cluster.def/ghi",
+    "http://host.net:19071/config/v1/search.config.index-info/abc/search/cluster.def/union"
+  ]
+}

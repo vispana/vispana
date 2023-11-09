@@ -73,7 +73,7 @@ function Content() {
 
         return (
             <>
-                <div className="w-full overflow-x-auto md:mt-4 mt-6 pb-6">
+                <div className="w-full overflow-x-scroll component-no-scrollbar md:mt-4 mt-6 pb-6">
                     <div className="flex w-full h-full" style={{height: "100%"}}>
                         {contentData
                         .map((data, index) => {
@@ -146,8 +146,7 @@ function Content() {
 
     function renderGrid(contentNodes) {
         return <SimpleGrid header="Content nodes" hasDistributionKey={true}>
-            {contentNodes.map(node => (
-                <SimpleGridRow key={node.name} data={node} hasDistributionKey={true}/>))}
+            {contentNodes.map(node => (<SimpleGridRow key={node.host.hostname} data={node} hasDistributionKey={true}/>))}
         </SimpleGrid>;
     }
 }
