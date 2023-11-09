@@ -36,7 +36,7 @@ Then run the start script!
 ./start.sh
 ```
 
-If you don't want to use the script, you can always run the commands yourself.
+If you don't want to use the script, you can run the following command:
 
 ```shell
 mvn spring-boot:run
