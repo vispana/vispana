@@ -1,9 +1,5 @@
-// necessary import to bundle CSS into a package with postcss
-import '../../../resources/static/main.css'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {androidstudio} from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
-// react imports
 import React from 'react'
 import {useOutletContext} from "react-router-dom";
 import TabView from "../../components/tabs/tab-view";
@@ -28,20 +24,28 @@ function AppPackage() {
         })
         .sort((a, b) => a.tabName.localeCompare(b.tabName));
 
-    const services = {
+    // initialize tabs with services.xml
+    const tabsContent = [{
         "tabName": "services.xml",
         "payload": vespaState.state.applicationPackage.servicesContent,
         "contentType": "xml"
-    };
+    }]
 
-    const hosts = {
-        "tabName": "hosts.xml",
-        "payload": vespaState.state.applicationPackage.hostsContent,
-        "contentType": "xml"
-    };
+    // possibly add hosts.xml
+    let hostsContent = vespaState.state.applicationPackage.hostsContent;
+    if (hostsContent) {
+        tabsContent.push({
+            "tabName": "hosts.xml",
+            "payload": hostsContent,
+            "contentType": "xml"
+        })
+    }
 
+    // add the schemas
+    tabsContent.push(...schemas)
 
-    const tabs = [services, hosts, ...schemas]
+    // build common tabs
+    const tabs = tabsContent
         .map(tab => {
                 return {
                     "header": tab.tabName,
@@ -53,11 +57,14 @@ function AppPackage() {
             }
         )
 
+    // build 'about'. This is done separately since it builds a different component inside the tab.
     tabs.push({
         "header": "about",
         "content":
             <div className="mt-8 mb-3">
-                <p><span className="text-yellow-400">Generation:</span> {vespaState.state.applicationPackage.appPackageGeneration}</p>
+                <p><span
+                    className="text-yellow-400">Generation:</span> {vespaState.state.applicationPackage.appPackageGeneration}
+                </p>
             </div>
     })
 
@@ -70,7 +77,6 @@ function AppPackage() {
 
             </div>
         </div>
-
     );
 }
 

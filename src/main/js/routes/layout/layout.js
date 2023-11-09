@@ -1,7 +1,3 @@
-// necessary import to bundle CSS into a package with postcss
-import '../../../resources/static/main.css'
-
-// react imports
 import React, {useEffect, useState} from 'react'
 import {NavLink, Outlet, useFetcher, useLoaderData} from "react-router-dom";
 import VispanaApiClient from "../../client/vispana-api-client";
