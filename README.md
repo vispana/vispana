@@ -19,12 +19,34 @@ Vispana is packaged in docker and available in [DockerHub](https://hub.docker.co
 
 To run, execute:
 ```shell
-docker run -p 4000:4000 vispana/vispana
+docker run --pull always -p 4000:4000 vispana/vispana
 ```
 
 Access on: [http://localhost:4000](http://localhost:4000)
 
 It will ask for the uri of a config-server in your cluster.
+
+### Running Vespa locally on a Docker
+
+If you are running Vespa locally in a Docker container, alongside Vispana, you need to make sure
+that Vispana can access Vespa.
+
+In a few steps, here's how to do it:
+
+1. Create a docker network
+    ```shell
+      docker network create --driver bridge vespanet
+    ```
+2. Run Vespa within `vespanet` network and `vespa-container` hostname :
+   ```shell
+      docker run --detach --name vespa --network vespanet --hostname vespa-container --publish 8080:8080 --publish 19071:19071 vespaengine/vespa
+    ```
+3. Run Vispana within `vespanet` network:
+    ```shell
+      docker run -p 4000:4000 --network vespanet vispana/vispana:latest
+    ```
+4. Access Vispana in your browser via [http://localhost:4000](http://localhost:4000) and specify
+   the config node as `http://vespa-container:19071`
 
 ## Running Locally
 
