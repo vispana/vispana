@@ -25,11 +25,18 @@ public class ConfigNodesAssembler {
             .map(
                 service -> {
                   var hostname = service.getHostname();
+                  var queryPort =
+                      service.getPorts().stream()
+                          .filter(port -> port.getTags().contains("query"))
+                          .map(port -> port.getNumber())
+                          .findFirst()
+                          .orElse(-1L);
+
                   var processStatus = processStatus(hostname, vespaMetrics);
                   var systemMetrics = systemMetrics(vespaMetrics.get(hostname));
                   return new ConfigNode(
                       service.getIndex().toString(),
-                      new Host(hostname, -1),
+                      new Host(hostname, queryPort.intValue()),
                       processStatus,
                       systemMetrics);
                 })

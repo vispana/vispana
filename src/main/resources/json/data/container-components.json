@@ -1,0 +1,37 @@
+{
+  "components": [
+    {
+      "id": "chain.default@MbusClient",
+      "configId": "feed/component/chain.default@MbusClient",
+      "classId": "com.yahoo.container.jdisc.messagebus.MbusClientProvider",
+      "bundle": "com.yahoo.container.jdisc.messagebus.MbusClientProvider",
+      "inject": []
+    },
+    {
+      "id": "com.yahoo.vespa.http.server.FeedHandler",
+      "configId": "feed/component/com.yahoo.vespa.http.server.FeedHandler",
+      "classId": "com.yahoo.vespa.http.server.FeedHandler",
+      "bundle": "vespaclient-container-plugin",
+      "inject": [
+        {
+          "id": "threadpool@feedapi-handler",
+          "name": ""
+        }
+      ]
+    },
+    {
+      "id": "threadpool@feedapi-handler",
+      "configId": "feed/component/com.yahoo.vespa.http.server.FeedHandler/threadpool@feedapi-handler",
+      "classId": "com.yahoo.container.handler.threadpool.ContainerThreadpoolImpl",
+      "bundle": "com.yahoo.container.handler.threadpool.ContainerThreadpoolImpl",
+      "inject": []
+    },
+    {
+      "id": "com.yahoo.container.core.config.HandlersConfigurerDi$RegistriesHack",
+      "configId": ":parent:",
+      "classId": "",
+      "bundle": "",
+      "inject": []
+    }
+  ]
+}

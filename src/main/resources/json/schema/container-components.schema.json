@@ -1,0 +1,39 @@
+{
+  "type" : "object",
+  "properties" : {
+    "components" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "configId" : {
+            "type" : "string"
+          },
+          "classId" : {
+            "type" : "string"
+          },
+          "bundle" : {
+            "type" : "string"
+          },
+          "inject" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "string"
+                },
+                "name" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
