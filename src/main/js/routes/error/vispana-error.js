@@ -19,10 +19,8 @@ function VispanaError() {
                         className="card flex-shrink-0 w-full max-w-1/2 shadow-2xl bg-standout-blue overflow-visible">
                         <div style={{position: "absolute", top: "-50px", left: "calc(50% - 40px)"}}
                              className="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
-                            <div
-                                className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
-                                <a href="/"><img alt="" src="/img/sad-wasp.png"
-                                                 className="icon icon-tabler icon-tabler-stack"/></a>
+                            <div className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400 overflow-hidden">
+                                <a href="/"><img alt="" src="/img/vispana-broken-logo.png" className="icon icon-tabler icon-tabler-stack"/></a>
                             </div>
                         </div>
                         <div className="flex mt-10 card-body w-800 text-center">

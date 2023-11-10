@@ -21,9 +21,8 @@ function Index() {
                         <div style={{position: "absolute", top: "-50px", left: "calc(50% - 40px)"}}
                              className="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
                             <div
-                                className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
-                                <img alt="" src="/img/icons8-hive-64.png"
-                                     className="icon icon-tabler icon-tabler-stack"/>
+                                className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400 overflow-hidden">
+                                <img alt="" src={logoPath()} className="icon icon-tabler icon-tabler-stack"/>
                             </div>
                         </div>
                         <div className="flex mt-10 card-body w-800 ">
@@ -61,6 +60,11 @@ export async function action({ request }) {
     }
     return {message: "Host must have protocol (e.g., http:// or https://) and no spaces"};
 
+}
+
+export function logoPath() {
+    const index = Math.floor(Math.random() * 5) + 1
+    return `/img/vispana-logo-${index}.png`;
 }
 
 export default Index;
