@@ -6,10 +6,9 @@ import SimpleGrid from "../../components/simple-grid/simple-grid";
 import SimpleGridRow from "../../components/simple-grid/simple-grid-row";
 
 function Container() {
-    const {vespaState} = useOutletContext();
+    const vespaState = useOutletContext();
 
     const tabs = vespaState
-        .state
         .container
         .clusters
         .map(cluster => {

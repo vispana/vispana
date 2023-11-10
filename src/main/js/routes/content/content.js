@@ -7,10 +7,9 @@ import SimpleGridRow from "../../components/simple-grid/simple-grid-row";
 import TabView from "../../components/tabs/tab-view";
 
 function Content() {
-    const {vespaState} = useOutletContext();
+    const vespaState = useOutletContext();
 
     const tabs = vespaState
-        .state
         .content
         .clusters
         .map(cluster => (
