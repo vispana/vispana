@@ -5,10 +5,9 @@ import {useOutletContext} from "react-router-dom";
 import TabView from "../../components/tabs/tab-view";
 
 function AppPackage() {
-    const {vespaState} = useOutletContext();
+    const vespaState = useOutletContext();
 
     const schemas = vespaState
-        .state
         .content
         .clusters
         .flatMap(cluster => {
@@ -27,12 +26,12 @@ function AppPackage() {
     // initialize tabs with services.xml
     const tabsContent = [{
         "tabName": "services.xml",
-        "payload": vespaState.state.applicationPackage.servicesContent,
+        "payload": vespaState.applicationPackage.servicesContent,
         "contentType": "xml"
     }]
 
     // possibly add hosts.xml
-    let hostsContent = vespaState.state.applicationPackage.hostsContent;
+    let hostsContent = vespaState.applicationPackage.hostsContent;
     if (hostsContent) {
         tabsContent.push({
             "tabName": "hosts.xml",
@@ -63,7 +62,7 @@ function AppPackage() {
         "content":
             <div className="mt-8 mb-3">
                 <p><span
-                    className="text-yellow-400">Generation:</span> {vespaState.state.applicationPackage.appPackageGeneration}
+                    className="text-yellow-400">Generation:</span> {vespaState.applicationPackage.appPackageGeneration}
                 </p>
             </div>
     })

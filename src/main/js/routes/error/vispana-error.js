@@ -1,0 +1,39 @@
+import React from 'react'
+import {useRouteError} from "react-router-dom";
+
+function VispanaError() {
+    const error = useRouteError();
+    console.log(error)
+    const notFound = <div>Page not found x_x</div>
+    const genericError = (<div>
+        <p>Some error happened while trying to process the request.</p>
+        <br />
+        <p className="text-sm">Make sure you are pointing correctly to a Vespa cluster with a running application.</p>
+    </div>)
+
+    return (<>
+        <main role="main" className="h-screen flex flex-row flex-wrap">
+            <div className="hero min-h-screen bg-darkest-blue">
+                <div className="flex-col justify-center hero-content lg:flex-row w-full">
+                    <div
+                        className="card flex-shrink-0 w-full max-w-1/2 shadow-2xl bg-standout-blue overflow-visible">
+                        <div style={{position: "absolute", top: "-50px", left: "calc(50% - 40px)"}}
+                             className="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
+                            <div
+                                className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
+                                <a href="/"><img alt="" src="/img/sad-wasp.png"
+                                                 className="icon icon-tabler icon-tabler-stack"/></a>
+                            </div>
+                        </div>
+                        <div className="flex mt-10 card-body w-800 text-center">
+                            <span className="text-yellow-400">Opzzz..</span>
+                            {error && error.status === 404 ? notFound : genericError}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </>);
+}
+
+export default VispanaError;
