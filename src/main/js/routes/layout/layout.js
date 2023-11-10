@@ -10,6 +10,7 @@ import {
 import VispanaApiClient from "../../client/vispana-api-client";
 import Loading from "../loading/loading";
 import Error from "../error/vispana-error";
+import {logoPath} from "../index";
 
 function Layout() {
     const loaderData = useLoaderData();
@@ -54,10 +55,9 @@ function Layout() {
                                 <div
                                     className="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
                                     <div
-                                        className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400">
+                                        className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400 overflow-hidden">
                                         <a href="/">
-                                            <img alt="" src="/img/icons8-hive-64.png"
-                                                 className="icon icon-tabler icon-tabler-stack"/>
+                                            <img alt="" src={logoPath()} className="icon icon-tabler icon-tabler-stack"/>
                                         </a>
                                     </div>
                                 </div>
@@ -118,7 +118,6 @@ function Layout() {
                                     <div className="flex flex-grow flex-col pt-2 normal-case">
                                         <div className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto text-center text-xs text-gray-400">
                                             <p>© 2021 — MIT License</p>
-                                            <p><a href="https://icons8.com/icon/65460/hive">Hive icon by Icons8</a></p>
                                         </div>
                                     </div>
                                 </div>
