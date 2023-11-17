@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Result",
+  "description": "Schema for Vespa results",
+  "type": "object",
+  "properties": {
+    "root": {
+      "$ref": "#/definitions/document_node"
+    },
+    "trace": {
+      "$ref": "#/definitions/trace_node"
+    }
+  },
+  "required": ["root"],
+  "definitions": {
+    "document_node": {
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/document_node"
+          }
+        },
+        "coverage": {
+          "$ref": "#/definitions/coverage"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/error"
+          }
+        },
+        "fields": {
+          "$ref": "#/definitions/fields"
+        },
+        "id": {
+          "type": "string"
+        },
+        "relevance": {
+          "type": "number"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "limits": {
+          "type": "object"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true,
+      "required": ["relevance"]
+    },
+    "trace_node": {
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#"
+          }
+        },
+        "timestamp": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "fields": {
+      "properties": {
+        "totalCount": {
+          "type": "number"
+        }
+      },
+      "required": ["totalCount"]
+    },
+    "coverage": {
+      "properties": {
+        "coverage": {
+          "type": "number"
+        },
+        "documents": {
+          "type": "number"
+        },
+        "full": {
+          "type": "boolean"
+        },
+        "nodes": {
+          "type": "number"
+        },
+        "results": {
+          "type": "number"
+        },
+        "resultsFull": {
+          "type": "number"
+        }
+      },
+      "required": ["coverage", "documents", "full", "nodes", "results", "resultsFull"]
+    },
+    "error": {
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "stackTrace": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "transient": {
+          "type": "boolean"
+        }
+      },
+      "required": ["code", "summary"]
+    }
+  }
+}

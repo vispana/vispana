@@ -1,4 +1,4 @@
-package com.vispana.client.vespa.helpers;
+package com.vispana.vespa.state.helpers;
 
 import com.vispana.api.model.HostMetrics;
 import com.vispana.client.vespa.model.MetricsNode;

@@ -1,8 +1,8 @@
-package com.vispana.client.vespa.assemblers;
+package com.vispana.vespa.state.assemblers;
 
-import static com.vispana.client.vespa.helpers.ProcessStatus.processStatus;
-import static com.vispana.client.vespa.helpers.Request.request;
-import static com.vispana.client.vespa.helpers.SystemMetrics.systemMetrics;
+import static com.vispana.vespa.state.helpers.ProcessStatus.processStatus;
+import static com.vispana.vespa.state.helpers.Request.requestGet;
+import static com.vispana.vespa.state.helpers.SystemMetrics.systemMetrics;
 
 import com.vispana.api.model.Host;
 import com.vispana.api.model.config.ConfigCluster;
@@ -19,7 +19,7 @@ public class ConfigNodesAssembler {
     var clusterControllerUrl =
         configHost + "/config/v1/cloud.config.cluster-info/admin/cluster-controllers";
 
-    var clusterControllers = request(clusterControllerUrl, ClusterControllersSchema.class);
+    var clusterControllers = requestGet(clusterControllerUrl, ClusterControllersSchema.class);
     var configNodes =
         clusterControllers.getServices().stream()
             .map(

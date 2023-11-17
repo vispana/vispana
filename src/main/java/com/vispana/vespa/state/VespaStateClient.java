@@ -1,19 +1,18 @@
-package com.vispana.client.vespa;
+package com.vispana.vespa.state;
 
 import com.vispana.api.model.VispanaRoot;
-import com.vispana.client.vespa.assemblers.AppPackageAssembler;
-import com.vispana.client.vespa.assemblers.ConfigNodesAssembler;
-import com.vispana.client.vespa.assemblers.ContainerAssembler;
-import com.vispana.client.vespa.assemblers.ContentAssembler;
-import com.vispana.client.vespa.helpers.ApplicationUrlFetcher;
-import com.vispana.client.vespa.helpers.MetricsFetcher;
-import com.vispana.client.vespa.helpers.VespaVersionFetcher;
+import com.vispana.vespa.state.assemblers.AppPackageAssembler;
+import com.vispana.vespa.state.assemblers.ConfigNodesAssembler;
+import com.vispana.vespa.state.assemblers.ContainerAssembler;
+import com.vispana.vespa.state.assemblers.ContentAssembler;
+import com.vispana.vespa.state.helpers.ApplicationUrlFetcher;
+import com.vispana.vespa.state.helpers.MetricsFetcher;
+import com.vispana.vespa.state.helpers.VespaVersionFetcher;
 import java.util.concurrent.StructuredTaskScope;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultVespaClient implements VespaClient {
-  @Override
+public class VespaStateClient {
   public VispanaRoot vespaState(String configHost) {
 
     try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {

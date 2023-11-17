@@ -1,22 +1,21 @@
-package com.vispana.client.vespa.helpers;
+package com.vispana.vespa.state.helpers;
 
-import java.util.Optional;
 import org.springframework.web.client.RestClient;
 
 public class Request {
 
   private static final RestClient restClient = RestClient.create();
 
-  public static <T> T request(String url, Class<T> responseType) {
+  public static <T> T requestGet(String url, Class<T> responseType) {
     return restClient.get().uri(url).retrieve().body(responseType);
   }
 
-  public static <T> Optional<T> requestWithDefaultValue(
+  public static <T> T requestGetWithDefaultValue(
       String url, Class<T> responseType, T defaultValue) {
     try {
-      return Optional.of(request(url, responseType));
+      return requestGet(url, responseType);
     } catch (Exception exception) {
-      return Optional.of(defaultValue);
+      return defaultValue;
     }
   }
 }

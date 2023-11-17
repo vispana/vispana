@@ -48,3 +48,8 @@ div.service_unknown {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.ace-tomorrow-night .ace_variable {
+    --tw-text-opacity: 1;
+    color: rgb(250 204 21 / var(--tw-text-opacity))
+}

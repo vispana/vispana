@@ -26,13 +26,14 @@ function Index() {
                             </div>
                         </div>
                         <div className="flex mt-10 card-body w-800 ">
-                            <Form method="post" >
+                            <Form method="post">
                                 <div className="form-control">
                                     <label className="label">
                                         <span className="label-text">Vespa Configuration URL</span>
                                     </label>
                                     <input name="config_host"
-                                           className="input text-center input-bordered"
+
+                                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center input-bordered"
                                            required
                                            placeholder="e.g.: http://localhost:19071"
                                            type="text"/>
@@ -55,15 +56,16 @@ export async function action({ request }) {
     const data = await request.formData();
     const configHost = data.get("config_host");
     const regex = new RegExp("^(http|https):\\/\\/\\S+$")
+    const urlSearchParam = new URLSearchParams({config_host: configHost}).toString()
+
     if(regex.test(configHost)) {
-        return redirect(`/app/config?config_host=${configHost}`)
+        return redirect(`/app/config?${urlSearchParam}`)
     }
     return {message: "Host must have protocol (e.g., http:// or https://) and no spaces"};
-
 }
 
 export function logoPath() {
-    const index = Math.floor(Math.random() * 5) + 1
+    const index = Math.floor(Math.random() * 6) + 1
     return `/img/vispana-logo-${index}.png`;
 }
 
