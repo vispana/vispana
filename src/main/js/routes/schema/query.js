@@ -1,5 +1,5 @@
 import Editor from "../../components/editor/editor";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import VispanaApiClient from "../../client/vispana-api-client";
 import QueryResult from "../../components/query-result/query-result";
 import { v4 as uuidv4 } from 'uuid';
@@ -12,14 +12,14 @@ function Query({containerUrl, schema}) {
     }
 
     const vispanaClient = new VispanaApiClient()
-    const defaultQuery = JSON.stringify({
-        yql: `SELECT *from ${schema} where true`,
-        hits: 30
-    }, null, 2)
-
-    const [query, setQuery] = useState(defaultQuery)
+    const [query, setQuery] = useState(defaultQuery(schema))
     const [showResults, setShowResults] = useState(false)
     const [refreshQuery, setRefreshQuery] = useState(uuidv4())
+
+    useEffect(() => {
+        setQuery(defaultQuery(schema))
+        setShowResults(false)
+    }, [schema])
 
     return <div className={"min-w-full"}>
         <form>
@@ -49,6 +49,13 @@ function Query({containerUrl, schema}) {
             </div>}
         </form>
     </div>
+}
+
+export function defaultQuery(schema) {
+    return JSON.stringify({
+        yql: `SELECT * from ${schema} where true`,
+        hits: 30
+    }, null, 2);
 }
 
 export default Query

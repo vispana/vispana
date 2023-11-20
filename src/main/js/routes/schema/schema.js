@@ -13,13 +13,13 @@ function Schema() {
     return (<>
         <TabView tabs={[
             {
-                "header": "Data preview",
-                "content": <Preview containerUrl={containerUrl} schema={schema}/>
-            },
-            {
                 "header": "Query",
                 "content": <Query containerUrl={containerUrl} schema={schema}/>
-            }]} />
+            },
+            {
+                "header": "Data preview",
+                "content": <Preview containerUrl={containerUrl} schema={schema}/>
+            },]} />
     </>)
 
     /* finds a valid container to issue the query */
