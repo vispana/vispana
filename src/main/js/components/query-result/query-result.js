@@ -24,7 +24,6 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
             default: 'rgb(20 27 45 / var(--tw-bg-opacity))',
         },
     });
-    const revalidator = useRevalidator();
 
     // data state
     const [data, setData] = useState({columns: [], content: []});
@@ -43,47 +42,55 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
     });
 
     async function postQuery(offset, perPage) {
-        const queryObject = JSON.parse(query)
-        const response = await vispanaClient
-            .postQuery(containerUrl, queryObject, offset, perPage)
-            .then(response => {
-                if (response.status && response.status !== 200) {
-                    const error = response.message ? response.message : "Failed to execute the query"
-                    return {
-                        success: undefined,
-                        error: error
-                    }
-                } else {
-                    return {
-                        success: response,
-                        error: undefined
-                    }
-                }
-            })
-            .catch(error => {
-                return {
-                    success: undefined,
-                    error: error.message
-                }
-            })
+        try {
+            const queryObject = JSON.parse(query)
+            const response = await vispanaClient
+              .postQuery(containerUrl, queryObject, offset, perPage)
+              .then(response => {
+                  if (response.status && response.status !== 200) {
+                      const error = response.message ? response.message : "Failed to execute the query"
+                      return {
+                          success: undefined,
+                          error: error
+                      }
+                  } else {
+                      return {
+                          success: response,
+                          error: undefined
+                      }
+                  }
+              })
+              .catch(error => {
+                  return {
+                      success: undefined,
+                      error: error.message
+                  }
+              })
 
-        if (response.error) {
+            if (response.error) {
+                setError({
+                    hasError: true,
+                    error: response.error
+                })
+            } else {
+                const vespaState = response.success;
+                setTotalRows(vespaState.root.fields.totalCount);
+
+                const gridData = processResult(vespaState);
+                setData(gridData);
+
+                setError({
+                    hasError: false,
+                    error: undefined
+                })
+            }
+        } catch (exception) {
             setError({
                 hasError: true,
-                error: response.error
-            })
-        } else {
-            const vespaState = response.success;
-            setTotalRows(vespaState.root.fields.totalCount);
-
-            const gridData = processResult(vespaState);
-            setData(gridData);
-
-            setError({
-                hasError: false,
-                error: undefined
+                error: exception.message
             })
         }
+
     }
 
     const load = async () => {
@@ -109,8 +116,17 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
     };
 
     useEffect(() => {
+        setPage(1)
+        setPerPage(defaultPageSize)
+        setError({
+            hasError: false,
+              error: ""
+        })
+    }, [schema]);
+
+    useEffect(() => {
         load();
-    }, [schema, showResults, perPage, page]);
+    }, [showResults, perPage, page]);
 
     useEffect(() => {
         setError({
@@ -153,7 +169,7 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
     )
 }
 
-function processResult(previewResults) {
+function processResult(result) {
     function extractData(rawData) {
         if (rawData === null || rawData === undefined) {
             return null;
@@ -167,14 +183,17 @@ function processResult(previewResults) {
     }
 
     // if empty result, just skip
-    if (!previewResults || !previewResults.root.fields.totalCount) {
+    if (!result || !result.root.fields.totalCount) {
         return {
             columns: [],
             content: []
         }
     }
-    const children = previewResults.root.children;
+    const children = result.root.children;
+
     const resultFields = children.flatMap(child => Object.keys(child.fields));
+    resultFields.push("relevance")
+
     const columns = [...new Set(resultFields)]
         .map(column => (
             {
@@ -185,9 +204,14 @@ function processResult(previewResults) {
                     const rawData = row[column]
                     return extractData(rawData)
                 },
-
             }))
-    const data = children.map(child => child.fields)
+
+    const data = children.map(child => {
+        const fields = child.fields;
+        fields.relevance = child.relevance
+        return fields
+    })
+
     return {
         columns: columns,
         content: data
