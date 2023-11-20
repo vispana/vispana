@@ -1,4 +1,4 @@
-package com.vispana.client.vespa.helpers;
+package com.vispana.vespa.state.helpers;
 
 public class NameExtractorFromUrl {
   public static String nameFromUrl(String containerClusterUrl) {

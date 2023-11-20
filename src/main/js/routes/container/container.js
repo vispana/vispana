@@ -7,7 +7,6 @@ import SimpleGridRow from "../../components/simple-grid/simple-grid-row";
 
 function Container() {
     const vespaState = useOutletContext();
-
     const tabs = vespaState
         .container
         .clusters
@@ -15,9 +14,12 @@ function Container() {
             return {
                 "header": cluster.name,
                 "content":
-                    <SimpleGrid header="Container nodes">
-                        { cluster.nodes.map(node => (<SimpleGridRow key={node.name} data={node}/>)) }
-                    </SimpleGrid>
+                    <>
+                        <SimpleGrid header="Container nodes">
+                            {cluster.nodes.map(node => (
+                                <SimpleGridRow key={node.name} data={node}/>))}
+                        </SimpleGrid>
+                    </>
             }
         })
 

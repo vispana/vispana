@@ -1,8 +1,8 @@
-package com.vispana.client.vespa.assemblers;
+package com.vispana.vespa.state.assemblers;
 
-import static com.vispana.client.vespa.helpers.ProcessStatus.processStatus;
-import static com.vispana.client.vespa.helpers.Request.request;
-import static com.vispana.client.vespa.helpers.SystemMetrics.systemMetrics;
+import static com.vispana.vespa.state.helpers.ProcessStatus.processStatus;
+import static com.vispana.vespa.state.helpers.Request.requestGet;
+import static com.vispana.vespa.state.helpers.SystemMetrics.systemMetrics;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
@@ -15,7 +15,6 @@ import com.vispana.api.model.content.Group;
 import com.vispana.api.model.content.GroupKey;
 import com.vispana.api.model.content.Schema;
 import com.vispana.api.model.content.SchemaDocCount;
-import com.vispana.client.vespa.helpers.NameExtractorFromUrl;
 import com.vispana.client.vespa.model.ClusterProperty;
 import com.vispana.client.vespa.model.ContentDistributionClusterSchema;
 import com.vispana.client.vespa.model.ContentDistributionSchema;
@@ -24,6 +23,7 @@ import com.vispana.client.vespa.model.MetricsNode;
 import com.vispana.client.vespa.model.SearchDispatchNodesSchema;
 import com.vispana.client.vespa.model.SearchDispatchSchema;
 import com.vispana.client.vespa.model.content.Node;
+import com.vispana.vespa.state.helpers.NameExtractorFromUrl;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class ContentAssembler {
       String appUrl) {
     var contentDistributionUrl = configHost + "/config/v1/vespa.config.content.distribution/";
     var contentClusters =
-        request(contentDistributionUrl, ContentDistributionSchema.class).getConfigs().stream()
+        requestGet(contentDistributionUrl, ContentDistributionSchema.class).getConfigs().stream()
             .map(NameExtractorFromUrl::nameFromUrl)
             .map(
                 clusterName -> {
@@ -76,7 +76,7 @@ public class ContentAssembler {
         .map(
             schemaName -> {
               var schemaUrl = appUrl + "/content/schemas/" + schemaName + ".sd";
-              var schemaContent = request(schemaUrl, String.class);
+              var schemaContent = requestGet(schemaUrl, String.class);
 
               var contentNodeByGroup =
                   contentNodes.stream()
@@ -138,7 +138,7 @@ public class ContentAssembler {
   private static List<String> fetchSchemas(String configHost, String clusterName) {
     var url =
         configHost + "/config/v1/search.config.index-info/" + clusterName + "/?recursive=true";
-    return request(url, IndexInfoSchema.class).getConfigs().stream()
+    return requestGet(url, IndexInfoSchema.class).getConfigs().stream()
         .map(NameExtractorFromUrl::nameFromUrl)
         .filter(schema -> !("cluster." + clusterName).equals(schema))
         .filter(schema -> !"union".equals(schema))
@@ -150,21 +150,21 @@ public class ContentAssembler {
     if (vespaVersion.startsWith("7")) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
-      return request(dispatcherUrl, SearchDispatchSchema.class).getNode();
+      return requestGet(dispatcherUrl, SearchDispatchSchema.class).getNode();
     } else {
       var dispatcherUrl =
           configHost
               + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
               + clusterName
               + "/search";
-      return request(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
+      return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
     }
   }
 
   private static ContentDistributionClusterSchema fetchContentDistributionData(
       String configHost, String contentCluster) {
     var url = configHost + "/config/v1/vespa.config.content.distribution/" + contentCluster;
-    return request(url, ContentDistributionClusterSchema.class);
+    return requestGet(url, ContentDistributionClusterSchema.class);
   }
 
   private static List<ContentNode> contentNodes(

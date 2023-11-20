@@ -13,6 +13,7 @@ import Container from "./routes/container/container";
 import Content from "./routes/content/content";
 import AppPackage from "./routes/apppackage/app-package";
 import VispanaError from "./routes/error/vispana-error";
+import Schema from "./routes/schema/schema";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,12 +24,11 @@ const router = createBrowserRouter(
                 <Route path="container" element={<Container />} />
                 <Route path="content" element={<Content />} />
                 <Route path="apppackage" element={<AppPackage />} />
+                <Route path="schema/:schema" element={<Schema />}/>
             </Route>
         </Route>
     ));
 
 createRoot(document.getElementById("react")).render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>
+    <RouterProvider router={router} />
 )
