@@ -27,7 +27,7 @@ function Editor({query, setQuery, handleRunQuery}) {
             editor.commands.addCommands([{
                 name: 'run query',
                 exec: handleRunQuery,
-                bindKey: {mac: "Command-Enter"}
+                bindKey: {mac: "Command-Enter", win: "Ctrl-Enter"}
             }])
         }
     }, [editorRef?.current?.editor])

@@ -57,10 +57,7 @@ function Query({containerUrl, schema}) {
 
 export function defaultQuery(schema) {
     return JSON.stringify({
-        yql: `SELECT *
-              from ${schema}
-              where true`
-    }, null, 2);
+        yql: `SELECT * from ${schema} where true` }, null, 2);
 }
 
 export default Query
