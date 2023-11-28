@@ -4,7 +4,6 @@ import {androidstudio} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import Loading from "../../routes/loading/loading";
 import VispanaError from "../../routes/error/vispana-error";
-import {useRevalidator} from "react-router-dom";
 
 function QueryResult({containerUrl, vispanaClient, query, showResults, schema, refreshQuery, defaultPageSize = 15}) {
     // customize theme
