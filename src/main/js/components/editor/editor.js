@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/snippets/json";
@@ -8,7 +8,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import {LanguageProvider} from "ace-linters/build/ace-linters";
 import schema from "./query-schema"
 
-function Editor({query, setQuery}) {
+function Editor({query, setQuery, handleRunQuery}) {
     const provider = LanguageProvider.fromCdn("https://cdn.jsdelivr.net/npm/ace-linters/build");
     //link schema to json service
     provider.setGlobalOptions("json", {
@@ -20,7 +20,21 @@ function Editor({query, setQuery}) {
         ]
     });
 
+    const editorRef = React.useRef(null);
+    useEffect(() => {
+        if (editorRef?.current?.editor) {
+            const editor = editorRef.current.editor
+            editor.commands.addCommands([{
+                name: 'run query',
+                exec: handleRunQuery,
+                bindKey: {mac: "Command-Enter", win: "Ctrl-Enter"}
+            }])
+        }
+    }, [editorRef?.current?.editor])
+
+
     return (<AceEditor
+        ref={editorRef}
         height={"210px"}
         placeholder="Placeholder Text"
         mode="json"
