@@ -15,6 +15,13 @@ function Query({containerUrl, schema}) {
         runQuery()
     }
 
+    function prettifyJsonQuery() {
+        try {
+            setQuery(JSON.stringify(JSON.parse(query), null, 2))
+        } catch (_) {
+        }
+    }
+
     const vispanaClient = new VispanaApiClient()
     const [query, setQuery] = useState(defaultQuery(schema))
     const [showResults, setShowResults] = useState(false)
@@ -26,32 +33,38 @@ function Query({containerUrl, schema}) {
     }, [schema])
 
     return <div className={"min-w-full"}>
-        <form>
-            <Editor query={query} setQuery={setQuery} handleRunQuery={runQuery}/>
-            <div className="form-control mb-2">
-                <div className={"min-w-full text-right"}>
-                    <a className={"text-sm underline"}
-                       target="_blank"
-                       href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
-                        Query reference
-                    </a>
-                </div>
-                <button className="btn btn-ghost text-yellow-400" type="submit" onClick={handleClick}>
-                    Query
+        <Editor query={query} setQuery={setQuery} handleRunQuery={runQuery}
+                handleFormatQuery={prettifyJsonQuery}/>
+        <div className="form-control mb-2 flex flex-row pt-1">
+            <div className="tooltip tooltip-right" data-tip="Format Query (Cmd+Opt+L)">
+                <button className="btn btn-ghost text-yellow-400 text-left w-32 flex justify-start"
+                        onClick={prettifyJsonQuery}>
+                    <i className="fas fa-code block"/>
                 </button>
-
             </div>
-            {showResults && <div className={"min-w-full"}>
-                <QueryResult key="query"
-                             query={query}
-                             defaultPageSize={10}
-                             containerUrl={containerUrl}
-                             schema={schema}
-                             render={showResults}
-                             refreshQuery={refreshQuery}
-                             vispanaClient={vispanaClient}/>
-            </div>}
-        </form>
+            <button className="btn btn-ghost text-yellow-400 flex-grow"
+                    onClick={handleClick}>
+                <div className="tooltip tooltip-right w-24 capitalize" data-tip="Query (Cmd+Enter)">
+                    <span className="uppercase">Query</span>
+                </div>
+            </button>
+
+            <a className="text-sm underline w-32 text-right"
+               target="_blank"
+               href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
+                Query reference
+            </a>
+        </div>
+        {showResults && <div className={"min-w-full"}>
+            <QueryResult key="query"
+                         query={query}
+                         defaultPageSize={10}
+                         containerUrl={containerUrl}
+                         schema={schema}
+                         render={showResults}
+                         refreshQuery={refreshQuery}
+                         vispanaClient={vispanaClient}/>
+        </div>}
     </div>
 }
 
