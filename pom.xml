@@ -134,6 +134,9 @@
 						<goals>
 							<goal>webpack</goal>
 						</goals>
+						<configuration>
+							<arguments>build --mode=production</arguments>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
