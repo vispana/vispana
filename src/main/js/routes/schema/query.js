@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import VispanaApiClient from "../../client/vispana-api-client";
 import QueryResult from "../../components/query-result/query-result";
 import {v4 as uuidv4} from 'uuid';
+import {Tooltip} from "react-tooltip";
 
 function Query({containerUrl, schema}) {
     function runQuery() {
@@ -33,28 +34,39 @@ function Query({containerUrl, schema}) {
     }, [schema])
 
     return <div className={"min-w-full"}>
-        <Editor query={query} setQuery={setQuery} handleRunQuery={runQuery}
+        <Editor query={query}
+                setQuery={setQuery}
+                handleRunQuery={runQuery}
                 handleFormatQuery={prettifyJsonQuery}/>
-        <div className="form-control mb-2 flex flex-row pt-1">
-            <div className="tooltip tooltip-right" data-tip="Format Query (Cmd+Opt+L)">
-                <button className="btn btn-ghost text-yellow-400 text-left w-32 flex justify-start"
-                        onClick={prettifyJsonQuery}>
-                    <i className="fas fa-code block"/>
-                </button>
-            </div>
-            <button className="btn btn-ghost text-yellow-400 flex-grow"
-                    onClick={handleClick}>
-                <div className="tooltip tooltip-right w-24 capitalize" data-tip="Query (Cmd+Enter)">
-                    <span className="uppercase">Query</span>
-                </div>
-            </button>
-
-            <a className="text-sm underline w-32 text-right"
+        <div className="form-control mb-2 flex flex-row pt-1 justify-end min-w-full">
+            <a type="button"
+               className="btn bg-standout-blue text-yellow-400 w-13 flex text-center border-none outline-none mr-1"
+               data-tooltip-id="vispana-tooltip"
+               data-tooltip-content="Query reference"
+               data-tooltip-place="top"
                target="_blank"
                href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
-                Query reference
+                <i className={"text-xs fas fa-question"} />
             </a>
+            <button type="button"
+                    className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                    data-tooltip-id="vispana-tooltip"
+                    data-tooltip-content="Format Query (Cmd+Opt+L)"
+                    data-tooltip-place="top"
+                    onClick={prettifyJsonQuery}>
+                <i className="fas fa-code block"/>
+            </button>
+            <button type="button"
+                    className="btn bg-standout-blue text-yellow-400 w-32 btn-blue border-none outline-none"
+                    data-tooltip-id="vispana-tooltip"
+                    data-tooltip-content="Query (Cmd+Enter)"
+                    data-tooltip-place="top"
+                    onClick={handleClick}>
+                    <i className={"text-xs fas fa-play pr-2"}> </i>
+                    <span className="uppercase">Query</span>
+            </button>
         </div>
+
         {showResults && <div className={"min-w-full"}>
             <QueryResult key="query"
                          query={query}
@@ -65,6 +77,7 @@ function Query({containerUrl, schema}) {
                          refreshQuery={refreshQuery}
                          vispanaClient={vispanaClient}/>
         </div>}
+        <Tooltip id="vispana-tooltip" />
     </div>
 }
 
