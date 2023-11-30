@@ -8,7 +8,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import {LanguageProvider} from "ace-linters/build/ace-linters";
 import schema from "./query-schema"
 
-function Editor({query, setQuery, handleRunQuery}) {
+function Editor({query, setQuery, handleRunQuery, handleFormatQuery}) {
     const provider = LanguageProvider.fromCdn("https://cdn.jsdelivr.net/npm/ace-linters/build");
     //link schema to json service
     provider.setGlobalOptions("json", {
@@ -24,14 +24,24 @@ function Editor({query, setQuery, handleRunQuery}) {
     useEffect(() => {
         if (editorRef?.current?.editor) {
             const editor = editorRef.current.editor
-            editor.commands.addCommands([{
-                name: 'run query',
-                exec: handleRunQuery,
-                bindKey: {mac: "Command-Enter", win: "Ctrl-Enter"}
-            }])
+            const commands = []
+            if (handleRunQuery) {
+                commands.push({
+                    name: 'run query',
+                    exec: handleRunQuery,
+                    bindKey: {mac: "Command-Enter", win: "Ctrl-Enter"}
+                })
+            }
+            if (handleFormatQuery) {
+                commands.push({
+                    name: 'format query',
+                    exec: handleFormatQuery,
+                    bindKey: {mac: "Command-Option-L", win: "Ctrl-Alt-L"}
+                })
+            }
+            editor.commands.addCommands(commands)
         }
     }, [editorRef?.current?.editor])
-
 
     return (<AceEditor
         ref={editorRef}

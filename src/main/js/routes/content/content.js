@@ -100,7 +100,7 @@ function Content() {
                                                                                 Group '{group}':
                                                                             </span>
                                                                         </div>
-                                                                        <div className="flex-1 text-left" style={{minWidth: "200px", marginRight: "0.75rem"}}>
+                                                                        <div className="flex-1 text-gray-200 text-left" style={{minWidth: "200px", marginRight: "0.75rem"}}>
                                                                             {' '} {count.toLocaleString()} {hasDiff ? <span className="text-red-400">({diff})</span> : <></> }
                                                                         </div>
                                                                     </div>

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import VispanaApiClient from "../../client/vispana-api-client";
 import QueryResult from "../../components/query-result/query-result";
 import {v4 as uuidv4} from 'uuid';
+import {Tooltip} from "react-tooltip";
 
 function Query({containerUrl, schema}) {
     function runQuery() {
@@ -13,6 +14,13 @@ function Query({containerUrl, schema}) {
     function handleClick(event) {
         event.preventDefault()
         runQuery()
+    }
+
+    function prettifyJsonQuery() {
+        try {
+            setQuery(JSON.stringify(JSON.parse(query), null, 2))
+        } catch (_) {
+        }
     }
 
     const vispanaClient = new VispanaApiClient()
@@ -26,32 +34,50 @@ function Query({containerUrl, schema}) {
     }, [schema])
 
     return <div className={"min-w-full"}>
-        <form>
-            <Editor query={query} setQuery={setQuery} handleRunQuery={runQuery}/>
-            <div className="form-control mb-2">
-                <div className={"min-w-full text-right"}>
-                    <a className={"text-sm underline"}
-                       target="_blank"
-                       href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
-                        Query reference
-                    </a>
-                </div>
-                <button className="btn btn-ghost text-yellow-400" type="submit" onClick={handleClick}>
-                    Query
-                </button>
+        <Editor query={query}
+                setQuery={setQuery}
+                handleRunQuery={runQuery}
+                handleFormatQuery={prettifyJsonQuery}/>
+        <div className="form-control mb-2 flex flex-row pt-1 justify-end min-w-full">
+            <a type="button"
+               className="btn bg-standout-blue text-yellow-400 w-13 flex text-center border-none outline-none mr-1"
+               data-tooltip-id="vispana-tooltip"
+               data-tooltip-content="Query reference"
+               data-tooltip-place="top"
+               target="_blank"
+               href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
+                <i className={"text-xs fas fa-question"} />
+            </a>
+            <button type="button"
+                    className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                    data-tooltip-id="vispana-tooltip"
+                    data-tooltip-content="Format Query (Cmd+Opt+L)"
+                    data-tooltip-place="top"
+                    onClick={prettifyJsonQuery}>
+                <i className="fas fa-code block"/>
+            </button>
+            <button type="button"
+                    className="btn bg-standout-blue text-yellow-400 w-32 btn-blue border-none outline-none"
+                    data-tooltip-id="vispana-tooltip"
+                    data-tooltip-content="Query (Cmd+Enter)"
+                    data-tooltip-place="top"
+                    onClick={handleClick}>
+                    <i className={"text-xs fas fa-play pr-2"}> </i>
+                    <span className="uppercase">Query</span>
+            </button>
+        </div>
 
-            </div>
-            {showResults && <div className={"min-w-full"}>
-                <QueryResult key="query"
-                             query={query}
-                             defaultPageSize={10}
-                             containerUrl={containerUrl}
-                             schema={schema}
-                             render={showResults}
-                             refreshQuery={refreshQuery}
-                             vispanaClient={vispanaClient}/>
-            </div>}
-        </form>
+        {showResults && <div className={"min-w-full"}>
+            <QueryResult key="query"
+                         query={query}
+                         defaultPageSize={10}
+                         containerUrl={containerUrl}
+                         schema={schema}
+                         render={showResults}
+                         refreshQuery={refreshQuery}
+                         vispanaClient={vispanaClient}/>
+        </div>}
+        <Tooltip id="vispana-tooltip" />
     </div>
 }
 
