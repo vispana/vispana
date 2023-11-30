@@ -152,14 +152,6 @@ function Layout() {
                                 <div className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto">
                                     <Outlet context={loadedVespaState}/>
                                 </div>
-                                <div className="flex-1 p-6 md:mt-16">
-                                    <div className="flex flex-grow flex-col pt-2 normal-case">
-                                        <div
-                                            className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto text-center text-xs text-gray-400">
-                                            <p>© 2021 — MIT License</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <Configuration loadedVespaState={loadedVespaState}></Configuration>
