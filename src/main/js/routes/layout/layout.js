@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useState} from 'react'
+import React, {Suspense, useCallback, useEffect, useState} from 'react'
 import {
     Await,
     defer,
@@ -23,6 +23,24 @@ function Layout() {
     const refreshIconClass = "fas fa-sync-alt"
     const [refreshInterval, setRefreshInterval] = useState(-1);
     const [refreshIcon, setRefreshIcon] = useState(refreshIconClass);
+
+    useEffect(() => {
+        const refreshIntervalFromLocalStorage = Number(localStorage.getItem("refreshInterval"));
+        if (refreshIntervalFromLocalStorage) {
+            setRefreshInterval(refreshIntervalFromLocalStorage)
+        } else {
+            setRefreshInterval(-1);
+            localStorage.removeItem("refreshInterval")
+        }
+    }, [])
+
+    const setRefreshIntervalAndSave = useCallback((refreshInterval) => {
+        const refreshIntervalNumber = Number(refreshInterval);
+        if (refreshIntervalNumber) {
+            localStorage.setItem("refreshInterval", refreshInterval);
+            setRefreshInterval(refreshIntervalNumber)
+        }
+    }, [setRefreshInterval])
 
     // Code below sets the expected effects once refreshes changes
     useEffect(() => {
@@ -132,8 +150,9 @@ function Layout() {
                                         <select
                                             className="select select-sm w-40 max-w-xs bg-standout-blue text-xs focus:ring-0"
                                             id="form_interval" name="refresh_interval[interval]"
-                                            defaultValue={-1} onChange={(event) => {
-                                            setRefreshInterval(Number(event.target.value))
+                                            value={refreshInterval}
+                                            onChange={(event) => {
+                                            setRefreshIntervalAndSave(event.target.value)
                                         }}>
                                             <option value="-1">Off</option>
                                             <option value="15000">15s</option>
