@@ -149,7 +149,7 @@ function Layout() {
                                 </div>
                             </div>
                             <div className="flex-1 max-h-full bg-darkest-blue">
-                                <div className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto">
+                                <div className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto pb-4">
                                     <Outlet context={loadedVespaState}/>
                                 </div>
                             </div>
