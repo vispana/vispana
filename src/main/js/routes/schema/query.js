@@ -29,8 +29,8 @@ function Query({containerUrl, schema}) {
             if ("trace" in parsed) {
                 return // don't overwrite if it's already there
             }
+            parsed["tracelevel"] = 5
             parsed["trace"] = {
-                "level": 5,
                 "explainLevel": 1,
                 "timestamps": true
             }
@@ -56,29 +56,29 @@ function Query({containerUrl, schema}) {
                 handleFormatQuery={prettifyJsonQuery}/>
         <div className="form-control mb-2 flex flex-row pt-1 justify-end min-w-full">
             <a type="button"
-               className="btn bg-standout-blue text-yellow-400 w-13 flex text-center border-none outline-none mr-1"
-               data-tooltip-id="vispana-tooltip"
-               data-tooltip-content="Query reference"
-               data-tooltip-place="top"
-               target="_blank"
-               href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
-                <i className={"text-xs fas fa-question"} />
+                className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                data-tooltip-id="vispana-tooltip"
+                data-tooltip-content="Query reference"
+                data-tooltip-place="top"
+                target="_blank"
+                href={"https://docs.vespa.ai/en/reference/query-api-reference.html"}>
+                <i className={"text-xs fas fa-question pl-1 pr-1" } />
             </a>
             <button type="button"
-                    className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
-                    data-tooltip-id="vispana-tooltip"
-                    data-tooltip-content="Format Query (Cmd+Opt+L)"
-                    data-tooltip-place="top"
-                    onClick={prettifyJsonQuery}>
-                <i className="fas fa-code block"/>
+                className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                data-tooltip-id="vispana-tooltip"
+                data-tooltip-content="Format Query (Cmd+Opt+L)"
+                data-tooltip-place="top"
+                onClick={prettifyJsonQuery}>
+                <i className="fas fa-code "/>
             </button>
             <button type="button"
-                    className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
-                    data-tooltip-id="vispana-tooltip"
-                    data-tooltip-content="Add Trace"
-                    data-tooltip-place="top"
-                    onClick={addTrace}>
-                <i className="fas fa-search block"/>
+                className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                data-tooltip-id="vispana-tooltip"
+                data-tooltip-content="Add Trace"
+                data-tooltip-place="top"
+                onClick={addTrace}>
+                <i className="fas fa-stopwatch pl-1 pr-1"/>
             </button>
             <button type="button"
                     className="btn bg-standout-blue text-yellow-400 w-32 btn-blue border-none outline-none"
