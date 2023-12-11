@@ -4,8 +4,9 @@ import {androidstudio} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import Loading from "../../routes/loading/loading";
 import VispanaError from "../../routes/error/vispana-error";
+import TabView from "../tabs/tab-view";
 
-function QueryResult({containerUrl, vispanaClient, query, showResults, schema, refreshQuery, defaultPageSize = 15}) {
+function QueryResult({containerUrl, vispanaClient, query, showResults, schema, refreshQuery, defaultPageSize = 15, useTabs = false}) {
     // customize theme
     createTheme('dark', {
         text: {
@@ -25,7 +26,7 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
     });
 
     // data state
-    const [data, setData] = useState({columns: [], content: []});
+    const [data, setData] = useState({columns: [], content: [], trace: []});
     const [loading, setLoading] = useState(true);
     const [totalRows, setTotalRows] = useState(0);
 
@@ -75,8 +76,8 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
                 const vespaState = response.success;
                 setTotalRows(vespaState.root.fields.totalCount);
 
-                const gridData = processResult(vespaState);
-                setData(gridData);
+                const resultData = processResult(vespaState);
+                setData(resultData);
 
                 setError({
                     hasError: false,
@@ -135,36 +136,67 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
         load();
     }, [refreshQuery]);
 
-    return (
-        <>
-            {!error.hasError && <DataTable
-                theme="dark"
-                customStyles={{
-                    head: {
-                        style: {
-                            color: '#facc15'
-                        }
-                    }
-                }}
-                columns={data.columns}
-                data={data.content}
-                fixedHeader
-                expandableRows
-                expandableRowsComponent={ExpandedComponent}
-                progressPending={loading}
-                progressComponent={<Loading centralize={false}/>}
-                pagination
-                paginationPerPage={defaultPageSize}
-                paginationServer
-                paginationTotalRows={totalRows}
-                onChangeRowsPerPage={handlePerRowsChange}
-                onChangePage={handlePageChange}
-            />}
-            {error.hasError && (<VispanaError showLogo={false} errorMessage={{
+    if (error.hasError) {
+        return (
+            <VispanaError showLogo={false} errorMessage={{
                 title: "Failed to execute the query",
                 description: error.error
-            }}/>)}
-        </>
+            }}/>
+        )
+    }
+
+    const results = (
+        <DataTable
+            theme="dark"
+            customStyles={{
+                head: {
+                    style: {
+                        color: '#facc15'
+                    }
+                }
+            }}
+            columns={data.columns}
+            data={data.content}
+            fixedHeader
+            expandableRows
+            expandableRowsComponent={ExpandedComponent}
+            progressPending={loading}
+            progressComponent={<Loading centralize={false}/>}
+            pagination
+            paginationPerPage={defaultPageSize}
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangeRowsPerPage={handlePerRowsChange}
+            onChangePage={handlePageChange}
+        />
+    )
+
+    if (!useTabs) {
+        return results
+    }
+
+    const tabs = [
+        {
+            "header": "Results",
+            "content": results
+        }
+    ]
+
+    if (data.trace.length > 0) {
+        tabs.push(
+            {
+                "header": "Trace",
+                "content": (
+                    <SyntaxHighlighter language="json" style={androidstudio}>
+                        {JSON.stringify(data.trace, null, 2)}
+                    </SyntaxHighlighter>
+                )
+            }
+        )
+    }
+
+    return (
+        <TabView tabs={tabs} />
     )
 }
 
@@ -211,9 +243,12 @@ function processResult(result) {
         return fields
     })
 
+    const trace = "trace" in result ? result.trace.children : []
+
     return {
         columns: columns,
-        content: data
+        content: data,
+        trace: trace
     }
 }
 
