@@ -23,6 +23,22 @@ function Query({containerUrl, schema}) {
         }
     }
 
+    function addTrace() {
+        try {
+            const parsed = JSON.parse(query)
+            if ("trace" in parsed) {
+                return // don't overwrite if it's already there
+            }
+            parsed["trace"] = {
+                "level": 5,
+                "explainLevel": 1,
+                "timestamps": true
+            }
+            setQuery(JSON.stringify(parsed, null, 2))
+        } catch (_) {
+        }
+    }
+
     const vispanaClient = new VispanaApiClient()
     const [query, setQuery] = useState(defaultQuery(schema))
     const [showResults, setShowResults] = useState(false)
@@ -57,6 +73,14 @@ function Query({containerUrl, schema}) {
                 <i className="fas fa-code block"/>
             </button>
             <button type="button"
+                    className="btn bg-standout-blue text-yellow-400 w-13 text-center border-none outline-none mr-1"
+                    data-tooltip-id="vispana-tooltip"
+                    data-tooltip-content="Add Trace"
+                    data-tooltip-place="top"
+                    onClick={addTrace}>
+                <i className="fas fa-search block"/>
+            </button>
+            <button type="button"
                     className="btn bg-standout-blue text-yellow-400 w-32 btn-blue border-none outline-none"
                     data-tooltip-id="vispana-tooltip"
                     data-tooltip-content="Query (Cmd+Enter)"
@@ -75,7 +99,8 @@ function Query({containerUrl, schema}) {
                          schema={schema}
                          render={showResults}
                          refreshQuery={refreshQuery}
-                         vispanaClient={vispanaClient}/>
+                         vispanaClient={vispanaClient}
+                         useTabs={true}/>
         </div>}
         <Tooltip id="vispana-tooltip" />
     </div>
