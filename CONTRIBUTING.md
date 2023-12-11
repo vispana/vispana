@@ -38,6 +38,12 @@ To run locally, execute:
 
 The service will be available at [`localhost:4000`](http://localhost:4000) from your browser.
 
+To enable hot reloading of the web application, make sure you have NodeJS installed and execute:
+
+```shell
+npm run watch
+```
+
 ## Git commit into to the repository
 
 We advise to add [scope](https://ec.europa.eu/component-library/v1.15.0/eu/docs/conventions/git/#:~:text=feat%3A%20A%20new%20feature,bug%20nor%20adds%20a%20feature)
