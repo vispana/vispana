@@ -35,13 +35,13 @@ function Editor({query, setQuery, handleRunQuery, handleFormatQuery}) {
             if (handleFormatQuery) {
                 commands.push({
                     name: 'format query',
-                    exec: handleFormatQuery,
+                    exec: () => handleFormatQuery(query),
                     bindKey: {mac: "Command-Option-L", win: "Ctrl-Alt-L"}
                 })
             }
             editor.commands.addCommands(commands)
         }
-    }, [editorRef?.current?.editor])
+    }, [editorRef?.current?.editor, query])
 
     return (<AceEditor
         ref={editorRef}
