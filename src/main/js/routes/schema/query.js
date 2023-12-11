@@ -16,7 +16,7 @@ function Query({containerUrl, schema}) {
         runQuery()
     }
 
-    function prettifyJsonQuery() {
+    function prettifyJsonQuery(query) {
         try {
             setQuery(JSON.stringify(JSON.parse(query), null, 2))
         } catch (_) {
@@ -69,7 +69,7 @@ function Query({containerUrl, schema}) {
                 data-tooltip-id="vispana-tooltip"
                 data-tooltip-content="Format Query (Cmd+Opt+L)"
                 data-tooltip-place="top"
-                onClick={prettifyJsonQuery}>
+                onClick={(e) => prettifyJsonQuery(query)}>
                 <i className="fas fa-code "/>
             </button>
             <button type="button"
