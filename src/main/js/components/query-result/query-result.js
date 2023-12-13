@@ -182,7 +182,7 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
         }
     ]
 
-    if (data.trace.length > 0) {
+    if (data && data.trace && data.trace.length > 0) {
         tabs.push(
             {
                 "header": "Trace",

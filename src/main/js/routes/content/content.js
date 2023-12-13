@@ -43,9 +43,9 @@ function Content() {
                             {' | '}
                             <span>Redundancy: </span> <span className="text-gray-400">{overview.redundancy}</span>
                         </p>
-                        <p className="mt-2 text-xs text-gray-200">
-                            <span className="font-extrabold">Groups: </span>
-                            <span className="text-gray-400">
+                        <p className="mt-2 text-xs">
+                            <span className="font-extrabold text-yellow-400">Groups</span>
+                            <div>
                                 { Object
                                     .keys(overview.groupNodeCount)
                                     .map((groupKey, index, array) => {
@@ -54,12 +54,12 @@ function Content() {
                                             <span key={index}>
                                                 <span className="text-gray-200">{groupKey}</span>
                                                 {' '}
-                                                <span className="italic">({count})</span>
+                                                <span className="italic text-gray-400">({count})</span>
                                                 {(index < array.length -1 ) ? ' | ' : ""}
                                             </span>
                                         )
                                     })}
-                          </span>
+                          </div>
                         </p>
                     </div>
                 </div>
