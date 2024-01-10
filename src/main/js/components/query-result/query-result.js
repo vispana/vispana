@@ -41,6 +41,23 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
         error: ""
     });
 
+    const NoDataConst = props => {
+        if (data.json && data.json.root) {
+            const root = data.json.root
+            if (root.coverage && root.coverage.degraded && root.coverage.degraded.timeout) {
+                return <><span className="text-red-500 m-8">Vespa query timed out.</span></>
+            } else {
+                if (root.fields && root.fields.totalCount === 0) {
+                    return <><span className="text-yellow-400 m-8">No fields returned.</span></>
+                } else {
+                    return <><span className="text-yellow-400 m-8">Unexpected state, please check JSON and report an issue.</span></>
+                }
+            }
+        }
+
+        return <><span className="text-yellow-400 m-8">There are no records to display</span></>
+    }
+
     async function postQuery(offset, perPage) {
         try {
             const queryObject = JSON.parse(query)
@@ -168,6 +185,7 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}
+            noDataComponent={<NoDataConst/>}
         />
     )
 
@@ -179,6 +197,12 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
         {
             "header": "Results",
             "content": results
+        },
+        {
+            "header": "JSON response",
+            "content": (<SyntaxHighlighter language="json" style={androidstudio}>
+                {JSON.stringify(data.json, null, 2)}
+            </SyntaxHighlighter>)
         }
     ]
 
@@ -217,10 +241,13 @@ function processResult(result) {
     if (!result || !result.root.fields.totalCount) {
         return {
             columns: [],
-            content: []
+            content: [],
+            trace: [],
+            json: result
         }
     }
-    const children = result.root.children;
+
+    const children = result.root.children ? result.root.children : [];
 
     const resultFields = children.flatMap(child => Object.keys(child.fields));
     resultFields.push("relevance")
@@ -248,7 +275,8 @@ function processResult(result) {
     return {
         columns: columns,
         content: data,
-        trace: trace
+        trace: trace,
+        json: result
     }
 }
 
