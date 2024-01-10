@@ -4,9 +4,12 @@ import VispanaApiClient from "../../client/vispana-api-client";
 import QueryResult from "../../components/query-result/query-result";
 import {v4 as uuidv4} from 'uuid';
 import {Tooltip} from "react-tooltip";
+import {useSearchParams} from "react-router-dom";
 
 function Query({containerUrl, schema}) {
     function runQuery() {
+        searchParams.set(queryFieldFromSearchParam(schema), query)
+        setSearchParams(searchParams)
         setShowResults(true)
         setRefreshQuery(uuidv4())
     }
@@ -21,6 +24,10 @@ function Query({containerUrl, schema}) {
             setQuery(JSON.stringify(JSON.parse(query), null, 2))
         } catch (_) {
         }
+    }
+
+    function queryFieldFromSearchParam(schema) {
+        return `${schema}Query`
     }
 
     function addTrace() {
@@ -38,14 +45,16 @@ function Query({containerUrl, schema}) {
         } catch (_) {
         }
     }
-
     const vispanaClient = new VispanaApiClient()
-    const [query, setQuery] = useState(defaultQuery(schema))
+    const [query, setQuery] = useState(defaultQuery)
     const [showResults, setShowResults] = useState(false)
     const [refreshQuery, setRefreshQuery] = useState(uuidv4())
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        setQuery(defaultQuery(schema))
+        const queryField = queryFieldFromSearchParam(schema)
+        const initialQuery = searchParams.has(queryField) ? searchParams.get(queryField) : defaultQuery(schema)
+        setQuery(initialQuery)
         setShowResults(false)
     }, [schema])
 
