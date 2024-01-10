@@ -3,12 +3,15 @@ import {useOutletContext, useParams} from "react-router-dom";
 import TabView from "../../components/tabs/tab-view";
 import Preview from "./preview";
 import Query from "./query";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import {androidstudio} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 function Schema() {
     const vespaState = useOutletContext()
     const params = useParams()
     const containerUrl = getQueryableContainer(vespaState)
     const schema = params.schema
+    const schemaDetails = findSchemaDetails(vespaState, schema)
 
     return (<>
         <TabView tabs={[
@@ -19,7 +22,14 @@ function Schema() {
             {
                 "header": "Data preview",
                 "content": <Preview containerUrl={containerUrl} schema={schema}/>
-            },]} />
+            },
+            {
+                "header": "Schema",
+                "content": <SyntaxHighlighter language="yaml" style={androidstudio}>
+                    {schemaDetails}
+                </SyntaxHighlighter>
+            }
+        ]} />
     </>)
 
     /* finds a valid container to issue the query */
@@ -33,6 +43,16 @@ function Schema() {
             return clusters[0].route
         } else {
             return ""
+        }
+    }
+
+    function findSchemaDetails(vespaState, schema) {
+        for (let cluster of vespaState.content.clusters) {
+            for (let data of cluster.contentData) {
+                if (data.schema.schemaName === schema) {
+                    return data.schema.schemaContent
+                }
+            }
         }
     }
 }
