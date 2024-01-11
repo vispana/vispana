@@ -270,7 +270,11 @@ function processResult(result) {
         return fields
     })
 
-    const trace = "trace" in result ? result.trace.children : []
+    let trace = []
+    if ("trace" in result) {
+        trace = result.trace.children
+        result["trace"] = "...see trace tab..."
+    }
 
     return {
         columns: columns,
