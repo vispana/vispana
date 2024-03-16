@@ -72,15 +72,19 @@ function Content() {
 
         return (
             <>
-                <div className="w-full overflow-x-scroll component-no-scrollbar md:mt-4 mt-6 pb-6">
+                <div className="w-full overflow-x-scroll component-no-scrollbar mt-6 pb-6">
                     <div className="flex w-full h-full" style={{height: "100%"}}>
                         {contentData
                         .map((data, index) => {
+                            let marginRight = index === contentData.length - 1 ? "0" : "0.75rem"
                             return (
-                                <div key={index} className="flex-grow flex-wrap" style={{minWidth: "200px", marginRight: "0.75rem"}}>
+                                <div key={index} className="flex-grow flex-wrap" style={{minWidth: "200px", marginRight: marginRight}}>
                                     <div className="flex flex-col justify-center w-full max-w-sm text-center bg-standout-blue rounded-md shadow-md border border-1 border-standout-blue" style={{height: "100%", padding: "1.0rem", borderColor: "#26324a"}}>
-                                        <div className="text-yellow-400">
-                                            {data.schema.schemaName}
+                                        <div className="text-yellow-400 w-full">
+                                            <p className="text-yellow-400 text-ellipsis overflow-hidden w-full">
+                                                {data.schema.schemaName}
+                                            </p>
+
                                         </div>
 
                                         <div>

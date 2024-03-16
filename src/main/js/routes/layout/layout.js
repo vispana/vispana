@@ -52,11 +52,10 @@ function Layout() {
                 errorElement={<VispanaError/>}>
                 {(loadedVespaState) => (
                     <main role="main" className="h-screen flex flex-row flex-wrap">
-                        <div id="sideBar"
-                             className="relative h-screen  flex flex-col flex-wrap p-6 flex-none w-56 md:-ml-64 md:fixed md:top-0 md:z-30 md:h-screen md:shadow-xl animated faster bg-standout-blue">
+                        <div id="sideBar" className="relative h-screen  flex flex-col flex-wrap p-6 min-w-75 max-w-80 animated faster bg-standout-blue">
                             <div className="flex flex-col">
                                 <div
-                                    className="flex flex-row flex-start justify-center mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
+                                    className="flex flex-row flex-start justify-center mb-3 font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500">
                                     <div
                                         className="mb-3 w-24 h-24 rounded-full bg-white flex items-center justify-center cursor-pointer text-indigo-700 border-4 border-yellow-400 overflow-hidden">
                                         <a href="/">
@@ -111,7 +110,7 @@ function Layout() {
 
                             </div>
                         </div>
-                        <div className="flex-1 h-screen p-6 md:mt-16 overflow-x-auto w-full">
+                        <div className="flex-1 h-screen p-6 overflow-x-auto w-full">
                             <div>
                                 <div className="space-x-1 w-full">
                                     <div className="text-right font-flow"
@@ -149,7 +148,7 @@ function Layout() {
                                 </div>
                             </div>
                             <div className="flex-1 max-h-full bg-darkest-blue">
-                                <div className="-my-2 sm:-mx-6 lg:-mx-8 overflow-x-auto pb-4">
+                                <div className="-my-2 x-8 overflow-x-auto pb-4">
                                     <Outlet context={loadedVespaState}/>
                                 </div>
                             </div>
@@ -164,11 +163,12 @@ function Layout() {
     function navLinkStyle() {
         return ({isActive}) => {
             if (isActive) {
-                return "mt-3 capitalize font-medium text-sm transition ease-in-out duration-100" +
-                    " text-yellow-400"
+                return "mt-3 font-medium text-sm transition ease-in-out duration-100" +
+                    " text-yellow-400 text-ellipsis overflow-hidden w-full"
+
             } else {
-                return "mt-3 capitalize font-medium text-sm hover:text-white transition" +
-                    " ease-in-out duration-500 text-gray-300"
+                return "mt-3 font-medium text-sm hover:text-white transition" +
+                    " ease-in-out duration-500 text-gray-300 text-ellipsis overflow-hidden w-full"
             }
         };
     }

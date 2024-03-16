@@ -18,7 +18,7 @@ const Accordion = ({
                 {controllerElement(isExpanded)}
             </div>
             {isExpanded && (
-                <div id={contentDescription} className="min-w-full flex flex-col pl-4">
+                <div id={contentDescription} className="w-full flex flex-col pl-4" style={{maxWidth: "220px"}}>
                     {children}
                 </div>
             )}

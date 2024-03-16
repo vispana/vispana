@@ -15,7 +15,7 @@ function Index() {
     return (<>
         <main role="main" className="h-screen flex flex-row flex-wrap">
             <div className="hero min-h-screen bg-darkest-blue">
-                <div className="flex-col justify-center hero-content lg:flex-row w-full">
+                <div className="justify-center hero-content flex-row w-full">
                     <div
                         className="card flex-shrink-0 w-full max-w-1/2 shadow-2xl bg-standout-blue overflow-visible">
                         <div style={{position: "absolute", top: "-50px", left: "calc(50% - 40px)"}}
