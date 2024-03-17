@@ -17,6 +17,14 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
         background: {
             default: '#1f2a40',
         },
+        highlightOnHover: {
+            default: '#3b4f77',
+            text: '#fff',
+        },
+        striped: {
+            default: '#2c3c5a',
+            text: '#fff',
+        },
         context: {
             text: '#facc15',
         },
@@ -185,6 +193,9 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}
+            responsive
+            striped
+            highlightOnHover
             noDataComponent={<NoDataConst/>}
         />
     )
@@ -220,7 +231,7 @@ function QueryResult({containerUrl, vispanaClient, query, showResults, schema, r
     }
 
     return (
-        <TabView tabs={tabs} />
+        <TabView tabs={tabs}/>
     )
 }
 

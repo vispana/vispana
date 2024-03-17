@@ -1,8 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-function TabView({ tabs }) {
+function TabView({ tabs, currentTab, tabSelector }) {
+    if(currentTab === undefined || !tabSelector === undefined ) {
+        const [tabIndex, setTabIndex] = useState(0);
+        currentTab = tabIndex;
+        tabSelector = setTabIndex;
+    }
+
     tabs.forEach(tab => {
         if(! tab.hasOwnProperty('header') || !tab.hasOwnProperty('content')) {
             throw new Error(`Expected 'header' and 'content' properties in TabView. Got: ${tab}`)
@@ -11,7 +17,7 @@ function TabView({ tabs }) {
 
     return (
         <div className="w-full max-w-full min-w-full">
-        <Tabs>
+        <Tabs selectedIndex={currentTab} onSelect={(index) => tabSelector(index)}>
             <TabList className="flex justify-left items-left component-no-scrollbar overflow-x-scroll">
                 { tabs
                     .map((tab, index) => (
