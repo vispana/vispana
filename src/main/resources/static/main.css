@@ -57,3 +57,14 @@ div.service_unknown {
 * {
     color: rgb(229 231 235 / var(--tw-text-opacity))
 }
+
+.font-search {
+    position: relative;
+}
+
+.font-search i{
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    color: rgb(128, 128, 128);
+}

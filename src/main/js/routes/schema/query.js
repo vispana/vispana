@@ -6,12 +6,22 @@ import {v4 as uuidv4} from 'uuid';
 import {Tooltip} from "react-tooltip";
 import {useSearchParams} from "react-router-dom";
 
-function Query({containerUrl, schema}) {
+function Query({containerUrl, schema, searchParams, setSearchParams}) {
     function runQuery() {
         searchParams.set(queryFieldFromSearchParam(schema), query)
         setSearchParams(searchParams)
         setShowResults(true)
         setRefreshQuery(uuidv4())
+
+        // Save the query to local storage
+        // create an object similar to the sample object in history-client.js
+        // and save it to local storage
+        const itemToHistory = {
+            timestamp: new Date().toISOString(),
+            vespaInstance: containerUrl,
+            query: query
+        }
+        localStorage.setItem(uuidv4(), JSON.stringify(itemToHistory))
     }
 
     function handleClick(event) {
@@ -24,10 +34,6 @@ function Query({containerUrl, schema}) {
             setQuery(JSON.stringify(JSON.parse(query), null, 2))
         } catch (_) {
         }
-    }
-
-    function queryFieldFromSearchParam(schema) {
-        return `${schema}Query`
     }
 
     function addTrace() {
@@ -49,7 +55,6 @@ function Query({containerUrl, schema}) {
     const [query, setQuery] = useState(defaultQuery)
     const [showResults, setShowResults] = useState(false)
     const [refreshQuery, setRefreshQuery] = useState(uuidv4())
-    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         const queryField = queryFieldFromSearchParam(schema)
@@ -118,6 +123,10 @@ function Query({containerUrl, schema}) {
 export function defaultQuery(schema) {
     return JSON.stringify({
         yql: `SELECT * from ${schema} where true` }, null, 2);
+}
+
+export function queryFieldFromSearchParam(schema) {
+    return `${schema}Query`
 }
 
 export default Query
