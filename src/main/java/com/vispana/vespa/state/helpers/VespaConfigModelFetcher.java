@@ -39,7 +39,7 @@ public class VespaConfigModelFetcher {
           host.getServices().stream().filter(searchNodePredicate()).collect(Collectors.toList());
       List<String> splitHostName = List.of(host.getName().split(("[-.]")));
 
-      // Assuming host is of format <service>-<key>-<group>-<key>.domain.com
+      // Assuming host is of format vespa-<node_type>-<group>-<key>.domain
       if (splitHostName.size() >= 4) {
         node.setGroup(Long.parseLong(splitHostName.get(2)));
         node.setKey(Long.parseLong(splitHostName.get(3)));
