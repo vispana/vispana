@@ -148,21 +148,30 @@ public class ContentAssembler {
 
   private static List<Node> fetchDispatcherData(
       String configHost, String clusterName, String vespaVersion) {
-    int vespaMajorVersionNumber = Integer.parseInt(vespaVersion.split("\\.")[0]);
-    int vespaMinorVersionNumber = Integer.parseInt(vespaVersion.split("\\.")[1]);
 
-    if (vespaMajorVersionNumber == 7) {
+    String[] version = vespaVersion.split("\\.");
+
+    //Assume semantic versioning major.minor.patch
+    if (version.length == 3) {
+      throw new RuntimeException("Failed to parse vespa version");
+    }
+
+    int majorVersion = Integer.parseInt(version[0]);
+    int minorVersion = Integer.parseInt(version[1]);
+
+    if (majorVersion == 7) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
       return requestGet(dispatcherUrl, SearchDispatchSchema.class).getNode();
-    } else if (vespaMajorVersionNumber == 8 && vespaMinorVersionNumber < 323) {
+    } else if (majorVersion == 8 && minorVersion < 323) {
       var dispatcherUrl =
           configHost
-              + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
-              + clusterName
-              + "/search";
+          + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
+          + clusterName
+          + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
     } else {
+      // For Vespa 8.323.45 and above
       return fetchContentNodes(configHost);
     }
   }
