@@ -152,7 +152,7 @@ public class ContentAssembler {
     String[] version = vespaVersion.split("\\.");
 
     //Assume semantic versioning major.minor.patch
-    if (version.length == 3) {
+    if (version.length != 3) {
       throw new RuntimeException("Failed to parse vespa version");
     }
 
