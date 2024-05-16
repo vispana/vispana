@@ -3,6 +3,7 @@ package com.vispana.vespa.state.assemblers;
 import static com.vispana.vespa.state.helpers.ProcessStatus.processStatus;
 import static com.vispana.vespa.state.helpers.Request.requestGet;
 import static com.vispana.vespa.state.helpers.SystemMetrics.systemMetrics;
+import static com.vispana.vespa.state.helpers.VespaConfigModelFetcher.fetchContentNodes;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
@@ -147,17 +148,22 @@ public class ContentAssembler {
 
   private static List<Node> fetchDispatcherData(
       String configHost, String clusterName, String vespaVersion) {
-    if (vespaVersion.startsWith("7")) {
+    int vespaMajorVersionNumber = Integer.parseInt(vespaVersion.split("\\.")[0]);
+    int vespaMinorVersionNumber = Integer.parseInt(vespaVersion.split("\\.")[1]);
+
+    if (vespaMajorVersionNumber == 7) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
       return requestGet(dispatcherUrl, SearchDispatchSchema.class).getNode();
-    } else {
+    } else if (vespaMajorVersionNumber == 8 && vespaMinorVersionNumber < 323) {
       var dispatcherUrl =
           configHost
               + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
               + clusterName
               + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
+    } else {
+      return fetchContentNodes(configHost);
     }
   }
 

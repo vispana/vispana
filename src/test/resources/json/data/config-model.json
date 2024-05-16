@@ -1,0 +1,305 @@
+{
+  "vespaVersion": "8.296.15",
+  "hosts": [
+    {
+      "name": "vespa-content-0-1.vespa",
+      "services": [
+        {
+          "name": "storagenode",
+          "type": "storagenode",
+          "configid": "content/storage/0",
+          "clustertype": "content",
+          "clustername": "content",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19100,
+              "tags": "messaging"
+            },
+            {
+              "number": 19101,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19102,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "searchnode",
+          "type": "searchnode",
+          "configid": "content/search/cluster.content/0",
+          "clustertype": "search",
+          "clustername": "content",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19103,
+              "tags": "status admin rtc rpc"
+            },
+            {
+              "number": 19104,
+              "tags": "unused"
+            },
+            {
+              "number": 19105,
+              "tags": "unused"
+            },
+            {
+              "number": 19106,
+              "tags": "unused"
+            },
+            {
+              "number": 19107,
+              "tags": "state health json http"
+            }
+          ]
+        },
+        {
+          "name": "transactionlogserver",
+          "type": "transactionlogserver",
+          "configid": "content/search/cluster.content/0/transactionlogserver",
+          "clustertype": "search",
+          "clustername": "content",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19108,
+              "tags": "tls"
+            }
+          ]
+        },
+        {
+          "name": "distributor",
+          "type": "distributor",
+          "configid": "content/distributor/0",
+          "clustertype": "content",
+          "clustername": "content",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19109,
+              "tags": "messaging"
+            },
+            {
+              "number": 19110,
+              "tags": "status rpc"
+            },
+            {
+              "number": 19111,
+              "tags": "state status http"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/vespa-content-0-1.vespa",
+          "clustertype": "container",
+          "clustername": "metrics",
+          "index": 10,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/vespa-content-0-1.vespa/sentinel",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/vespa-content-0-1.vespa/logd",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/vespa-content-0-1.vespa/configproxy",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vespa-config-0",
+      "services": [
+        {
+          "name": "configserver",
+          "type": "configserver",
+          "configid": "admin/configservers/configserver.0",
+          "clustertype": "admin",
+          "clustername": "admin",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19070,
+              "tags": "config rpc"
+            },
+            {
+              "number": 19071,
+              "tags": "state config http"
+            }
+          ]
+        },
+        {
+          "name": "slobrok",
+          "type": "slobrok",
+          "configid": "admin/slobrok.0",
+          "clustertype": "slobrok",
+          "clustername": "admin",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19099,
+              "tags": "status admin rpc"
+            },
+            {
+              "number": 19100,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "container-clustercontroller",
+          "type": "container-clustercontroller",
+          "configid": "admin/cluster-controllers/0",
+          "clustertype": "container",
+          "clustername": "cluster-controllers",
+          "index": 0,
+          "ports": [
+            {
+              "number": 19050,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19101,
+              "tags": "external http"
+            },
+            {
+              "number": 19102,
+              "tags": "admin rpc"
+            }
+          ]
+        },
+        {
+          "name": "metricsproxy-container",
+          "type": "metricsproxy-container",
+          "configid": "admin/metrics/vespa-config-0",
+          "clustertype": "container",
+          "clustername": "metrics",
+          "index": 6,
+          "ports": [
+            {
+              "number": 19092,
+              "tags": "state external query http"
+            },
+            {
+              "number": 19093,
+              "tags": "unused"
+            },
+            {
+              "number": 19094,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19095,
+              "tags": "metrics rpc"
+            }
+          ]
+        },
+        {
+          "name": "config-sentinel",
+          "type": "config-sentinel",
+          "configid": "hosts/vespa-config-0/sentinel",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19097,
+              "tags": "admin rpc"
+            },
+            {
+              "number": 19098,
+              "tags": "state http interactive telnet"
+            }
+          ]
+        },
+        {
+          "name": "logd",
+          "type": "logd",
+          "configid": "hosts/vespa-config-0/logd",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19089,
+              "tags": "state http"
+            }
+          ]
+        },
+        {
+          "name": "configproxy",
+          "type": "configproxy",
+          "configid": "hosts/vespa-config-0/configproxy",
+          "clustertype": "hosts",
+          "clustername": "admin",
+          "index": 999999,
+          "ports": [
+            {
+              "number": 19090,
+              "tags": "admin rpc status client rpc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
