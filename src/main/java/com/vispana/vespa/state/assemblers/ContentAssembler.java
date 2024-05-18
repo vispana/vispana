@@ -151,7 +151,7 @@ public class ContentAssembler {
 
     String[] version = vespaVersion.split("\\.");
 
-    //Assume semantic versioning major.minor.patch
+    // Assume semantic versioning major.minor.patch
     if (version.length != 3) {
       throw new RuntimeException("Failed to parse vespa version");
     }
@@ -166,9 +166,9 @@ public class ContentAssembler {
     } else if (majorVersion == 8 && minorVersion < 323) {
       var dispatcherUrl =
           configHost
-          + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
-          + clusterName
-          + "/search";
+              + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
+              + clusterName
+              + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
     } else {
       // For Vespa 8.323.45 and above
