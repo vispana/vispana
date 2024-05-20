@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VespaStateClient {
+
   public VispanaRoot vespaState(String configHost) {
 
     try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
@@ -29,13 +30,21 @@ public class VespaStateClient {
       var vespaVersion = vespaVersionFork.get();
       var appUrl = appUrlFork.get();
 
+      var appPackageScope = scope.fork(() -> AppPackageAssembler.assemble(appUrl));
+      scope
+          .join()
+          .throwIfFailed(
+              throwable -> new RuntimeException("Failed to get app data from Vespa", throwable));
+      var appPackage = appPackageScope.get();
+
       // fetch and build Vispana components concurrently and block until tasks are done
       var configFork = scope.fork(() -> ConfigNodesAssembler.assemble(configHost, vespaMetrics));
       var containerFork = scope.fork(() -> ContainerAssembler.assemble(configHost, vespaMetrics));
       var contentFork =
           scope.fork(
-              () -> ContentAssembler.assemble(configHost, vespaVersion, vespaMetrics, appUrl));
-      var appPackageScope = scope.fork(() -> AppPackageAssembler.assemble(appUrl));
+              () ->
+                  ContentAssembler.assemble(
+                      configHost, vespaVersion, vespaMetrics, appUrl, appPackage));
       scope
           .join()
           .throwIfFailed(
@@ -44,7 +53,6 @@ public class VespaStateClient {
       var configNodes = configFork.get();
       var containerNodes = containerFork.get();
       var contentNodes = contentFork.get();
-      var appPackage = appPackageScope.get();
 
       return new VispanaRoot(configNodes, containerNodes, contentNodes, appPackage);
     } catch (Throwable t) {

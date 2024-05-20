@@ -1,11 +1,13 @@
 package com.vispana.vespa.state.assemblers;
 
+import static com.vispana.vespa.state.helpers.ContentNodesExtractor.contentNodesFromAppPackage;
 import static com.vispana.vespa.state.helpers.ProcessStatus.processStatus;
 import static com.vispana.vespa.state.helpers.Request.requestGet;
 import static com.vispana.vespa.state.helpers.SystemMetrics.systemMetrics;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
+import com.vispana.api.model.apppackage.ApplicationPackage;
 import com.vispana.api.model.content.ContentCluster;
 import com.vispana.api.model.content.ContentData;
 import com.vispana.api.model.content.ContentNode;
@@ -38,14 +40,17 @@ public class ContentAssembler {
       String configHost,
       String vespaVersion,
       Map<String, MetricsNode> vespaMetrics,
-      String appUrl) {
+      String appUrl,
+      ApplicationPackage appPackage) {
     var contentDistributionUrl = configHost + "/config/v1/vespa.config.content.distribution/";
+
     var contentClusters =
         requestGet(contentDistributionUrl, ContentDistributionSchema.class).getConfigs().stream()
             .map(NameExtractorFromUrl::nameFromUrl)
             .map(
                 clusterName -> {
-                  var dispatcher = fetchDispatcherData(configHost, clusterName, vespaVersion);
+                  var dispatcher =
+                      fetchDispatcherData(configHost, clusterName, vespaVersion, appPackage);
                   var schemas = fetchSchemas(configHost, clusterName);
                   var contentDistribution = fetchContentDistributionData(configHost, clusterName);
                   var distribution =
@@ -146,18 +151,34 @@ public class ContentAssembler {
   }
 
   private static List<Node> fetchDispatcherData(
-      String configHost, String clusterName, String vespaVersion) {
-    if (vespaVersion.startsWith("7")) {
+      String configHost,
+      String clusterName,
+      String vespaVersion,
+      final ApplicationPackage appPackage) {
+
+    String[] version = vespaVersion.split("\\.");
+
+    // Assume semantic versioning major.minor.patch
+    if (version.length != 3) {
+      throw new RuntimeException("Failed to parse vespa version");
+    }
+
+    int majorVersion = Integer.parseInt(version[0]);
+    int minorVersion = Integer.parseInt(version[1]);
+
+    if (majorVersion == 7) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
       return requestGet(dispatcherUrl, SearchDispatchSchema.class).getNode();
-    } else {
+    } else if (majorVersion == 8 && minorVersion < 323) {
       var dispatcherUrl =
           configHost
               + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
               + clusterName
               + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
+    } else {
+      return contentNodesFromAppPackage(appPackage);
     }
   }
 
