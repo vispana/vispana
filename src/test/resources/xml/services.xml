@@ -5,15 +5,12 @@
         <document-processing />
         <document-api />
         <nodes>
-            <jvm gc-options="-XX:MaxTenuringThreshold=15 -XX:NewRatio=1" options="-XX:+PrintCommandLineFlags -Xlog:gc=off" allocated-memory="75%" />
             <node hostalias="feed-0" />
         </nodes>
     </container>
     <container id="query" version="1.0">
-        <accesslog type="disabled" />
         <search />
         <nodes>
-            <jvm gc-options="-XX:MaxTenuringThreshold=15 -XX:NewRatio=1" options="-XX:+PrintCommandLineFlags -Xlog:gc=off" allocated-memory="75%" />
             <node hostalias="query-0" />
         </nodes>
     </container>
@@ -28,12 +25,6 @@
                 <searchable-copies>1</searchable-copies>
             </proton>
         </engine>
-        <tuning>
-            <cluster-controller>
-                <transition-time>3600</transition-time>
-            </cluster-controller>
-            <bucket-splitting minimum-bits="16" />
-        </tuning>
         <redundancy>1</redundancy>
         <group name="top-group">
             <distribution partitions="*" />
@@ -60,10 +51,5 @@
             <slobrok hostalias="config-2" />
         </slobroks>
         <adminserver hostalias="admin-0" />
-        <metrics>
-            <consumer id="metri">
-                <metric id="vds.idealstate.merge_bucket.pending.average" />
-            </consumer>
-        </metrics>
     </admin>
 </services>
