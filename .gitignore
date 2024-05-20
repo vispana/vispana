@@ -15,3 +15,4 @@ package-lock.json
 org.eclipse.*
 settings.json
 .DS_Store
+.java-version
