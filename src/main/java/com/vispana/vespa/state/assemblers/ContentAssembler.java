@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
 import com.vispana.api.model.apppackage.ApplicationPackage;
+import com.vispana.api.model.config.ConfigNodes;
 import com.vispana.api.model.content.ContentCluster;
 import com.vispana.api.model.content.ContentData;
 import com.vispana.api.model.content.ContentNode;
@@ -41,7 +42,8 @@ public class ContentAssembler {
       String vespaVersion,
       Map<String, MetricsNode> vespaMetrics,
       String appUrl,
-      ApplicationPackage appPackage) {
+      ApplicationPackage appPackage,
+      String configHostName) {
     var contentDistributionUrl = configHost + "/config/v1/vespa.config.content.distribution/";
 
     var contentClusters =
@@ -50,7 +52,7 @@ public class ContentAssembler {
             .map(
                 clusterName -> {
                   var dispatcher =
-                      fetchDispatcherData(configHost, clusterName, vespaVersion, appPackage);
+                      fetchDispatcherData(configHost, clusterName, vespaVersion, appPackage, configHostName);
                   var schemas = fetchSchemas(configHost, clusterName);
                   var contentDistribution = fetchContentDistributionData(configHost, clusterName);
                   var distribution =
@@ -154,7 +156,8 @@ public class ContentAssembler {
       String configHost,
       String clusterName,
       String vespaVersion,
-      final ApplicationPackage appPackage) {
+      final ApplicationPackage appPackage,
+      final String configHostName) {
 
     String[] version = vespaVersion.split("\\.");
 
@@ -178,7 +181,7 @@ public class ContentAssembler {
               + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
     } else {
-      return contentNodesFromAppPackage(appPackage);
+      return contentNodesFromAppPackage(appPackage, configHostName);
     }
   }
 

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 public class ProcessStatus {
   public static Map<String, Status> processStatus(
       String host, Map<String, MetricsNode> vespaMetrics) {
+    if (!vespaMetrics.containsKey(host)) {
+      return Map.of();
+    }
+
     return vespaMetrics.get(host).getServices().stream()
         .map(
             service -> {

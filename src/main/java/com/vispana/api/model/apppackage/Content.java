@@ -9,9 +9,20 @@ public class Content {
   private String id;
 
   @JacksonXmlProperty(localName = "group")
-  private TopGroup topGroup;
+  private Group group;
 
-  protected List<Group> getContentGroups() {
-    return topGroup != null ? topGroup.getGroups() : List.of();
+  @JacksonXmlProperty(localName = "nodes")
+  Nodes nodes;
+
+  public List<Group> getGroups() {
+    return group != null ? group.getGroups() : List.of();
+  }
+
+  public List<Node> getNodes() {
+    return nodes != null ? nodes.getNodes() : List.of();
+  }
+
+  public boolean hasNodes() {
+    return nodes != null && nodes.getNodes() != null && !nodes.getNodes().isEmpty();
   }
 }

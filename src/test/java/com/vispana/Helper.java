@@ -18,8 +18,12 @@ public class Helper {
   }
 
   public static String defaultServicesXmlString() {
+    return servicesXmlString("xml/services.xml");
+  }
+
+  public static String servicesXmlString(String path) {
     ClassLoader loader = Helper.class.getClassLoader();
-    File file = new File(loader.getResource("xml/services.xml").getFile());
+    File file = new File(loader.getResource(path).getFile());
     try {
       return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
     } catch (IOException e) {

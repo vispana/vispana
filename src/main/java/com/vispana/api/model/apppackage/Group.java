@@ -13,6 +13,14 @@ public class Group {
   private String distributionKey;
 
   @JacksonXmlElementWrapper(useWrapping = false)
+  @JacksonXmlProperty(localName = "group")
+  List<Group> groups;
+
+  public List<Group> getGroups() {
+    return groups != null ? groups : List.of(this);
+  }
+
+  @JacksonXmlElementWrapper(useWrapping = false)
   @JacksonXmlProperty(localName = "node")
   List<Node> nodes;
 
@@ -21,7 +29,7 @@ public class Group {
   }
 
   public String getDistributionKey() {
-    return distributionKey;
+    return distributionKey != null ? distributionKey : "-1";
   }
 
   public List<Node> getNodes() {

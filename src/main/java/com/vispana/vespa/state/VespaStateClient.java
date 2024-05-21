@@ -31,26 +31,26 @@ public class VespaStateClient {
       var appUrl = appUrlFork.get();
 
       var appPackageScope = scope.fork(() -> AppPackageAssembler.assemble(appUrl));
+      var configFork = scope.fork(() -> ConfigNodesAssembler.assemble(configHost, vespaMetrics));
       scope
           .join()
           .throwIfFailed(
-              throwable -> new RuntimeException("Failed to get app data from Vespa", throwable));
+              throwable -> new RuntimeException("Failed to get data from Vespa", throwable));
       var appPackage = appPackageScope.get();
+      var configNodes = configFork.get();
 
       // fetch and build Vispana components concurrently and block until tasks are done
-      var configFork = scope.fork(() -> ConfigNodesAssembler.assemble(configHost, vespaMetrics));
       var containerFork = scope.fork(() -> ContainerAssembler.assemble(configHost, vespaMetrics));
       var contentFork =
           scope.fork(
               () ->
                   ContentAssembler.assemble(
-                      configHost, vespaVersion, vespaMetrics, appUrl, appPackage));
+                      configHost, vespaVersion, vespaMetrics, appUrl, appPackage,
+                      configNodes.clusters().getFirst().nodes().getFirst().host().hostname()));
       scope
           .join()
           .throwIfFailed(
               throwable -> new RuntimeException("Failed to get data from Vespa", throwable));
-
-      var configNodes = configFork.get();
       var containerNodes = containerFork.get();
       var contentNodes = contentFork.get();
 
