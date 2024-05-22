@@ -64,6 +64,9 @@ function AppPackage() {
                 <p><span
                     className="text-yellow-400">Generation:</span> {vespaState.applicationPackage.appPackageGeneration}
                 </p>
+                <p><span
+                    className="text-yellow-400">Version:</span> {`${vespaState.vespaVersion.major}.${vespaState.vespaVersion.minor}.${vespaState.vespaVersion.patch}`}
+                </p>
             </div>
     })
 

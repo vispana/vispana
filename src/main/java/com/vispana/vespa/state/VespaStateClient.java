@@ -58,7 +58,7 @@ public class VespaStateClient {
       var containerNodes = containerFork.get();
       var contentNodes = contentFork.get();
 
-      return new VispanaRoot(configNodes, containerNodes, contentNodes, appPackage);
+      return new VispanaRoot(configNodes, containerNodes, contentNodes, appPackage, vespaVersion);
     } catch (Throwable t) {
       // Since this application is not meant to be exposed outside a perimeter, jut throw
       // the exception to ease debugging

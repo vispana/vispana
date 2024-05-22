@@ -7,6 +7,7 @@ import static com.vispana.vespa.state.helpers.SystemMetrics.systemMetrics;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
+import com.vispana.api.model.VespaVersion;
 import com.vispana.api.model.apppackage.ApplicationPackage;
 import com.vispana.api.model.content.ContentCluster;
 import com.vispana.api.model.content.ContentData;
@@ -38,7 +39,7 @@ public class ContentAssembler {
 
   public static ContentNodes assemble(
       String configHost,
-      String vespaVersion,
+      VespaVersion vespaVersion,
       Map<String, MetricsNode> vespaMetrics,
       String appUrl,
       ApplicationPackage appPackage,
@@ -155,25 +156,15 @@ public class ContentAssembler {
   private static List<Node> fetchDispatcherData(
       String configHost,
       String clusterName,
-      String vespaVersion,
+      VespaVersion vespaVersion,
       final ApplicationPackage appPackage,
       final String configHostName) {
 
-    String[] version = vespaVersion.split("\\.");
-
-    // Assume semantic versioning major.minor.patch
-    if (version.length != 3) {
-      throw new RuntimeException("Failed to parse vespa version");
-    }
-
-    int majorVersion = Integer.parseInt(version[0]);
-    int minorVersion = Integer.parseInt(version[1]);
-
-    if (majorVersion == 7) {
+    if (vespaVersion.major() == 7) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
       return requestGet(dispatcherUrl, SearchDispatchSchema.class).getNode();
-    } else if (majorVersion == 8 && minorVersion < 323) {
+    } else if (vespaVersion.major() == 8 && vespaVersion.minor() < 323) {
       var dispatcherUrl =
           configHost
               + "/config/v2/tenant/default/application/default/vespa.config.search.dispatch-nodes/"
