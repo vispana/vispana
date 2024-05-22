@@ -9,4 +9,5 @@ public record VispanaRoot(
     ConfigNodes config,
     ContainerNodes container,
     ContentNodes content,
-    ApplicationPackage applicationPackage) {}
+    ApplicationPackage applicationPackage,
+    VespaVersion vespaVersion) {}
