@@ -31,12 +31,14 @@ public class ContentNodesExtractor {
                 new Group(), services.getContent().getNodes().get(0), hosts, configHostName));
       }
       return services.getContent().getNodes().stream()
-          .map(n -> createNode(new Group(), n, hosts, null))
+          .map(n -> createNode(new Group(), n, hosts, configHostName))
           .collect(Collectors.toList());
     }
 
     return services.getContent().getGroups().stream()
-        .flatMap(group -> group.getNodes().stream().map(n -> createNode(group, n, hosts, null)))
+        .flatMap(
+            group ->
+                group.getNodes().stream().map(n -> createNode(group, n, hosts, configHostName)))
         .collect(Collectors.toList());
   }
 

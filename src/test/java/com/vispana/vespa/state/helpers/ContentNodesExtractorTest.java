@@ -55,6 +55,24 @@ class ContentNodesExtractorTest {
   }
 
   @Test
+  void contentNodesFromAppPackageForSingleGroupSingleHost() {
+    String hostsXmlString = ""; // Single host does not require hosts.xml
+    String servicesXmlString =
+        Helper.servicesXmlString("xml/services-single-group-single-host.xml");
+    ApplicationPackage applicationPackage =
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+    List<Node> nodes =
+        ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
+
+    assertNotNull(nodes);
+    assertEquals(1, nodes.size());
+    assertEquals("config.host.name", nodes.get(0).getHost());
+    assertEquals(19103, nodes.get(0).getPort());
+    assertEquals(-1, nodes.get(0).getGroup());
+    assertEquals(0, nodes.get(0).getKey());
+  }
+
+  @Test
   void contentNodesFromAppPackageForNoGroup() {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = Helper.servicesXmlString("xml/services-no-group.xml");
