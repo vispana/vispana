@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <services version="1.0">
 
-<!--  <container id="feed" version="1.0">-->
-<!--    <accesslog type="disabled" />-->
-<!--    <document-processing />-->
-<!--    <document-api />-->
-<!--    <nodes>-->
-<!--      <node hostalias="node1" />-->
-<!--    </nodes>-->
-<!--  </container>-->
-
   <container id="query" version="1.0">
     <document-api/>
     <search />

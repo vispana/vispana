@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Group {
 
+  public static final String FALLBACK_DISTRIBUTION_KEY = "-1";
+
   @JacksonXmlProperty(localName = "name", isAttribute = true)
   private String name;
 
@@ -29,7 +31,7 @@ public class Group {
   }
 
   public String getDistributionKey() {
-    return distributionKey != null ? distributionKey : "-1";
+    return distributionKey != null ? distributionKey : FALLBACK_DISTRIBUTION_KEY;
   }
 
   public List<Node> getNodes() {
