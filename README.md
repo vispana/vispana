@@ -46,7 +46,14 @@ In a few steps, here's how to do it:
       docker run -p 4000:4000 --network vespanet vispana/vispana:latest
     ```
 4. Access Vispana in your browser via [http://localhost:4000](http://localhost:4000) and specify
-   the config node as `http://vespa-container:19071`
+   the config node as `http://vespa-container:19071` if you run vispana in docker. If you run 
+   vispana locally, you can use `http://localhost:19071` or add `127.0.0.1 vespa-container` to 
+   /etc/hosts.
+
+5. Vispana assume that a application is running with name `default`.
+   This project include a sample application that can be deployed to Vespa.
+   See [SAMPLEAPP.md](https://github.com/vispana/vispana/blob/main/SAMPLEAPP.md) for more information.
+
 
 ## Running Locally
 

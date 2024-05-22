@@ -18,7 +18,8 @@ class ContentNodesExtractorTest {
     String servicesXmlString = defaultServicesXmlString();
     ApplicationPackage applicationPackage =
         new ApplicationPackage("1", servicesXmlString, hostsXmlString);
-    List<Node> nodes = ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
+    List<Node> nodes =
+        ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
     assertNotNull(nodes);
     assertEquals(2, nodes.size());
@@ -38,7 +39,8 @@ class ContentNodesExtractorTest {
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-group.xml");
     ApplicationPackage applicationPackage =
         new ApplicationPackage("1", servicesXmlString, hostsXmlString);
-    List<Node> nodes = ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
+    List<Node> nodes =
+        ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
     assertNotNull(nodes);
     assertEquals(2, nodes.size());
@@ -58,7 +60,8 @@ class ContentNodesExtractorTest {
     String servicesXmlString = Helper.servicesXmlString("xml/services-no-group.xml");
     ApplicationPackage applicationPackage =
         new ApplicationPackage("1", servicesXmlString, hostsXmlString);
-    List<Node> nodes = ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
+    List<Node> nodes =
+        ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
     assertNotNull(nodes);
     assertEquals(2, nodes.size());
@@ -78,7 +81,8 @@ class ContentNodesExtractorTest {
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-host.xml");
     ApplicationPackage applicationPackage =
         new ApplicationPackage("1", servicesXmlString, hostsXmlString);
-    List<Node> nodes = ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
+    List<Node> nodes =
+        ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
     assertNotNull(nodes);
     assertEquals(1, nodes.size());

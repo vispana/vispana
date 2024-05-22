@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.groupingBy;
 
 import com.vispana.api.model.Host;
 import com.vispana.api.model.apppackage.ApplicationPackage;
-import com.vispana.api.model.config.ConfigNodes;
 import com.vispana.api.model.content.ContentCluster;
 import com.vispana.api.model.content.ContentData;
 import com.vispana.api.model.content.ContentNode;
@@ -52,7 +51,8 @@ public class ContentAssembler {
             .map(
                 clusterName -> {
                   var dispatcher =
-                      fetchDispatcherData(configHost, clusterName, vespaVersion, appPackage, configHostName);
+                      fetchDispatcherData(
+                          configHost, clusterName, vespaVersion, appPackage, configHostName);
                   var schemas = fetchSchemas(configHost, clusterName);
                   var contentDistribution = fetchContentDistributionData(configHost, clusterName);
                   var distribution =

@@ -2,10 +2,8 @@ package com.vispana.vespa.state.helpers;
 
 import com.vispana.api.model.apppackage.ApplicationPackage;
 import com.vispana.api.model.apppackage.Group;
-import com.vispana.api.model.apppackage.Host;
 import com.vispana.api.model.apppackage.Hosts;
 import com.vispana.api.model.apppackage.Services;
-import com.vispana.api.model.config.ConfigNodes;
 import com.vispana.client.vespa.model.content.Node;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +13,8 @@ public class ContentNodesExtractor {
   public static final long DEFAULT_RPC_ADMIN_PORT = 19103L;
   public static final String UNKNOWN = "unknown";
 
-  public static List<Node> contentNodesFromAppPackage(final ApplicationPackage appPackage,
-                                                      final String configHostName) {
+  public static List<Node> contentNodesFromAppPackage(
+      final ApplicationPackage appPackage, final String configHostName) {
     Services services = Services.fromXml(appPackage.servicesContent());
     Hosts hosts = Hosts.fromXml(appPackage.hostsContent());
 
@@ -29,7 +27,8 @@ public class ContentNodesExtractor {
       // is single node vespa setup
       if (services.getContent().getNodes().size() == 1) {
         return List.of(
-            createNode(new Group(), services.getContent().getNodes().get(0), hosts, configHostName));
+            createNode(
+                new Group(), services.getContent().getNodes().get(0), hosts, configHostName));
       }
       return services.getContent().getNodes().stream()
           .map(n -> createNode(new Group(), n, hosts, null))

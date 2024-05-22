@@ -45,7 +45,11 @@ public class VespaStateClient {
           scope.fork(
               () ->
                   ContentAssembler.assemble(
-                      configHost, vespaVersion, vespaMetrics, appUrl, appPackage,
+                      configHost,
+                      vespaVersion,
+                      vespaMetrics,
+                      appUrl,
+                      appPackage,
                       configNodes.clusters().getFirst().nodes().getFirst().host().hostname()));
       scope
           .join()
