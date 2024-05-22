@@ -45,6 +45,13 @@ function Layout() {
         }
     }, [revalidator.state]);
 
+    function getHost() {
+        var httpRegex = new RegExp("^(http|https):\\/\\/")
+        var portRegex = new RegExp(":[0-9]+\\/")
+        var host = searchParams.get("config_host")
+        return host.replace(httpRegex, "").replace(portRegex, "")
+    }
+
     return (<>
         <Suspense fallback={<Loading/>}>
             <Await
@@ -112,8 +119,9 @@ function Layout() {
                         </div>
                         <div className="flex-1 h-screen p-6 overflow-x-auto w-full">
                             <div>
-                                <div className="space-x-1 w-full">
-                                    <div className="text-right font-flow"
+                                <div className="space-x-1 w-full parent-table">
+                                    <div className="text-left font-flow left-child">{`${(getHost())}`}</div>
+                                    <div className="text-right font-flow right-child"
                                          style={{textAlign: "right"}}>
 
                                         <a className="text-xs btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0"
