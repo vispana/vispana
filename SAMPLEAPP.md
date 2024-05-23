@@ -6,7 +6,10 @@ This project includes a sample application that can be deployed to vespa (in doc
 
 ## Pre-requisites
 To deploy and feed the app one can use the vespa cli.
-It can be installed with `brew install vespa-cli`
+It can be installed with brew:
+```shell
+brew install vespa-cli
+```
 
 ## Setup
 
