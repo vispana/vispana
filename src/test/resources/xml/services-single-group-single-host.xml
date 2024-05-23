@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<services version="1.0">
+    <container id="feed" version="1.0">
+        <accesslog type="disabled" />
+        <document-processing />
+        <document-api />
+        <nodes>
+            <node hostalias="feed-0" />
+        </nodes>
+    </container>
+    <container id="query" version="1.0">
+        <search />
+        <nodes>
+            <node hostalias="query-0" />
+        </nodes>
+    </container>
+    <content id="content" version="1.0">
+        <documents>
+            <document mode="index" type="msmarco" />
+            <document-processing cluster="feed" />
+        </documents>
+        <engine>
+            <proton>
+                <sync-transactionlog>false</sync-transactionlog>
+                <searchable-copies>1</searchable-copies>
+            </proton>
+        </engine>
+        <redundancy>1</redundancy>
+        <group name="top-group">
+                <node hostalias="content-0-0" distribution-key="0" />
+        </group>
+    </content>
+    <admin version="2.0">
+        <configservers>
+            <configserver hostalias="config-0" />
+            <configserver hostalias="config-1" />
+            <configserver hostalias="config-2" />
+        </configservers>
+        <cluster-controllers>
+            <cluster-controller hostalias="config-0" />
+            <cluster-controller hostalias="config-1" />
+            <cluster-controller hostalias="config-2" />
+        </cluster-controllers>
+        <slobroks>
+            <slobrok hostalias="config-0" />
+            <slobrok hostalias="config-1" />
+            <slobrok hostalias="config-2" />
+        </slobroks>
+        <adminserver hostalias="admin-0" />
+    </admin>
+</services>

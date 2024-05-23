@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.io.IOException;
-import java.util.List;
 
 @JacksonXmlRootElement(localName = "services")
 public class Services {
@@ -25,7 +24,10 @@ public class Services {
     }
   }
 
-  public List<Group> getContentGroups() {
-    return content != null ? content.getContentGroups() : List.of();
+  public Content getContent() {
+    if (content == null) {
+      throw new RuntimeException("No content found in services xml");
+    }
+    return content;
   }
 }
