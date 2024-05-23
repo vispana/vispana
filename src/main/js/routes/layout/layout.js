@@ -23,6 +23,7 @@ function Layout() {
     const refreshIconClass = "fas fa-sync-alt"
     const [refreshInterval, setRefreshInterval] = useState(-1);
     const [refreshIcon, setRefreshIcon] = useState(refreshIconClass);
+    const hostname = new URL(searchParams.get("config_host")).hostname
 
     // Code below sets the expected effects once refreshes changes
     useEffect(() => {
@@ -44,13 +45,6 @@ function Layout() {
             setRefreshIcon(refreshIconClass + " fa-spin text-yellow-400")
         }
     }, [revalidator.state]);
-
-    function getHost() {
-        var httpRegex = new RegExp("^(http|https):\\/\\/")
-        var portRegex = new RegExp(":[0-9]+\\/")
-        var host = searchParams.get("config_host")
-        return host.replace(httpRegex, "").replace(portRegex, "")
-    }
 
     return (<>
         <Suspense fallback={<Loading/>}>
@@ -120,7 +114,7 @@ function Layout() {
                         <div className="flex-1 h-screen p-6 overflow-x-auto w-full">
                             <div>
                                 <div className="space-x-1 w-full parent-table">
-                                    <div className="text-left font-flow left-child">{`${(getHost())}`}</div>
+                                    <div className="text-left font-flow left-child">{hostname}</div>
                                     <div className="text-right font-flow right-child"
                                          style={{textAlign: "right"}}>
 
