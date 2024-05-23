@@ -2,7 +2,7 @@ Sample app setup
 =============================
 
 Vispana assume that a application is running with name `default`.
-This project include a sample application that can be deployed to vespa (in docker).
+This project includes a sample application that can be deployed to vespa (in docker).
 
 ## Pre-requisites
 To deploy and feed the app one can use the vespa cli.
