@@ -51,7 +51,7 @@ In a few steps, here's how to do it:
    /etc/hosts.
 
 5. Vispana assumes that an application is running with name `default`.
-   This project include a sample application that can be deployed to Vespa.
+   This project includes a sample application that can be deployed to Vespa.
    See [SAMPLEAPP.md](https://github.com/vispana/vispana/blob/main/SAMPLEAPP.md) for more information.
 
 
