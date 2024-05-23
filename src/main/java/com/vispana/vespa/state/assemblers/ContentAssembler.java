@@ -42,7 +42,8 @@ public class ContentAssembler {
       VespaVersion vespaVersion,
       Map<String, MetricsNode> vespaMetrics,
       String appUrl,
-      ApplicationPackage appPackage) {
+      ApplicationPackage appPackage,
+      String configHostName) {
     var contentDistributionUrl = configHost + "/config/v1/vespa.config.content.distribution/";
 
     var contentClusters =
@@ -51,7 +52,8 @@ public class ContentAssembler {
             .map(
                 clusterName -> {
                   var dispatcher =
-                      fetchDispatcherData(configHost, clusterName, vespaVersion, appPackage);
+                      fetchDispatcherData(
+                          configHost, clusterName, vespaVersion, appPackage, configHostName);
                   var schemas = fetchSchemas(configHost, clusterName);
                   var contentDistribution = fetchContentDistributionData(configHost, clusterName);
                   var distribution =
@@ -155,7 +157,9 @@ public class ContentAssembler {
       String configHost,
       String clusterName,
       VespaVersion vespaVersion,
-      final ApplicationPackage appPackage) {
+      final ApplicationPackage appPackage,
+      final String configHostName) {
+
     if (vespaVersion.major() == 7) {
       var dispatcherUrl =
           configHost + "/config/v1/vespa.config.search.dispatch/" + clusterName + "/search";
@@ -168,7 +172,7 @@ public class ContentAssembler {
               + "/search";
       return requestGet(dispatcherUrl, SearchDispatchNodesSchema.class).getNode();
     } else {
-      return contentNodesFromAppPackage(appPackage);
+      return contentNodesFromAppPackage(appPackage, configHostName);
     }
   }
 

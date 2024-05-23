@@ -17,6 +17,9 @@ public class Hosts {
     XmlMapper xmlMapper = new XmlMapper();
 
     try {
+      if (xml == null || xml.isEmpty()) {
+        return new Hosts();
+      }
       return xmlMapper.readValue(xml, Hosts.class);
     } catch (IOException e) {
       throw new RuntimeException("Failed to parse Hosts xml", e);
