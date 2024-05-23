@@ -50,7 +50,7 @@ In a few steps, here's how to do it:
    vispana locally, you can use `http://localhost:19071` or add `127.0.0.1 vespa-container` to
    /etc/hosts.
 
-5. Vispana assume that a application is running with name `default`.
+5. Vispana assumes that an application is running with name `default`.
    This project include a sample application that can be deployed to Vespa.
    See [SAMPLEAPP.md](https://github.com/vispana/vispana/blob/main/SAMPLEAPP.md) for more information.
 
