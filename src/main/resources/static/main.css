@@ -68,3 +68,19 @@ div.service_unknown {
     top: 10px;
     color: rgb(128, 128, 128);
 }
+
+.parent-table {
+    display:table;
+}
+
+.left-child {
+    display:table-cell;
+    vertical-align:middle;
+    text-align: left;
+}
+
+.right-child {
+    display:table-cell;
+    vertical-align:middle;
+    text-align: right;
+}

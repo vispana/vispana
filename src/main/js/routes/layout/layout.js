@@ -45,6 +45,14 @@ function Layout() {
         }
     }, [revalidator.state]);
 
+    function hostName() {
+        let hostName = ""
+        try {
+            hostName = new URL(searchParams.get("config_host")).hostname
+        } catch {}
+        return hostName;
+    }
+
     return (<>
         <Suspense fallback={<Loading/>}>
             <Await
@@ -112,8 +120,9 @@ function Layout() {
                         </div>
                         <div className="flex-1 h-screen p-6 overflow-x-auto w-full">
                             <div>
-                                <div className="space-x-1 w-full">
-                                    <div className="text-right font-flow"
+                                <div className="space-x-1 w-full parent-table">
+                                    <div className="text-left font-flow left-child">{hostName()}</div>
+                                    <div className="text-right font-flow right-child"
                                          style={{textAlign: "right"}}>
 
                                         <a className="text-xs btn btn-square btn-sm bg-standout-blue border-0 hover:bg-standout-blue hover:border-0 active:border-0"
