@@ -1,0 +1,7 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: vispana
+spec:
+  type: service
+  owner: search-dvalin
