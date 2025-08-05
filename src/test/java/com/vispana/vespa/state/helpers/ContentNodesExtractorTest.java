@@ -8,6 +8,7 @@ import com.vispana.Helper;
 import com.vispana.api.model.apppackage.ApplicationPackage;
 import com.vispana.client.vespa.model.content.Node;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class ContentNodesExtractorTest {
@@ -17,7 +18,8 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = defaultServicesXmlString();
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage(
+            "1", servicesXmlString, hostsXmlString, List.of(), Map.of(), Map.of());
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -38,7 +40,8 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-group.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage(
+            "1", servicesXmlString, hostsXmlString, List.of(), Map.of(), Map.of());
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -60,7 +63,8 @@ class ContentNodesExtractorTest {
     String servicesXmlString =
         Helper.servicesXmlString("xml/services-single-group-single-host.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage(
+            "1", servicesXmlString, hostsXmlString, List.of(), Map.of(), Map.of());
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -77,7 +81,8 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = Helper.servicesXmlString("xml/services-no-group.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage(
+            "1", servicesXmlString, hostsXmlString, List.of(), Map.of(), Map.of());
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -98,7 +103,8 @@ class ContentNodesExtractorTest {
     String hostsXmlString = ""; // Single host does not require hosts.xml
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-host.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage(
+            "1", servicesXmlString, hostsXmlString, List.of(), Map.of(), Map.of());
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 

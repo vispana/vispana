@@ -40,6 +40,60 @@ function AppPackage() {
         })
     }
 
+    // possibly add models
+    let modelsContent = vespaState.applicationPackage.modelsContent;
+    if (modelsContent.length > 0) {
+        tabsContent.push({
+            "tabName": "models",
+            "payload": JSON.stringify(modelsContent, null, 2),
+            "contentType": "json"
+        })
+    }
+    
+    // possibly add query-profiles with their XML content
+    let queryProfilesContent = vespaState.applicationPackage.queryProfilesContent;
+    // queryProfilesContent is a Map<String, String>
+    if (Object.keys(queryProfilesContent).length > 0) {
+        // Create a combined payload with all query profile XML contents
+        const combinedQueryProfiles = Object.entries(queryProfilesContent)
+            .map(([profileName, content]) => {
+                if (content) {
+                    return `<!-- ${profileName} -->\n${content}`;
+                } else {
+                    return `<!-- ${profileName} -->\n<!-- Error loading query profile -->`;
+                }
+            })
+            .join('\n\n');
+            
+        tabsContent.push({
+            "tabName": "query-profiles",
+            "payload": combinedQueryProfiles,
+            "contentType": "xml"
+        })
+    }
+    
+    // possibly add query-profile-types with their XML content
+    let queryProfileTypesContent = vespaState.applicationPackage.queryProfileTypesContent;
+    // queryProfileTypesContent is a Map<String, String>
+    if (Object.keys(queryProfileTypesContent).length > 0) {
+        // Create a combined payload with all query profile type XML contents
+        const combinedQueryProfileTypes = Object.entries(queryProfileTypesContent)
+            .map(([profileTypeName, content]) => {
+                if (content) {
+                    return `<!-- ${profileTypeName} -->\n${content}`;
+                } else {
+                    return `<!-- ${profileTypeName} -->\n<!-- Error loading query profile type -->`;
+                }
+            })
+            .join('\n\n');
+            
+        tabsContent.push({
+            "tabName": "query-profile-types",
+            "payload": combinedQueryProfileTypes,
+            "contentType": "xml"
+        })
+    }
+
     // add the schemas
     tabsContent.push(...schemas)
 
