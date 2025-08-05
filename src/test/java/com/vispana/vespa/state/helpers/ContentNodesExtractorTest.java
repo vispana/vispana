@@ -17,7 +17,7 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = defaultServicesXmlString();
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString, null);
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -38,7 +38,7 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-group.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString, null);
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -60,7 +60,7 @@ class ContentNodesExtractorTest {
     String servicesXmlString =
         Helper.servicesXmlString("xml/services-single-group-single-host.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString, null);
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -77,7 +77,7 @@ class ContentNodesExtractorTest {
     String hostsXmlString = defaultHostsXmlString();
     String servicesXmlString = Helper.servicesXmlString("xml/services-no-group.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString, null);
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
@@ -98,7 +98,7 @@ class ContentNodesExtractorTest {
     String hostsXmlString = ""; // Single host does not require hosts.xml
     String servicesXmlString = Helper.servicesXmlString("xml/services-single-host.xml");
     ApplicationPackage applicationPackage =
-        new ApplicationPackage("1", servicesXmlString, hostsXmlString);
+        new ApplicationPackage("1", servicesXmlString, hostsXmlString, null);
     List<Node> nodes =
         ContentNodesExtractor.contentNodesFromAppPackage(applicationPackage, "config.host.name");
 
