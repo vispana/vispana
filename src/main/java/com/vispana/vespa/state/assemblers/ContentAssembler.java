@@ -86,13 +86,34 @@ public class ContentAssembler {
               var schemaUrl = appUrl + "/content/schemas/" + schemaName + ".sd";
               var schemaContent = requestGet(schemaUrl, String.class);
 
+              // Get schema's rank-profiles
+              var rankProfilesUrl = appUrl + "/content/schemas/" + schemaName + "/";
+              List<String> rankProfilesUrlsList = requestGet(rankProfilesUrl, List.class);
+              Map<String, String> schemaRankProfiles;
+              if (rankProfilesUrlsList.size() > 0) {
+                schemaRankProfiles = rankProfilesUrlsList.stream()
+                    .collect(
+                        Collectors.toMap(
+                            rankProfileUrl -> {
+                              // Extract name from URL: get last part and remove ".profile"
+                              String[] urlParts = rankProfileUrl.split("/");
+                              return urlParts[urlParts.length - 1].replace(".profile", "");
+                            },
+                            rankProfileUrl -> {
+                              // Fetch content from the rank profile URL
+                              return requestGet(rankProfileUrl, String.class);
+                            }));
+              } else {
+                schemaRankProfiles = Map.of();
+              }
+
               var contentNodeByGroup =
                   contentNodes.stream()
                       .collect(groupingBy(contentNode -> contentNode.group().key()));
 
               var schemaDocCounts = countDocuments(schemaName, contentNodeByGroup);
 
-              return new ContentData(new Schema(schemaName, schemaContent), schemaDocCounts);
+              return new ContentData(new Schema(schemaName, schemaContent, schemaRankProfiles), schemaDocCounts);
             })
         .toList();
   }

@@ -1,3 +1,5 @@
 package com.vispana.api.model.content;
 
-public record Schema(String schemaName, String schemaContent) {}
+import java.util.Map;
+
+public record Schema(String schemaName, String schemaContent, Map<String, String> schemaRankProfiles) {}

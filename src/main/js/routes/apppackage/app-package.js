@@ -3,6 +3,7 @@ import {androidstudio} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import React from 'react'
 import {useOutletContext} from "react-router-dom";
 import TabView from "../../components/tabs/tab-view";
+import SchemaDefinition from "../../components/schema-definition/schema-definition";
 
 function AppPackage() {
     const vespaState = useOutletContext();
@@ -16,8 +17,9 @@ function AppPackage() {
                 .map(data => {
                     return {
                         "tabName": `${data.schema.schemaName}.sd`,
-                        "payload": data.schema.schemaContent,
-                        "contentType": "yaml"
+                        "contentType": "schema-definition",
+                        "schemaContent": data.schema.schemaContent,
+                        "rankProfiles": data.schema.schemaRankProfiles
                     };
                 })
         })
@@ -49,9 +51,16 @@ function AppPackage() {
                 return {
                     "header": tab.tabName,
                     "content":
-                        <SyntaxHighlighter language={tab.contentType} style={androidstudio}>
-                            {tab.payload}
-                        </SyntaxHighlighter>
+                        tab.contentType === "schema-definition" ? (
+                            <SchemaDefinition
+                                schemaContent={tab.schemaContent}
+                                rankProfiles={tab.rankProfiles}
+                            />
+                        ) : (
+                            <SyntaxHighlighter language={tab.contentType} style={androidstudio}>
+                                {tab.payload}
+                            </SyntaxHighlighter>
+                        )
                 }
             }
         )
