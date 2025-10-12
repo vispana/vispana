@@ -46,34 +46,41 @@ public class ContentAssembler {
       String configHostName) {
     var contentDistributionUrl = configHost + "/config/v1/vespa.config.content.distribution/";
 
-    var contentClusters =
-        requestGet(contentDistributionUrl, ContentDistributionSchema.class).getConfigs().stream()
-            .map(NameExtractorFromUrl::nameFromUrl)
-            .map(
-                clusterName -> {
-                  var dispatcher =
-                      fetchDispatcherData(
-                          configHost, clusterName, vespaVersion, appPackage, configHostName);
-                  var schemas = fetchSchemas(configHost, clusterName);
-                  var contentDistribution = fetchContentDistributionData(configHost, clusterName);
-                  var distribution =
-                      contentDistribution.getCluster().getAdditionalProperties().get(clusterName);
+    var contentClusters = requestGet(contentDistributionUrl, ContentDistributionSchema.class).getConfigs().stream()
+        .map(NameExtractorFromUrl::nameFromUrl)
+        .map(
+            clusterName -> {
+              // contentNodes
+              var dispatcher = fetchDispatcherData(
+                  configHost, clusterName, vespaVersion, appPackage, configHostName);
+              var contentNodes = contentNodes(vespaMetrics, clusterName, dispatcher);
 
-                  var redundancy = distribution.getRedundancy().intValue();
-                  var copies = distribution.getReadyCopies().intValue();
-                  var hostsPerGroup = hostsPerGroup(distribution);
-                  var hostsCount = hostsPerGroup.size();
-                  var contentOverview =
-                      new ContentOverview(hostsCount, copies, redundancy, hostsPerGroup);
+              // contentData
+              var schemas = fetchSchemas(configHost, clusterName);
+              var contentData = fetchSchemaContent(appUrl, schemas, contentNodes);
 
-                  var contentNodes = contentNodes(vespaMetrics, clusterName, dispatcher);
+              // contentOverview
+              var contentDistribution = fetchContentDistributionData(configHost, clusterName);
+              var distribution = contentDistribution.getCluster().getAdditionalProperties().get(clusterName);
+              var redundancy = distribution.getRedundancy().intValue();
+              var copies = distribution.getReadyCopies().intValue();
+              var hostsPerGroup = hostsPerGroup(distribution);
+              var hostsCount = hostsPerGroup.size();
+              var notYetConverged = contentNodes.stream()
+                  .map(contentNode -> contentNode.hostMetrics().notYetConverged())
+                  .reduce(0, Integer::sum);
+              var contentOverview = new ContentOverview(
+                  hostsCount,
+                  copies,
+                  redundancy,
+                  notYetConverged,
+                  hostsPerGroup);
 
-                  var contentData = fetchSchemaContent(appUrl, schemas, contentNodes);
-
-                  return new ContentCluster(
-                      clusterName, contentOverview, contentData, contentNodes);
-                })
-            .toList();
+              // Final ContentCluster
+              return new ContentCluster(
+                  clusterName, contentOverview, contentData, contentNodes);
+            })
+        .toList();
 
     return new ContentNodes(contentClusters);
   }

@@ -8,6 +8,7 @@ public class SystemMetrics {
     var cpuUtil = 0d;
     var memoryUsage = 0d;
     var diskUsage = 0d;
+    var notYetConverged = 0;
 
     for (var services : hostMetrics.getServices()) {
       for (var metric : services.getMetrics()) {
@@ -21,9 +22,12 @@ public class SystemMetrics {
         if (values.getCpuUtil() != null) {
           cpuUtil += values.getCpuUtil();
         }
+        if (values.getClusterControllerNodesNotConvergedMax() != null) {
+          notYetConverged += values.getClusterControllerNodesNotConvergedMax().intValue();
+        }
       }
     }
 
-    return new HostMetrics(cpuUtil, memoryUsage * 100, diskUsage * 100);
+    return new HostMetrics(cpuUtil, memoryUsage * 100, diskUsage * 100, notYetConverged);
   }
 }

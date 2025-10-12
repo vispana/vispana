@@ -6,4 +6,5 @@ public record ContentOverview(
     int partitionGroups,
     int searchableCopies,
     int redundancy,
+    int notYetConverged,
     Map<GroupKey, Integer> groupNodeCount) {}

@@ -397,6 +397,21 @@ function EnhancedGrid({
                 sortable: false,
             },
             {
+                name: <HeaderComponent title="Not Yet Converged" onHeaderClick={onHeaderClick} />,
+                selector: row => row.hostMetrics?.notYetConverged || 0,
+                cell: row => (
+                    <p className="overflow-ellipsis overflow-hidden text-xs text-gray-300 text-center">
+                        {row.hostMetrics?.notYetConverged || 0}
+                    </p>
+                ),
+                grow: 0.5,  // Smaller flex growth since it's just a number
+                minWidth: '100px',
+                maxWidth: '150px',  // Prevent it from taking too much space
+                center: true,
+                wrap: true,
+                sortable: false,
+            },
+            {
                 name: <HeaderComponent title="Hosts" onHeaderClick={onHeaderClick} />,
                 selector: row => row.host?.hostname || '',
                 cell: row => (

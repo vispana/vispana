@@ -14,7 +14,7 @@ import java.net.URL;
 public class JSONSchemaGenerator {
   public static void main(String[] args) throws IOException {
     var jsonMapper = new JSONSchemaGenerator();
-    var application = jsonMapper.getResource("container-components.json");
+    var application = jsonMapper.getResource("metrics.json");
     jsonMapper.toSchema(application);
   }
 

@@ -48,6 +48,8 @@ function EnhancedContent() {
                             <span>Searchable copies: </span> <span className="text-gray-400">{overview.searchableCopies}</span>
                             {' | '}
                             <span>Redundancy: </span> <span className="text-gray-400">{overview.redundancy}</span>
+                            {' | '}
+                            <span>Not Yet Converged: </span> <span className="text-gray-400">{overview.notYetConverged}</span>
                         </p>
                         <p className="mt-2 text-xs">
                             <span className="font-extrabold text-yellow-400">Groups</span>
